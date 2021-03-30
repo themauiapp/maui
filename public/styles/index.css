@@ -1,0 +1,13 @@
+@tailwind base;
+
+@tailwind components;
+
+.nunito {
+  font-family: "Nunito", sans-serif;
+}
+
+.quicksand {
+  font-family: "Quicksand", sans-serif;
+}
+
+@tailwind utilities;

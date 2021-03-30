@@ -1,0 +1,60 @@
+.btn {
+  position: relative;
+  padding: 26px 54px;
+  transition: color 0.2s ease-in;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:hover > .layer {
+  height: 100%;
+}
+
+.btn-outlined {
+  border: 1px solid #301b3f;
+  background: transparent;
+  color: #301b3f;
+}
+
+.btn-outlined:hover {
+  color: #fff;
+}
+
+.btn-filled {
+  background: #301b3f;
+  color: #fff;
+}
+
+.btn-filled:hover {
+  color: #301b3f;
+}
+
+.btn > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  transition: all 0.2s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.btn > .content {
+  height: 100%;
+  color: inherit;
+  z-index: 20;
+}
+
+.btn-outlined > .layer {
+  background: #301b3f;
+}
+
+.btn-filled > .layer {
+  background: #fff;
+  border: 1px solid #301b3f;
+}
