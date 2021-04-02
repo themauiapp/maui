@@ -1,8 +1,32 @@
 .hero {
   height: 85vh;
+  margin: 0 0 22vh 0;
 }
 
-.section {
-  width: 90%;
-  max-width: 1160px;
+.about__img-primary-parent {
+  width: 60%;
+  margin-right: 25px;
+}
+
+.about__img-primary {
+  height: 400px;
+}
+
+.about__img-secondary-parent {
+  width: 40%;
+}
+
+.about__img-secondary {
+  height: 187.5px;
+  margin-bottom: 25px;
+}
+
+.features {
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+
+.features::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }

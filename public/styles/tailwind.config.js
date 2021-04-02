@@ -14,6 +14,7 @@ module.exports = {
     extend: {
       colors: {
         martini: "#B4A5A5",
+        "light-grey": "#FBFBFB",
         "oxford-blue": "#3C415C",
         "revolver-purple": "#301B3F",
         "eerie-black": "#151515",
