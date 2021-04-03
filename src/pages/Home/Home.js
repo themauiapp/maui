@@ -6,13 +6,13 @@ import "./Home.css";
 
 const features = [
   {
-    name: "Record Income",
+    name: "Record your month to month income",
     description:
       "Easily record your day to day expenses via the app or Telegram Bot",
     image_url: "/images/home/wallet.jpg",
   },
   {
-    name: "Record Expenses",
+    name: "Record day to day expenses",
     description:
       "Easily record your day to day expenses via the app or Telegram Bot",
     image_url: "/images/home/man-holding-dollar.jpg",
@@ -38,14 +38,14 @@ const displayFeatures = () => {
   });
 };
 
-const scrollFeatures = (right = true) => {
-  const features = document.getElementById("features");
-  if (right) {
-    features.scrollLeft += 100;
-    return;
-  }
-  features.scrollLeft -= 100;
-};
+// const scrollFeatures = (right = true) => {
+//   const features = document.getElementById("features");
+//   if (right) {
+//     features.scrollLeft += 150;
+//     return;
+//   }
+//   features.scrollLeft -= 150;
+// };
 
 const Home = () => {
   return (
@@ -142,11 +142,11 @@ const Home = () => {
             processes to ensure a great user experience.
           </p>
         </div>
-        <div className="col-span-7 px-24 py-16 bg-light-grey">
-          <div id="features" className="features mb-6 flex p-1">
+        <div className="col-span-7 px-24 py-20 bg-light-grey">
+          <div id="features" className="features flex">
             {displayFeatures()}
           </div>
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <img
               onClick={() => {
                 scrollFeatures(false);
@@ -163,7 +163,109 @@ const Home = () => {
               className="cursor-pointer"
               alt="arrow right"
             />
+          </div> */}
+        </div>
+      </section>
+      <section className="bg-white p-24 grid grid-cols-12">
+        <div className="col-start-2 col-end-12 grid grid-cols-12 items-center">
+          <div
+            className="relative col-span-5 bg-light-grey flex flex-col"
+            style={{ height: "350px" }}
+          >
+            <div
+              className="relative grid grid-cols-12 col-gap-5 mb-5"
+              style={{ left: "-10%", width: "120%" }}
+            >
+              <div className="col-span-6">
+                <img
+                  src="/images/home/calculator.jpg"
+                  className="w-full object-cover"
+                  alt="calculator"
+                  style={{ height: "175px" }}
+                />
+              </div>
+              <div className="col-span-6">
+                <img
+                  src="/images/home/notes.jpg"
+                  className="w-full object-cover"
+                  alt="calculator"
+                  style={{ height: "175px" }}
+                />
+              </div>
+            </div>
+            <div
+              className="relative grid grid-cols-12 col-gap-5"
+              style={{ left: "-10%", width: "120%" }}
+            >
+              <div className="col-span-6">
+                <img
+                  src="/images/home/calculator.jpg"
+                  className="w-full object-cover"
+                  alt="calculator"
+                  style={{ height: "175px" }}
+                />
+              </div>
+              <div className="col-span-6">
+                <img
+                  src="/images/home/calculator.jpg"
+                  className="w-full object-cover"
+                  alt="calculator"
+                  style={{ height: "175px" }}
+                />
+              </div>
+            </div>
           </div>
+          <div className="col-start-8 col-end-13 flex flex-col justify-center text-justify pt-8 leading-7">
+            <p className="text-2xl mb-4 font-semibold">Made For Ease</p>
+            <p className="mb-5">
+              Maui comes equiped with a convenience telegram bot through which
+              users can add and view expenses without having to open up the app.
+              MauiBot however is not enabled by default for Maui users. To
+              enable MauiBot simply visit him and follow his prompts.
+            </p>
+            <div style={{ width: "fit-content" }}>
+              <Button>MauiBot</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="bg-revolver-purple px-24 py-16 flex justify-between text-white">
+        <div className="flex flex-col md:w-48 lg:w-64 text-justify">
+          <p className="text-xl mb-3">Maui</p>
+          <p>
+            Maui ships with a number of features designed to provide you with
+            the best expense tracking experience possible.
+          </p>
+        </div>
+        <div class="flex flex-col">
+          <p class="text-xl mb-3">Contact</p>
+          <p class="mb-3">
+            3, Bisi Awosika street, Ologolo, Lekki
+          </p>
+          <p class="mb-3">
+            +2348179868840
+          </p>
+          <p class="m-0">
+            <a href="mailto:olamileke.dev@gmail.com">olamileke.dev@gmail.com</a>
+          </p>
+        </div>
+        <div class="flex flex-col">
+          <p class="text-xl mb-3">Social Media</p>
+          <p class="mb-3">
+            <a href="http://facebook.com" target="blank">
+              Facebook
+            </a>
+          </p>
+          <p class="mb-3">
+            <a href="http://twitter.com/f_olamileke" target="blank">
+              Twitter
+            </a>
+          </p>
+          <p class="m-0">
+            <a href="http://instagram.com/f_olamileke" target="blank">
+              Instagram
+            </a>
+          </p>
         </div>
       </section>
     </div>
