@@ -70,7 +70,7 @@ const Signup = () => {
   };
   return (
     <form noValidate className="w-full pt-8 flex flex-col">
-      <p className="text-xl font-semibold mb-5 px-10">Get Started</p>
+      <p className="text-xl mb-5 px-10 nunito">Get Started</p>
       {displayFields()}
       <div className="mt-2 px-10">
         <Button onClick={formik.handleSubmit}>Signup</Button>

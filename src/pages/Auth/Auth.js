@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Signup from "../../components/Signup/Signup";
 import Login from "../../components/Login/Login";
+import Footer from "../../components/Footer/Footer";
 
 const Auth = () => {
   const [signup, setSignup] = useState(
@@ -15,7 +16,7 @@ const Auth = () => {
 
   return (
     <div className="w-screen">
-      <div className={signup ? "h-screen mb-20" : "h-screen"}>
+      <div className={signup ? "h-screen mb-20" : "h-screen"} style={{ height:'90vh' }}>
         <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
           <div className="flex justify-between items-center">
             <div className="flex nunito text-lg">
@@ -73,6 +74,7 @@ const Auth = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

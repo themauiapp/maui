@@ -11,16 +11,7 @@ const Login = () => {
     onSubmit: (values) => {},
   });
 
-  const fields = [
-    {
-      name: "email",
-      type: "email",
-    },
-    {
-      name: "password",
-      type: "password",
-    },
-  ];
+  const fields = ["email", "password"];
 
   const displayFields = () => {
     const formFields = [...fields];
@@ -29,13 +20,13 @@ const Login = () => {
         <div key={index} className="w-full px-10 mb-4 flex flex-col">
           <input
             id={field.name}
-            className="focus:outline-none capitalize p-3 text-gray-700"
-            type={field.type}
-            name={field.name}
+            className="focus:outline-none p-3 text-gray-700"
+            type={field}
+            name={field}
             onChange={formik.handleChange}
-            placeholder={field.name.replace(/_/, " ")}
+            placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
             style={{ border: "1px solid rgba(0,0,0,0.05)" }}
-            autoFocus={field.name === "first_name"}
+            autoFocus={field === "email"}
           />
           {formik.errors?.[field.name] && (
             <p className="mt-2 text-sm text-red">
@@ -48,7 +39,7 @@ const Login = () => {
   };
   return (
     <form noValidate className="w-full pt-8 flex flex-col">
-      <p className="text-xl font-semibold mb-5 px-10">Welcome back</p>
+      <p className="text-xl mb-5 px-10 nunito">Welcome back</p>
       {displayFields()}
       <div className="mt-2 px-10">
         <Button onClick={formik.handleSubmit}>Login</Button>
