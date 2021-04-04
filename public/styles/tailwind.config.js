@@ -18,6 +18,8 @@ module.exports = {
         "oxford-blue": "#3C415C",
         "revolver-purple": "#301B3F",
         "eerie-black": "#151515",
+        red: "#FF0000",
+        "light-red": "#EA3C53",
       },
       height: {
         "1/2": "50%",
@@ -31,9 +33,11 @@ module.exports = {
         "2/6": "33.33%",
         "4/6": "66.67%",
         "5/6": "83.33%",
+        fc: "fit-content",
       },
       width: {
         "3/7": "42%",
+        fc: "fit-content",
       },
     },
   },

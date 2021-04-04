@@ -1,44 +1,75 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Switch, Route, Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Signup from "../../components/Signup/Signup";
+import Login from "../../components/Login/Login";
 
-const Auth = () => (
-  <div className="w-screen h-screen">
-    <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
-      <div className="flex justify-between items-center">
-        <Link to="/" className="nunito text-lg">
-          Maui
-        </Link>
-        <div className="invisible">
-          <Button>Maui</Button>
+const Auth = () => {
+  const [signup, setSignup] = useState(
+    window.location.pathname === "/accounts/new"
+  );
+  return (
+    <div className="w-screen">
+      <div className="h-screen mb-20">
+        <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
+          <div className="flex justify-between items-center">
+            <div className="flex nunito text-lg">
+              <Link to="/">Maui</Link>
+              <p className="mx-1">|</p>
+              {signup ? (
+                <Link
+                  onClick={() => {
+                    setSignup(!signup);
+                  }}
+                  to="/session/new"
+                >
+                  Login
+                </Link>
+              ) : (
+                <Link
+                  onClick={() => {
+                    setSignup(!signup);
+                  }}
+                  to="/accounts/new"
+                >
+                  Signup
+                </Link>
+              )}
+            </div>
+            <div className="invisible">
+              <Button type="outlined">Login</Button>
+            </div>
+          </div>
+        </div>
+        <div className="h-4/6 px-24 flex justify-around">
+          <div
+            className="relative w-1/4"
+            style={{ top: "-10%", height: "370px" }}
+          >
+            <img
+              src="/images/auth/woman-standing.jpg"
+              className="object-cover w-full h-full"
+              alt="woman smiling"
+              style={{ height: "370px" }}
+            />
+          </div>
+          <div
+            className="relative w-1/3 bg-white h-fc"
+            style={{ top:signup ? '-25%' : '-10%', border: "1px solid rgba(0,0,0,0.05)" }}
+          >
+            <Switch>
+              <Route exact path="/accounts/new">
+                <Signup />
+              </Route>
+              <Route exact path="/session/new">
+                <Login />
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
     </div>
-    <div className="h-4/6 px-24 pb-10 flex justify-around">
-      <div className="relative w-1/4" style={{ top: "-10%", height: "380px" }}>
-        <img
-          src="/images/auth/woman-standing.jpg"
-          className="object-cover w-full h-full"
-          alt="woman smiling"
-          style={{ height: "380px", transform: "rotate(0deg)" }}
-        />
-      </div>
-      <div
-        className="relative w-1/3 p-10 bg-white shadow"
-        style={{ top: "-25%", height: "120%" }}
-      >
-        <Router>
-          <Switch>
-            <Route path="/accounts/new">
-              <Signup />
-            </Route>
-            <Route path="/session/new">login</Route>
-          </Switch>
-        </Router>
-      </div>
-    </div>
-  </div>
-);
+  );
+};
 
 export default Auth;

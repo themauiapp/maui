@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Feature from "../../components/Feature/Feature";
 import Footer from "../../components/Footer/Footer";
-import { features } from './data';
+import { features } from "./data";
 import "./Home.css";
 
 const displayFeatures = () => {
@@ -34,9 +34,11 @@ const Home = () => {
             Keep effective track of your day to day spending. Record, analyze,
             generate and more.
           </p>
-          <Link to="/accounts/new">
-            <Button type="filled">Begin</Button>
-          </Link>
+          <div className="w-fc">
+            <Link to="/accounts/new">
+              <Button type="filled">Begin</Button>
+            </Link>
+          </div>
         </div>
         <div className="relative bg-light-grey col-span-6 pr-24">
           <img
@@ -89,7 +91,7 @@ const Home = () => {
           </div>
           <div className="col-start-8 col-end-13 flex flex-col justify-center">
             <p className="text-2xl font-semibold mb-4">
-              Made for The Everyday Person
+              Made for Everyday People
             </p>
             <p className="mb-5 text-justify">
               Maui was born out of a desire to help individuals easily and
@@ -198,7 +200,7 @@ const Home = () => {
               MauiBot however is not enabled by default for Maui users. To
               enable MauiBot simply visit him and follow his prompts.
             </p>
-            <div style={{ width: "fit-content" }}>
+            <div className="w-fc">
               <Button>
                 <p>
                   MauiBot <i class="ml-2 text-sm fa fa-external-link-alt"></i>
