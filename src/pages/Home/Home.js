@@ -2,34 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Feature from "../../components/Feature/Feature";
+import Footer from "../../components/Footer/Footer";
+import { features } from './data';
 import "./Home.css";
-
-const features = [
-  {
-    name: "Record your month to month income",
-    description:
-      "Easily record your day to day expenses via the app or Telegram Bot",
-    image_url: "/images/home/wallet.jpg",
-  },
-  {
-    name: "Record day to day expenses",
-    description:
-      "Easily record your day to day expenses via the app or Telegram Bot",
-    image_url: "/images/home/man-holding-dollar.jpg",
-  },
-  {
-    name: "Access Analytics",
-    description:
-      "Generate graphs and charts detailing your spending for various periods.",
-    image_url: "/images/home/paper-graph.jpg",
-  },
-  {
-    name: "Download Financial Information",
-    description:
-      "Download income and expense information for use in excel file format.",
-    image_url: "/images/home/man-holding-dollar.jpg",
-  },
-];
 
 const displayFeatures = () => {
   const featuresToDisplay = [...features];
@@ -224,50 +199,16 @@ const Home = () => {
               enable MauiBot simply visit him and follow his prompts.
             </p>
             <div style={{ width: "fit-content" }}>
-              <Button>MauiBot</Button>
+              <Button>
+                <p>
+                  MauiBot <i class="ml-2 text-sm fa fa-external-link-alt"></i>
+                </p>
+              </Button>
             </div>
           </div>
         </div>
       </section>
-      <section className="bg-revolver-purple px-24 py-16 flex justify-between text-white">
-        <div className="flex flex-col md:w-48 lg:w-64 text-justify">
-          <p className="text-xl mb-3">Maui</p>
-          <p>
-            Maui ships with a number of features designed to provide you with
-            the best expense tracking experience possible.
-          </p>
-        </div>
-        <div class="flex flex-col">
-          <p class="text-xl mb-3">Contact</p>
-          <p class="mb-3">
-            3, Bisi Awosika street, Ologolo, Lekki
-          </p>
-          <p class="mb-3">
-            +2348179868840
-          </p>
-          <p class="m-0">
-            <a href="mailto:olamileke.dev@gmail.com">olamileke.dev@gmail.com</a>
-          </p>
-        </div>
-        <div class="flex flex-col">
-          <p class="text-xl mb-3">Social Media</p>
-          <p class="mb-3">
-            <a href="http://facebook.com" target="blank">
-              Facebook
-            </a>
-          </p>
-          <p class="mb-3">
-            <a href="http://twitter.com/f_olamileke" target="blank">
-              Twitter
-            </a>
-          </p>
-          <p class="m-0">
-            <a href="http://instagram.com/f_olamileke" target="blank">
-              Instagram
-            </a>
-          </p>
-        </div>
-      </section>
+      <Footer />
     </div>
   );
 };
