@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Feature from "../../components/Feature/Feature";
@@ -22,10 +22,42 @@ const displayFeatures = () => {
 //   features.scrollLeft -= 150;
 // };
 
+const scrollTo = (id) => {
+  const element = document.getElementById(id);
+  element.scrollIntoView({ behavior: "smooth" });
+};
+
+const navScroll = () => {
+  const nav = document.getElementById("nav");
+  if (!nav) {
+    return;
+  }
+  if (window.pageYOffset > 0) {
+    nav.classList.remove("absolute");
+    nav.classList.add("opacity-80");
+    nav.classList.add("pr-20");
+    nav.classList.add("fixed");
+    nav.classList.add("bg-white");
+  } else {
+    nav.classList.add("absolute");
+    nav.classList.remove("pr-20");
+    nav.classList.remove("fixed");
+    nav.classList.remove("bg-white");
+  }
+};
+
 const Home = () => {
+  useEffect(() => {
+    const home = document.getElementById("home");
+    if (!home) {
+      return;
+    }
+    window.onscroll = navScroll;
+  }, []);
+
   return (
-    <div className="min-h-screen w-screen quicksand">
-      <section className="relative hero w-full grid grid-cols-12">
+    <div id="home" className="min-h-screen w-screen quicksand">
+      <section id="index" className="relative hero w-full grid grid-cols-12">
         <div className="col-span-6 pl-24 pt-24 mt-4 h-full flex flex-col justify-center w-5/6">
           <p className="text-5xl mb-4 capitalize">
             Your Everyday Financial History At Your Fingertips.
@@ -49,14 +81,41 @@ const Home = () => {
           />
         </div>
 
-        <div className="absolute top-0 left-0 w-full pt-8 px-24 flex items-center justify-between nunito">
+        <div
+          id="nav"
+          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full py-8 px-24 flex items-center justify-between nunito"
+        >
           <Link to="/" className="text-lg">
             Maui
           </Link>
           <div className="flex items-center">
-            <p className="cursor-pointer mr-6">Home</p>
-            <p className="cursor-pointer mr-6">About</p>
-            <p className="cursor-pointer mr-6">Features</p>
+            <Link
+              to="/#index"
+              onClick={() => {
+                scrollTo("index");
+              }}
+              className="cursor-pointer mr-6"
+            >
+              Home
+            </Link>
+            <Link
+              to="/#about"
+              onClick={() => {
+                scrollTo("about");
+              }}
+              className="cursor-pointer mr-6"
+            >
+              About
+            </Link>
+            <Link
+              to="/#features"
+              onClick={() => {
+                scrollTo("features");
+              }}
+              className="cursor-pointer mr-6"
+            >
+              Features
+            </Link>
             <Link to="/session/new" className="mr-6">
               <Button type="outlined">Login</Button>
             </Link>
@@ -66,7 +125,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="px-24">
+      <section id="about" className="px-24">
         <div className="grid grid-cols-12 mb-12">
           <div className="col-span-6 flex">
             <div className="about__img-primary-parent">
@@ -109,7 +168,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="grid grid-cols-12 mt-10">
+      <section id="features" className="grid grid-cols-12 mt-10">
         <div className="col-span-5 flex flex-col justify-center px-24">
           <p className="text-2xl mb-5 font-semibold">Made For Value</p>
           <p className="text-justify">
@@ -123,24 +182,6 @@ const Home = () => {
           <div id="features" className="features flex">
             {displayFeatures()}
           </div>
-          {/* <div className="flex justify-between">
-            <img
-              onClick={() => {
-                scrollFeatures(false);
-              }}
-              src="/images/home/arrow-left.png"
-              className="cursor-pointer"
-              alt="arrow left"
-            />
-            <img
-              onClick={() => {
-                scrollFeatures();
-              }}
-              src="/images/home/arrow-right.png"
-              className="cursor-pointer"
-              alt="arrow right"
-            />
-          </div> */}
         </div>
       </section>
       <section className="bg-white p-24 grid grid-cols-12">
@@ -203,7 +244,8 @@ const Home = () => {
             <div className="w-fc">
               <Button>
                 <p>
-                  MauiBot <i class="ml-2 text-sm fa fa-external-link-alt"></i>
+                  MauiBot{" "}
+                  <i className="ml-2 text-sm fa fa-external-link-alt"></i>
                 </p>
               </Button>
             </div>

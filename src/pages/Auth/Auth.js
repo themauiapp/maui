@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Signup from "../../components/Signup/Signup";
@@ -8,9 +8,14 @@ const Auth = () => {
   const [signup, setSignup] = useState(
     window.location.pathname === "/accounts/new"
   );
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
   return (
     <div className="w-screen">
-      <div className="h-screen mb-20">
+      <div className={signup ? "h-screen mb-20" : "h-screen"}>
         <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
           <div className="flex justify-between items-center">
             <div className="flex nunito text-lg">

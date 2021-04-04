@@ -26,7 +26,7 @@ const Login = () => {
     const formFields = [...fields];
     return formFields.map((field, index) => {
       return (
-        <div className="w-full px-10 mb-4 flex flex-col">
+        <div key={index} className="w-full px-10 mb-4 flex flex-col">
           <input
             id={field.name}
             className="focus:outline-none capitalize p-3 text-gray-700"

@@ -39,7 +39,7 @@ const Signup = () => {
     const formFields = [...fields];
     return formFields.map((field, index) => {
       return (
-        <div className="w-full px-10 mb-4 flex flex-col">
+        <div key={index} className="w-full px-10 mb-4 flex flex-col">
           {field.type === "select" ? (
             <select
               name={field.name}
