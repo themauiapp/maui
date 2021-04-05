@@ -57,9 +57,9 @@ const Home = () => {
 
   return (
     <div id="home" className="min-h-screen w-screen quicksand">
-      <section id="index" className="relative hero w-full grid grid-cols-12">
-        <div className="col-span-6 pl-24 pt-24 mt-4 h-full flex flex-col justify-center w-5/6">
-          <p className="text-5xl mb-4 capitalize">
+      <section id="index" className="relative hero pt-32 pb-20 lg:p-0 w-full grid grid-cols-12">
+        <div className="col-span-12 bmd:col-span-10 lg:col-span-6 pl-24 pt-10 lg:pt-24 lg:mt-4 h-full flex flex-col justify-center w-5/6">
+          <p className="text-4xl lg:text-5xl mb-4 capitalize">
             Your Everyday Financial History At Your Fingertips.
           </p>
           <p className="text-lg mb-8 leading-7 w-4/5">
@@ -72,7 +72,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
-        <div className="relative bg-light-grey col-span-6 pr-24">
+        <div className="hidden lg:block relative bg-light-grey col-span-6 pr-24">
           <img
             className="absolute left-0 w-full object-cover px-24"
             src="/images/home/hero.jpg"
@@ -126,8 +126,8 @@ const Home = () => {
         </div>
       </section>
       <section id="about" className="px-24">
-        <div className="grid grid-cols-12 mb-12">
-          <div className="col-span-6 flex">
+        <div className="grid grid-cols-12 mb-20 lg:mb-12">
+          <div className="col-span-12 bmd:col-span-6 flex mb-4 bmd:mb-0">
             <div className="about__img-primary-parent">
               <img
                 src="/images/home/woman-portrait.jpg"
@@ -148,7 +148,7 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="col-start-8 col-end-13 flex flex-col justify-center">
+          <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 flex flex-col justify-center">
             <p className="text-2xl font-semibold mb-4">
               Made for Everyday People
             </p>
@@ -169,7 +169,7 @@ const Home = () => {
         </div>
       </section>
       <section id="features" className="grid grid-cols-12 mt-10">
-        <div className="col-span-5 flex flex-col justify-center px-24">
+        <div className="hidden col-span-5 bmd:flex flex-col justify-center px-24">
           <p className="text-2xl mb-5 font-semibold">Made For Value</p>
           <p className="text-justify">
             Maui ships with a number of features designed to provide you with
@@ -178,22 +178,28 @@ const Home = () => {
             processes to ensure a great user experience.
           </p>
         </div>
-        <div className="col-span-7 px-24 py-20 bg-light-grey">
+        <div className="col-span-12 bmd:col-span-7 mb-8 bmd:mb-0 px-24 py-20 bg-light-grey">
           <div id="features" className="features flex">
             {displayFeatures()}
           </div>
         </div>
+        <div className="bmd:hidden col-span-12 flex flex-col justify-center px-24">
+          <p className="text-2xl mb-5 font-semibold">Made For Value</p>
+          <p className="text-justify">
+            Maui ships with a number of features designed to provide you with
+            the best expense tracking experience possible. With a hyper focus on
+            user satisfaction, Maui is also constantly striving to refine its
+            processes to ensure a great user experience.
+          </p>
+        </div>
       </section>
       <section className="bg-white p-24 grid grid-cols-12">
-        <div className="col-start-2 col-end-12 grid grid-cols-12 items-center">
+        <div className="col-span-12 bmd:col-start-2 bmd:col-end-12 grid grid-cols-12 items-center">
           <div
-            className="relative col-span-5 bg-light-grey flex flex-col"
+            className="relative col-span-12 bmd:col-span-5 bg-light-grey flex flex-col"
             style={{ height: "350px" }}
           >
-            <div
-              className="relative grid grid-cols-12 col-gap-5 mb-5"
-              style={{ left: "-10%", width: "120%" }}
-            >
+            <div className="features__img-ease-parent relative grid grid-cols-12 col-gap-5 mb-5">
               <div className="col-span-6">
                 <img
                   src="/images/home/calculator.jpg"
@@ -211,10 +217,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            <div
-              className="relative grid grid-cols-12 col-gap-5"
-              style={{ left: "-10%", width: "120%" }}
-            >
+            <div className="features__img-ease-parent relative grid grid-cols-12 col-gap-5">
               <div className="col-span-6">
                 <img
                   src="/images/home/calculator.jpg"
@@ -233,7 +236,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-start-8 col-end-13 flex flex-col justify-center text-justify pt-8 leading-7">
+          <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 mt-16 bmd:mb-0 flex flex-col justify-center text-justify lg:pt-8 leading-7">
             <p className="text-2xl mb-4 font-semibold">Made For Ease</p>
             <p className="mb-5">
               Maui comes equiped with a convenience telegram bot through which

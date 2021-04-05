@@ -11,12 +11,15 @@ const Auth = () => {
   );
 
   useEffect(() => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="w-screen">
-      <div className={signup ? "h-screen mb-20" : "h-screen"} style={{ height:'90vh' }}>
+      <div
+        className={signup ? "h-screen mb-20" : "h-screen"}
+        style={{ height: "90vh" }}
+      >
         <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
           <div className="flex justify-between items-center">
             <div className="flex nunito text-lg">
@@ -47,7 +50,9 @@ const Auth = () => {
             </div>
           </div>
         </div>
-        <div className="h-4/6 px-24 flex justify-around">
+        <div
+          className="h-4/6 px-24 flex justify-around"
+        >
           <div
             className="relative w-1/4"
             style={{ top: "-10%", height: "370px" }}
@@ -61,7 +66,10 @@ const Auth = () => {
           </div>
           <div
             className="relative w-1/3 bg-white h-fc"
-            style={{ top:signup ? '-25%' : '-10%', border: "1px solid rgba(0,0,0,0.05)" }}
+            style={{
+              top: signup ? "-25%" : "-10%",
+              border: "1px solid rgba(0,0,0,0.05)",
+            }}
           >
             <Switch>
               <Route exact path="/accounts/new">

@@ -30,3 +30,22 @@
   width: 0px;
   height: 0px;
 }
+
+.features__img-ease-parent {
+  left: -10%;
+  width: 120%;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    height: fit-content;
+    margin: 0;
+  }
+}
+
+@media (max-width: 810px) {
+  .features__img-ease-parent {
+    left: 0;
+    width: 100%;
+  }
+}
