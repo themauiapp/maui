@@ -35,12 +35,12 @@ const navScroll = () => {
   if (window.pageYOffset > 0) {
     nav.classList.remove("absolute");
     nav.classList.add("opacity-80");
-    nav.classList.add("pr-20");
+    if (window.screen.width > 768) nav.classList.add("pr-20");
     nav.classList.add("fixed");
     nav.classList.add("bg-white");
   } else {
     nav.classList.add("absolute");
-    nav.classList.remove("pr-20");
+    if (window.screen.width > 768) nav.classList.remove("pr-20");
     nav.classList.remove("fixed");
     nav.classList.remove("bg-white");
   }
@@ -57,12 +57,15 @@ const Home = () => {
 
   return (
     <div id="home" className="min-h-screen w-screen quicksand">
-      <section id="index" className="relative hero pt-32 pb-20 lg:p-0 w-full grid grid-cols-12">
-        <div className="col-span-12 bmd:col-span-10 lg:col-span-6 pl-24 pt-10 lg:pt-24 lg:mt-4 h-full flex flex-col justify-center w-5/6">
-          <p className="text-4xl lg:text-5xl mb-4 capitalize">
+      <section
+        id="index"
+        className="relative hero pt-32 md:pt-32 pb-12 md:pb-16 lg:p-0 w-full grid grid-cols-12"
+      >
+        <div className="col-span-12 bmd:col-span-10 lg:col-span-6 px-8 sm:px-12 md:pl-24 md:pt-5 lg:pt-24 lg:mt-4 h-full flex flex-col justify-center w-full md:w-5/6">
+          <p className="text-4xl lg:text-5xl mb-3 md:mb-4 capitalize">
             Your Everyday Financial History At Your Fingertips.
           </p>
-          <p className="text-lg mb-8 leading-7 w-4/5">
+          <p className="text-lg mb-5 md:mb-8 leading-7 w-4/5">
             Keep effective track of your day to day spending. Record, analyze,
             generate and more.
           </p>
@@ -83,73 +86,80 @@ const Home = () => {
 
         <div
           id="nav"
-          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full py-8 px-24 flex items-center justify-between nunito"
+          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full py-10 md:py-8 px-8 sm:px-12 md:px-24 flex items-center justify-between nunito"
         >
-          <Link to="/" className="text-lg">
+          <Link to="/" className="nav__home text-lg">
             Maui
           </Link>
-          <div className="flex items-center">
-            <Link
-              to="/#index"
-              onClick={() => {
-                scrollTo("index");
-              }}
-              className="cursor-pointer mr-6"
-            >
-              Home
-            </Link>
-            <Link
-              to="/#about"
-              onClick={() => {
-                scrollTo("about");
-              }}
-              className="cursor-pointer mr-6"
-            >
-              About
-            </Link>
-            <Link
-              to="/#features"
-              onClick={() => {
-                scrollTo("features");
-              }}
-              className="cursor-pointer mr-6"
-            >
-              Features
-            </Link>
-            <Link to="/session/new" className="mr-6">
-              <Button type="outlined">Login</Button>
-            </Link>
-            <Link to="/accounts/new">
-              <Button type="filled">Signup</Button>
-            </Link>
-          </div>
+          {window.screen.width <= 768 && (
+            <div class="nav__hamburger">
+              <span></span>
+            </div>
+          )}
+          {window.screen.width > 768 && (
+            <div className="flex items-center">
+              <Link
+                to="/#index"
+                onClick={() => {
+                  scrollTo("index");
+                }}
+                className="cursor-pointer mr-6"
+              >
+                Home
+              </Link>
+              <Link
+                to="/#about"
+                onClick={() => {
+                  scrollTo("about");
+                }}
+                className="cursor-pointer mr-6"
+              >
+                About
+              </Link>
+              <Link
+                to="/#features"
+                onClick={() => {
+                  scrollTo("features");
+                }}
+                className="cursor-pointer mr-6"
+              >
+                Features
+              </Link>
+              <Link to="/session/new" className="mr-6">
+                <Button type="outlined">Login</Button>
+              </Link>
+              <Link to="/accounts/new">
+                <Button type="filled">Signup</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
-      <section id="about" className="px-24">
-        <div className="grid grid-cols-12 mb-20 lg:mb-12">
-          <div className="col-span-12 bmd:col-span-6 flex mb-4 bmd:mb-0">
-            <div className="about__img-primary-parent">
+      <section id="about" className="px-8 sm:px-12 md:px-24">
+        <div className="grid grid-cols-12 mb-12 md:mb-16 lg:mb-12">
+          <div className="col-span-12 bmd:col-span-6 bsm:flex mb-8 bmd:mb-0">
+            <div className="about__img-primary">
               <img
                 src="/images/home/woman-portrait.jpg"
-                className="object-cover w-full about__img-primary"
+                className="object-cover w-full"
                 alt="woman in portrait"
               />
             </div>
-            <div className="flex flex-col about__img-secondary-parent">
+            <div className="hidden md:flex flex-col about__img-secondary">
               <img
                 src="/images/home/man-smiling.jpg"
-                className="object-cover w-full about__img-secondary"
+                className="object-cover w-full"
                 alt="girl holding icecream"
               />
               <img
                 src="/images/home/man-looking.jpg"
-                className="object-cover w-full about__img-secondary"
+                className="object-cover w-full"
                 alt="man staring"
               />
             </div>
           </div>
           <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 flex flex-col justify-center">
-            <p className="text-2xl font-semibold mb-4">
+            <p className="text-xl sm:text-2xl font-semibold mb-4 text-center md:text-left">
               Made for Everyday People
             </p>
             <p className="mb-5 text-justify">
@@ -178,13 +188,15 @@ const Home = () => {
             processes to ensure a great user experience.
           </p>
         </div>
-        <div className="col-span-12 bmd:col-span-7 mb-8 bmd:mb-0 px-24 py-20 bg-light-grey">
+        <div className="col-span-12 bmd:col-span-7 mb-10 bmd:mb-0 px-8 sm:px-12 md:px-24 py-8 sm:py-12 md:py-20 bg-light-grey">
           <div id="features" className="features flex">
             {displayFeatures()}
           </div>
         </div>
-        <div className="bmd:hidden col-span-12 flex flex-col justify-center px-24">
-          <p className="text-2xl mb-5 font-semibold">Made For Value</p>
+        <div className="bmd:hidden col-span-12 flex flex-col justify-center px-8 sm:px-12 md:px-24">
+          <p className="text-xl sm:text-2xl mb-3 lg:mb-5 font-semibold text-center md:text-left">
+            Made For Value
+          </p>
           <p className="text-justify">
             Maui ships with a number of features designed to provide you with
             the best expense tracking experience possible. With a hyper focus on
@@ -193,37 +205,33 @@ const Home = () => {
           </p>
         </div>
       </section>
-      <section className="bg-white p-24 grid grid-cols-12">
-        <div className="col-span-12 bmd:col-start-2 bmd:col-end-12 grid grid-cols-12 items-center">
+      <section className="bg-white px-8 sm:px-12 md:px-24 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16 bmd:p-24 grid grid-cols-12">
+        <div className="col-span-12 lg:col-start-2 lg:col-end-12 grid grid-cols-12 items-center">
           <div
-            className="relative col-span-12 bmd:col-span-5 bg-light-grey flex flex-col"
-            style={{ height: "350px" }}
+            className="relative col-span-12 bmd:col-span-6 lg:col-span-5 flex flex-col h-fc"
           >
-            <div className="features__img-ease-parent relative grid grid-cols-12 col-gap-5 mb-5">
-              <div className="col-span-6">
+            <div className="features__img-ease relative grid grid-cols-12 col-gap-5 sm:mb-5">
+              <div className="col-span-12 sm:col-span-6">
                 <img
                   src="/images/home/calculator.jpg"
                   className="w-full object-cover"
                   alt="calculator"
-                  style={{ height: "175px" }}
                 />
               </div>
-              <div className="col-span-6">
+              <div className="hidden sm:block col-span-12 sm:col-span-6">
                 <img
-                  src="/images/home/notes.jpg"
+                  src="/images/home/calculator.jpg"
                   className="w-full object-cover"
                   alt="calculator"
-                  style={{ height: "175px" }}
                 />
               </div>
             </div>
-            <div className="features__img-ease-parent relative grid grid-cols-12 col-gap-5">
+            <div className="hidden features__img-ease relative sm:grid grid-cols-12 col-gap-5">
               <div className="col-span-6">
                 <img
                   src="/images/home/calculator.jpg"
                   className="w-full object-cover"
                   alt="calculator"
-                  style={{ height: "175px" }}
                 />
               </div>
               <div className="col-span-6">
@@ -231,14 +239,15 @@ const Home = () => {
                   src="/images/home/calculator.jpg"
                   className="w-full object-cover"
                   alt="calculator"
-                  style={{ height: "175px" }}
                 />
               </div>
             </div>
           </div>
-          <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 mt-16 bmd:mb-0 flex flex-col justify-center text-justify lg:pt-8 leading-7">
-            <p className="text-2xl mb-4 font-semibold">Made For Ease</p>
-            <p className="mb-5">
+          <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 mt-10 bmd:mt-0 flex flex-col items-center md:items-start justify-center text-justify leading-7">
+            <p className="text-xl sm:text-2xl mb-4 bsm:mb-5 lg:mb-4 font-semibold text-center md:text-left">
+              Made For Ease
+            </p>
+            <p className="mb-6 bmd:mb-5">
               Maui comes equiped with a convenience telegram bot through which
               users can add and view expenses without having to open up the app.
               MauiBot however is not enabled by default for Maui users. To

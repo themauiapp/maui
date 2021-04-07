@@ -3,3 +3,11 @@
   height: 400px;
   margin-right: 25px;
 }
+
+.feature img {
+  height: 400px;
+}
+
+.feature div {
+  bottom: 0;
+}

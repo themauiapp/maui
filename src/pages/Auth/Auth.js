@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button";
 import Signup from "../../components/Signup/Signup";
 import Login from "../../components/Login/Login";
 import Footer from "../../components/Footer/Footer";
+import "./Auth.css";
 
 const Auth = () => {
   const [signup, setSignup] = useState(
@@ -16,10 +17,7 @@ const Auth = () => {
 
   return (
     <div className="w-screen">
-      <div
-        className={signup ? "h-screen mb-20" : "h-screen"}
-        style={{ height: "90vh" }}
-      >
+      <div className="auth">
         <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
           <div className="flex justify-between items-center">
             <div className="flex nunito text-lg">
@@ -50,25 +48,18 @@ const Auth = () => {
             </div>
           </div>
         </div>
-        <div
-          className="h-4/6 px-24 flex justify-around"
-        >
-          <div
-            className="relative w-1/4"
-            style={{ top: "-10%", height: "370px" }}
-          >
+        <div className="h-4/6 px-24 flex justify-around">
+          <div className="auth__image-parent relative w-1/4">
             <img
               src="/images/auth/woman-standing.jpg"
               className="object-cover w-full h-full"
               alt="woman smiling"
-              style={{ height: "370px" }}
             />
           </div>
           <div
-            className="relative w-1/3 bg-white h-fc"
+            className="auth__form relative w-1/3 bg-white h-fc"
             style={{
               top: signup ? "-25%" : "-10%",
-              border: "1px solid rgba(0,0,0,0.05)",
             }}
           >
             <Switch>

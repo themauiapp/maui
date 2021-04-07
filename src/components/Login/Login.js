@@ -28,9 +28,9 @@ const Login = () => {
             style={{ border: "1px solid rgba(0,0,0,0.05)" }}
             autoFocus={field === "email"}
           />
-          {formik.errors?.[field.name] && (
+          {formik.errors?.[field] && (
             <p className="mt-2 text-sm text-red">
-              {formik.errors?.[field.name]}
+              {formik.errors?.[field]}
             </p>
           )}
         </div>
