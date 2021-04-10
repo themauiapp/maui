@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Feature from "../../components/Feature/Feature";
 import Footer from "../../components/Footer/Footer";
+import HomeSidebar from "../../components/Home-Sidebar/Home-Sidebar";
 import { features } from "./data";
 import "./Home.css";
 
@@ -21,11 +22,6 @@ const displayFeatures = () => {
 //   }
 //   features.scrollLeft -= 150;
 // };
-
-const scrollTo = (id) => {
-  const element = document.getElementById(id);
-  element.scrollIntoView({ behavior: "smooth" });
-};
 
 const navScroll = () => {
   const nav = document.getElementById("nav");
@@ -47,6 +43,8 @@ const navScroll = () => {
 };
 
 const Home = () => {
+  const [sidebar, setSidebar] = useState(false);
+
   useEffect(() => {
     const home = document.getElementById("home");
     if (!home) {
@@ -55,14 +53,26 @@ const Home = () => {
     window.onscroll = navScroll;
   }, []);
 
+  const scrollTo = (id) => {
+  const element = document.getElementById(id);
+  element.scrollIntoView({ behavior: "smooth" });
+  setSidebar(false);
+};
+
+  let overlayClasses =
+    "fixed top-0 left-0 w-screen h-screen transition-all duration-300 ease-in opacity-100 z-10";
+  overlayClasses = sidebar
+    ? overlayClasses
+    : overlayClasses.replace(/opacity-100 z-10/, "opacity-0 z--9999");
+
   return (
     <div id="home" className="min-h-screen w-screen quicksand">
       <section
         id="index"
-        className="relative hero pt-32 md:pt-32 pb-12 md:pb-16 lg:p-0 w-full grid grid-cols-12"
+        className="relative hero pt-20 bsm:pt-24 md:pt-32 pb-12 md:pb-16 lg:p-0 w-full grid grid-cols-12"
       >
-        <div className="col-span-12 bmd:col-span-10 lg:col-span-6 px-8 sm:px-12 md:pl-24 md:pt-5 lg:pt-24 lg:mt-4 h-full flex flex-col justify-center w-full md:w-5/6">
-          <p className="text-4xl lg:text-5xl mb-3 md:mb-4 capitalize">
+        <div className="col-span-12 bmd:col-span-10 lg:col-span-6 px-8 sm:px-12 md:pl-24 lg:pt-24 mt-2 md:mt-0 lg:mt-4 h-full flex flex-col justify-center w-full md:w-5/6">
+          <p className="text-3xl bsm:text-4xl lg:text-5xl mb-3 md:mb-4 capitalize">
             Your Everyday Financial History At Your Fingertips.
           </p>
           <p className="text-lg mb-5 md:mb-8 leading-7 w-4/5">
@@ -86,13 +96,18 @@ const Home = () => {
 
         <div
           id="nav"
-          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full py-10 md:py-8 px-8 sm:px-12 md:px-24 flex items-center justify-between nunito"
+          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full p-8 sm:px-12 md:px-24 flex items-center justify-between nunito"
         >
           <Link to="/" className="nav__home text-lg">
             Maui
           </Link>
           {window.screen.width <= 768 && (
-            <div class="nav__hamburger">
+            <div
+              onClick={() => {
+                setSidebar(!sidebar);
+              }}
+              className="nav__hamburger cursor-pointer"
+            >
               <span></span>
             </div>
           )}
@@ -133,6 +148,14 @@ const Home = () => {
               </Link>
             </div>
           )}
+          <div
+            onClick={() => {
+              setSidebar(!sidebar);
+            }}
+            className={overlayClasses}
+            style={{ background: "rgba(0,0,0,0.2)" }}
+          />
+          <HomeSidebar active={sidebar} scrollTo={scrollTo} />
         </div>
       </section>
       <section id="about" className="px-8 sm:px-12 md:px-24">
@@ -159,7 +182,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 flex flex-col justify-center">
-            <p className="text-xl sm:text-2xl font-semibold mb-4 text-center md:text-left">
+            <p className="text-xl sm:text-2xl font-semibold mb-2 lg:mb-4 text-center md:text-left">
               Made for Everyday People
             </p>
             <p className="mb-5 text-justify">
@@ -207,9 +230,7 @@ const Home = () => {
       </section>
       <section className="bg-white px-8 sm:px-12 md:px-24 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16 bmd:p-24 grid grid-cols-12">
         <div className="col-span-12 lg:col-start-2 lg:col-end-12 grid grid-cols-12 items-center">
-          <div
-            className="relative col-span-12 bmd:col-span-6 lg:col-span-5 flex flex-col h-fc"
-          >
+          <div className="relative col-span-12 bmd:col-span-6 lg:col-span-5 flex flex-col h-fc">
             <div className="features__img-ease relative grid grid-cols-12 col-gap-5 sm:mb-5">
               <div className="col-span-12 sm:col-span-6">
                 <img
@@ -243,15 +264,20 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-12 bmd:col-start-8 bmd:col-end-13 mt-10 bmd:mt-0 flex flex-col items-center md:items-start justify-center text-justify leading-7">
-            <p className="text-xl sm:text-2xl mb-4 bsm:mb-5 lg:mb-4 font-semibold text-center md:text-left">
+          <div className="col-span-12 bmd:col-start-7 bmd:col-end-13 bmd:pl-12 mt-10 bmd:mt-0 flex flex-col items-center md:items-start justify-center text-justify leading-7">
+            <p className="text-xl sm:text-2xl mb-3 bsm:mb-5 lg:mb-4 font-semibold text-center md:text-left">
               Made For Ease
             </p>
             <p className="mb-6 bmd:mb-5">
               Maui comes equiped with a convenience telegram bot through which
-              users can add and view expenses without having to open up the app.
-              MauiBot however is not enabled by default for Maui users. To
-              enable MauiBot simply visit him and follow his prompts.
+              users can add and view expenses without having to access the
+              platform. As a Maui user however, MauiBot is not enabled by
+              default. To enable MauiBot simply visit{" "}
+              <a href="/" className="text-blue-800 mr-1">
+                him
+              </a>
+              and follow his prompts. In no time, you will be enjoying the ease
+              he provides.
             </p>
             <div className="w-fc">
               <Button>

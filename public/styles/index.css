@@ -10,4 +10,8 @@
   font-family: "Quicksand", sans-serif;
 }
 
+.z--9999 {
+  z-index: -9999;
+}
+
 @tailwind utilities;

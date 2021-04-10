@@ -1,0 +1,18 @@
+.home__sidebar {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  right: -50vw;
+  width: 50vw;
+}
+
+.home__sidebar.active {
+  right: 0;
+}
+
+@media(max-width:610px) {
+    .home__sidebar {
+        right: -75vw;
+        width: 75vw;
+    }
+}

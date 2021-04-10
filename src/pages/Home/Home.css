@@ -13,7 +13,6 @@
   cursor: pointer;
   padding: 10px 0;
   width: 19px;
-  z-index: 9999;
 }
 
 .nav__hamburger span,
@@ -101,7 +100,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .about__img-primary {
     width: 100%;
     margin: 0;
