@@ -31,12 +31,10 @@ const navScroll = () => {
   if (window.pageYOffset > 0) {
     nav.classList.remove("absolute");
     nav.classList.add("opacity-80");
-    if (window.screen.width > 768) nav.classList.add("pr-20");
     nav.classList.add("fixed");
     nav.classList.add("bg-white");
   } else {
     nav.classList.add("absolute");
-    if (window.screen.width > 768) nav.classList.remove("pr-20");
     nav.classList.remove("fixed");
     nav.classList.remove("bg-white");
   }
@@ -50,14 +48,17 @@ const Home = () => {
     if (!home) {
       return;
     }
-    window.onscroll = navScroll;
+
+    if (window.screen.width <= 768) {
+      window.onscroll = navScroll;
+    }
   }, []);
 
   const scrollTo = (id) => {
-  const element = document.getElementById(id);
-  element.scrollIntoView({ behavior: "smooth" });
-  setSidebar(false);
-};
+    const element = document.getElementById(id);
+    element.scrollIntoView({ behavior: "smooth" });
+    setSidebar(false);
+  };
 
   let overlayClasses =
     "fixed top-0 left-0 w-screen h-screen transition-all duration-300 ease-in opacity-100 z-10";
@@ -150,7 +151,9 @@ const Home = () => {
           )}
           <div
             onClick={() => {
-              setSidebar(!sidebar);
+              if (window.screen.width <= 768) {
+                setSidebar(!sidebar);
+              }
             }}
             className={overlayClasses}
             style={{ background: "rgba(0,0,0,0.2)" }}
