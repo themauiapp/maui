@@ -1,5 +1,23 @@
 .auth {
-  height: 90vh;
+  height: 700px;
+}
+
+@media (max-width: 1024px) {
+  .auth {
+    height: 90vh;
+  }
+}
+
+@media (max-width: 385px) {
+  .auth {
+    height: 99vh;
+  }
+}
+
+@media (max-width: 340px) {
+  .auth {
+    height: 110vh;
+  }
 }
 
 .auth__image-parent {

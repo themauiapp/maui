@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { signupSchema } from "../../schemas/auth";
 import Button from "../Button/Button";
 
-const Signup = () => {
+const Signup = ({ setError }) => {
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -15,6 +15,11 @@ const Signup = () => {
     validateOnChange: false,
     onSubmit: (values) => {},
   });
+
+  useEffect(() => {
+    const values = Object.values(formik.errors);
+    setError(values.length > 0);
+  }, [formik.errors, setError]);
 
   const fields = [
     {
@@ -70,7 +75,7 @@ const Signup = () => {
   };
   return (
     <form noValidate className="w-full pt-8 flex flex-col">
-      <p className="text-xl mb-5 px-10 nunito">Get Started</p>
+      <p className="text-lg sm:text-xl mb-5 px-10 nunito">Get Started</p>
       {displayFields()}
       <div className="mt-2 px-10">
         <Button onClick={formik.handleSubmit}>Signup</Button>

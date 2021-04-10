@@ -96,7 +96,7 @@ const Home = () => {
 
         <div
           id="nav"
-          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full p-8 sm:px-12 md:px-24 flex items-center justify-between nunito"
+          className="transition-all duration-300 ease-in z-10 absolute top-0 left-0 w-full py-8 md:py-6 px-8 sm:px-12 md:px-24 flex items-center justify-between nunito"
         >
           <Link to="/" className="nav__home text-lg">
             Maui

@@ -39,7 +39,7 @@ const Login = () => {
   };
   return (
     <form noValidate className="w-full pt-8 flex flex-col">
-      <p className="text-xl mb-5 px-10 nunito">Welcome back</p>
+      <p className="text-lg sm:text-xl mb-5 px-10 nunito">Welcome back</p>
       {displayFields()}
       <div className="mt-2 px-10">
         <Button onClick={formik.handleSubmit}>Login</Button>

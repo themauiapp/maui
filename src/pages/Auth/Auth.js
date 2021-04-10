@@ -11,22 +11,57 @@ const Auth = () => {
     window.location.pathname === "/accounts/new"
   );
 
+  const [signupError, setSignupError] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const signupFormTop = () => {
+    const width = window.screen.width;
+
+    if (width > 576) {
+      return "-25%";
+    } else if (width > 385) {
+      return "-20%";
+    } else if(width > 360) {
+      return "-25%";
+    }
+
+    return "-27.5%"
+  };
+
+  const signupFormMarginBottom = () => {
+    if (window.screen.width > 576) {
+      return "mb-20";
+    }
+
+    if(window.screen.height > 800) {
+        return "mb-0";
+    }
+
+    if (window.screen.height > 700) {
+      return "mb-32";
+    }
+
+    return "mb-32";
+  };
+
   return (
     <div className="w-screen">
-      <div className="auth">
-        <div className="h-2/6 px-24 pt-8 w-full bg-light-grey">
-          <div className="flex justify-between items-center">
-            <div className="flex nunito text-lg">
+      <div
+        className={signupError ? `auth ${signupFormMarginBottom()}` : "auth"}
+      >
+        <div className="h-2/6 sm:h-3/7 lg:h-2/6 px-8 sm:px-12 md:px-24 pt-8 md:pt-6 w-full bg-light-grey">
+          <div className="flex justify-between md:items-center">
+            <div className="flex nunito text-lg nav__home">
               <Link to="/">Maui</Link>
               <p className="mx-1">|</p>
               {signup ? (
                 <Link
                   onClick={() => {
                     setSignup(!signup);
+                    setSignupError(false);
                   }}
                   to="/session/new"
                 >
@@ -48,8 +83,8 @@ const Auth = () => {
             </div>
           </div>
         </div>
-        <div className="h-4/6 px-24 flex justify-around">
-          <div className="auth__image-parent relative w-1/4">
+        <div className="h-4/6 sm:h-1/2 lg:h-4/6 px-8 sm:px-12 md:px-24 flex justify-between lg:justify-around">
+          <div className="hidden bmd:block auth__image-parent relative w-1/3 lg:w-1/4">
             <img
               src="/images/auth/woman-standing.jpg"
               className="object-cover w-full h-full"
@@ -57,14 +92,14 @@ const Auth = () => {
             />
           </div>
           <div
-            className="auth__form relative w-1/3 bg-white h-fc"
+            className="auth__form relative w-full bmd:w-1/2 lg:w-1/3 bg-white h-fc"
             style={{
-              top: signup ? "-25%" : "-10%",
+              top: signup ? signupFormTop() : "-10%",
             }}
           >
             <Switch>
               <Route exact path="/accounts/new">
-                <Signup />
+                <Signup setError={setSignupError} />
               </Route>
               <Route exact path="/session/new">
                 <Login />
