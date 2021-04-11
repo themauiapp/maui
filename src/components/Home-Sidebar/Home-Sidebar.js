@@ -11,7 +11,7 @@ const HomeSidebar = ({ active, scrollTo }) => {
   }, [active]);
 
   let classes =
-    "quicksand home__sidebar active z-20 transition-all duration-300 ease-in bg-white";
+    "home__sidebar active z-20 transition-all duration-300 ease-in bg-white";
   classes = display ? classes : classes.replace(/active z-20/, "z--9999");
 
   let linkClasses =
@@ -23,7 +23,7 @@ const HomeSidebar = ({ active, scrollTo }) => {
 
   return (
     <div className={classes}>
-      <div className="flex flex-col justify-center px-12 bsm:px-16 h-1/2 ">
+      <div className="nunito flex flex-col justify-center px-12 bsm:px-16 h-1/2 ">
         <Link
           to="/#index"
           onClick={() => {
@@ -71,7 +71,7 @@ const HomeSidebar = ({ active, scrollTo }) => {
         </Link>
         <Link to="/accounts/new">Login</Link>
       </div>
-      <div className="bg-revolver-purple px-12 bsm:px-16 flex items-center h-1/2 text-white">
+      <div className="quicksand bg-revolver-purple px-12 bsm:px-16 flex items-center h-1/2 text-white">
         <div className="flex flex-col">
           <p className="leading-7">
             Creating good sustainable financial future in the modern diaspora

@@ -5,8 +5,8 @@ const Footer = () => (
     <div className="flex flex-col mb-3 bmd:mb-0 w-full bmd:w-48 lg:w-64 text-justify">
       <p className="text-xl mb-3 bmd:mb-4">MAUI</p>
       <p className="leading-7">
-        Maui ships with a number of features designed to provide you with the
-        best expense tracking experience possible.
+        The financial tracking tool you never knew you needed. Know what you spent
+        on any day of any month of any year.
       </p>
     </div>
     <div className="flex flex-col mb-5 bmd:mb-0">
