@@ -1,4 +1,4 @@
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 const notifySuccess = (message) => {
   toast.success(message, { duration: 4000, style: { padding: "1rem" } });

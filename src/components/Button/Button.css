@@ -8,27 +8,15 @@
   outline: none;
 }
 
-.btn:hover > .layer {
-  height: 100%;
-}
-
 .btn-outlined {
   border: 1px solid #301b3f;
   background: transparent;
   color: #301b3f;
 }
 
-.btn-outlined:hover {
-  color: #fff;
-}
-
 .btn-filled {
   background: #301b3f;
   color: #fff;
-}
-
-.btn-filled:hover {
-  color: #301b3f;
 }
 
 .btn > div {
@@ -56,5 +44,20 @@
 
 .btn-filled > .layer {
   background: #fff;
-  border: 1px solid #301b3f;
+  border: 0px solid #301b3f;
+}
+
+@media (min-width: 1025px) {
+  .btn:hover > .layer {
+    height: 100%;
+    border: 1px solid #301b3f;
+  }
+
+  .btn-outlined:hover {
+    color: #fff;
+  }
+
+  .btn-filled:hover {
+    color: #301b3f;
+  }
 }

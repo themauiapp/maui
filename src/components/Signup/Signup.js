@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
+import { useMutation } from "@apollo/client";
+import { SIGNUP } from "../../graphql/auth";
 import { signupSchema } from "../../schemas/auth";
-import setCsrfCookie from "../../services/setCsrfCookie";
+import { AppContext } from "../../contexts/AppContext";
+import { setCsrfCookie, setUserCookie } from "../../services/cookie";
 import { notifySuccess } from "../../services/notify";
+import errorHandler from "../../utilities/errorHandler";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 
 const Signup = ({ setError }) => {
+  const [signupMutation] = useMutation(SIGNUP);
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const { changeUser } = useContext(AppContext);
 
   const formik = useFormik({
     initialValues: {
@@ -19,7 +27,7 @@ const Signup = ({ setError }) => {
     validationSchema: signupSchema,
     validateOnChange: false,
     onSubmit: (values) => {
-      setCookie();
+      setCookie({ ...values });
     },
   });
 
@@ -47,15 +55,39 @@ const Signup = ({ setError }) => {
     },
   ];
 
-  const setCookie = async () => {
+  const setCookie = async (values) => {
     setLoading(true);
 
     try {
-      const response = await setCsrfCookie();
-      console.log(response);
+      await setCsrfCookie();
+      signupUser({ ...values });
     } catch (error) {
-      console.log(error);
-    } finally {
+      errorHandler(error, history);
+      setLoading(false);
+    }
+  };
+
+  const signupUser = async (values) => {
+    const timezone =
+      Intl.DateTimeFormat().resolvedOptions().timeZone ?? "Africa/Lagos";
+    const variables = {
+      ...values,
+      timezone,
+      password_confirmation: values.password,
+    };
+    setLoading(true);
+    try {
+      const response = await signupMutation({ variables });
+      const data = response.data.signup;
+      if (data.errorId) {
+        const error = new Error(data.errorId);
+        throw error;
+      }
+      setUserCookie(data, changeUser);
+      history.push("/dashboard");
+      notifySuccess("signed up successfully");
+    } catch (error) {
+      errorHandler(error, history);
       setLoading(false);
     }
   };
@@ -90,11 +122,15 @@ const Signup = ({ setError }) => {
     });
   };
   return (
-    <form noValidate className="w-full pt-8 flex flex-col">
+    <form
+      noValidate
+      className="w-full pt-8 flex flex-col"
+      onSubmit={formik.handleSubmit}
+    >
       <p className="text-lg sm:text-xl mb-5 px-10 nunito">Get Started</p>
       {displayFields()}
       <div className="relative mt-2 mx-10">
-        <Button onClick={formik.handleSubmit}>Signup</Button>
+        <Button submit={true}>Signup</Button>
         <Loader display={loading} />
       </div>
       <div className="text-center bg-light-grey text-gray-700 flex justify-center mt-5 py-5">

@@ -5,11 +5,12 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import Cookies from "universal-cookie";
 import Home from "./pages/Home/Home";
 import Auth from "./pages/Auth/Auth";
 import AuthHome from "./pages/Auth-Home/Auth-Home";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const isAuthenticated = () => {
   const cookies = new Cookies();
@@ -32,14 +33,14 @@ const GuestGuardedRoute = ({ path, exact, children }) => {
       {children}
     </Route>
   ) : (
-    <Redirect to="/" />
+    <Redirect to="/dashboard" />
   );
 };
 
 function App() {
   return (
     <Router>
-      <Toaster position="top-center" />
+      <ToastContainer />
       <Switch>
         <AuthGuardedRoute path="/dashboard">
           <AuthHome />
