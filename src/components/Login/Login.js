@@ -4,16 +4,18 @@ import { useFormik } from "formik";
 import { notifySuccess } from "../../services/notify";
 import { setCsrfCookie, setUserCookie } from "../../services/cookie";
 import { useMutation } from "@apollo/client";
-import { LOGIN } from "../../graphql/auth";
+import { LOGIN, GOOGLELOGIN } from "../../graphql/auth";
 import { loginSchema } from "../../schemas/auth";
 import { AppContext } from "../../contexts/AppContext";
 import errorHandler from "../../utilities/errorHandler";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 
-const Login = () => {
+const Login = ({ toggleSpinner }) => {
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [loginMutation] = useMutation(LOGIN);
+  const [googleLoginMutation] = useMutation(GOOGLELOGIN);
   const { changeUser } = useContext(AppContext);
   const history = useHistory();
 
@@ -21,17 +23,19 @@ const Login = () => {
     initialValues: { email: "", password: "" },
     validationSchema: loginSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
-      setCookie({ ...values });
+    onSubmit: async (values) => {
+      await setCookie(true);
+      loginUser({ ...values });
     },
   });
 
-  const setCookie = async (values) => {
-    setLoading(true);
+  const setCookie = async (loading) => {
+    if (loading) {
+      setLoading(true);
+    }
 
     try {
       await setCsrfCookie();
-      loginUser({ ...values });
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -80,6 +84,26 @@ const Login = () => {
       );
     });
   };
+
+  const loginWithGoogle = async () => {
+    if (googleLoading) {
+      return;
+    }
+
+    toggleSpinner();
+    setGoogleLoading(true);
+    try {
+      await setCookie();
+      const response = await googleLoginMutation({ variables: { id: 100 } });
+      const { redirect_url } = response.data.googleLogin;
+      window.location.href = redirect_url;
+    } catch (error) {
+      errorHandler(error, history);
+      toggleSpinner();
+      setGoogleLoading(false);
+    }
+  };
+
   return (
     <form
       noValidate
@@ -92,9 +116,14 @@ const Login = () => {
         <Button submit={true}>Login</Button>
         <Loader display={loading} />
       </div>
-      <div className="text-center bg-light-grey text-gray-700 flex justify-center mt-5 py-5">
+      <div
+        onClick={() => {
+          loginWithGoogle();
+        }}
+        className="cursor-pointer text-center bg-light-grey text-gray-700 flex justify-center mt-5 py-5"
+      >
         login with{" "}
-        <p className="cursor-pointer relative" style={{ left: "5px" }}>
+        <p className="relative" style={{ left: "5px" }}>
           Google
         </p>
       </div>

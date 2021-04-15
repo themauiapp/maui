@@ -45,3 +45,27 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const GOOGLELOGIN = gql`
+  mutation GoogleLogin($id: ID) {
+    googleLogin(id: $id) {
+      redirect_url
+    }
+  }
+`;
+
+export const VERIFYGOOGLELOGIN = gql`
+  mutation VerifyGoogleLogin($timezone: String!) {
+    verifyGoogleLogin(timezone: $timezone) {
+      message
+      errorId
+      user {
+        name
+        email
+        email_verified_at
+        avatar
+        total_income
+      }
+    }
+  }
+`;

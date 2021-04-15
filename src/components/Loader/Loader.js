@@ -10,7 +10,7 @@ const Loader = ({ display }) => {
 
   return (
     <div className={classes}>
-      <div className="spinner" />
+      <div className="loader" />
     </div>
   );
 };

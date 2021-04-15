@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button";
 import Signup from "../../components/Signup/Signup";
 import Login from "../../components/Login/Login";
 import Footer from "../../components/Footer/Footer";
+import Spinner from "../../components/Spinner/Spinner";
 import "./Auth.css";
 
 const Auth = () => {
@@ -12,6 +13,7 @@ const Auth = () => {
   );
 
   const [signupError, setSignupError] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,11 +26,11 @@ const Auth = () => {
       return "-25%";
     } else if (width > 385) {
       return "-20%";
-    } else if(width > 360) {
+    } else if (width > 360) {
       return "-25%";
     }
 
-    return "-27.5%"
+    return "-27.5%";
   };
 
   const signupFormMarginBottom = () => {
@@ -36,8 +38,8 @@ const Auth = () => {
       return "mb-20";
     }
 
-    if(window.screen.height > 800) {
-        return "mb-0";
+    if (window.screen.height > 800) {
+      return "mb-0";
     }
 
     if (window.screen.height > 700) {
@@ -45,6 +47,10 @@ const Auth = () => {
     }
 
     return "mb-32";
+  };
+
+  const toggleSpinner = () => {
+    setSpinner(!spinner);
   };
 
   return (
@@ -99,16 +105,20 @@ const Auth = () => {
           >
             <Switch>
               <Route exact path="/accounts/new">
-                <Signup setError={setSignupError} />
+                <Signup
+                  setError={setSignupError}
+                  toggleSpinner={toggleSpinner}
+                />
               </Route>
               <Route exact path="/session/new">
-                <Login />
+                <Login toggleSpinner={toggleSpinner} />
               </Route>
             </Switch>
           </div>
         </div>
       </div>
       <Footer />
+      <Spinner display={spinner} />
     </div>
   );
 };

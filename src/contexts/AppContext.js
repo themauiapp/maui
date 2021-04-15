@@ -1,37 +1,14 @@
 import React, { createContext, useState } from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { createHttpLink } from "apollo-link-http";
+import { ApolloProvider } from "@apollo/client";
 import Cookies from "universal-cookie";
+import createApolloClient from "../utilities/createApolloClient";
 
 export const AppContext = createContext({});
 
 const AppContextProvider = ({ children }) => {
   const cookies = new Cookies();
   const [user, setUser] = useState(cookies.get("user") ?? null);
-  const httpLink = createHttpLink({
-    uri: `${process.env.REACT_APP_API_URL}graphql`,
-    credentials: "include",
-    fetchOptions: {
-      credentials: "include",
-    },
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    const XSRF_TOKEN = cookies.get("XSRF-TOKEN");
-    return {
-      headers: {
-        ...headers,
-        "X-XSRF-TOKEN": XSRF_TOKEN,
-      },
-    };
-  });
-
-  const cache = new InMemoryCache({});
-  const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache,
-  });
+  const client = createApolloClient();
 
   return (
     <AppContext.Provider

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
-import { SIGNUP } from "../../graphql/auth";
+import { SIGNUP, GOOGLELOGIN } from "../../graphql/auth";
 import { signupSchema } from "../../schemas/auth";
 import { AppContext } from "../../contexts/AppContext";
 import { setCsrfCookie, setUserCookie } from "../../services/cookie";
@@ -11,9 +11,11 @@ import errorHandler from "../../utilities/errorHandler";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 
-const Signup = ({ setError }) => {
+const Signup = ({ setError, toggleSpinner }) => {
   const [signupMutation] = useMutation(SIGNUP);
+  const [googleLoginMutation] = useMutation(GOOGLELOGIN);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const history = useHistory();
   const { changeUser } = useContext(AppContext);
 
@@ -26,8 +28,9 @@ const Signup = ({ setError }) => {
     },
     validationSchema: signupSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
-      setCookie({ ...values });
+    onSubmit: async (values) => {
+      await setCookie(true);
+      signupUser({ ...values });
     },
   });
 
@@ -55,12 +58,13 @@ const Signup = ({ setError }) => {
     },
   ];
 
-  const setCookie = async (values) => {
-    setLoading(true);
+  const setCookie = async (loading) => {
+    if (loading) {
+      setLoading(true);
+    }
 
     try {
       await setCsrfCookie();
-      signupUser({ ...values });
     } catch (error) {
       errorHandler(error, history);
       setLoading(false);
@@ -89,6 +93,25 @@ const Signup = ({ setError }) => {
     } catch (error) {
       errorHandler(error, history);
       setLoading(false);
+    }
+  };
+
+  const signupWithGoogle = async () => {
+    if (googleLoading) {
+      return;
+    }
+
+    toggleSpinner();
+    setGoogleLoading(true);
+    try {
+      await setCookie();
+      const response = await googleLoginMutation({ variables: { id: 100 } });
+      const { redirect_url } = response.data.googleLogin;
+      window.location.href = redirect_url;
+    } catch (error) {
+      errorHandler(error, history);
+      toggleSpinner();
+      setGoogleLoading(false);
     }
   };
 
@@ -133,9 +156,14 @@ const Signup = ({ setError }) => {
         <Button submit={true}>Signup</Button>
         <Loader display={loading} />
       </div>
-      <div className="text-center bg-light-grey text-gray-700 flex justify-center mt-5 py-5">
+      <div
+        onClick={() => {
+          signupWithGoogle();
+        }}
+        className="cursor-pointer text-center bg-light-grey text-gray-700 flex justify-center mt-5 py-5"
+      >
         signup with{" "}
-        <p className="cursor-pointer relative" style={{ left: "5px" }}>
+        <p className="relative" style={{ left: "5px" }}>
           Google
         </p>
       </div>
