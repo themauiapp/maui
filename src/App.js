@@ -49,6 +49,9 @@ function App() {
         <GuestGuardedRoute path="/google/login">
           <Verify />
         </GuestGuardedRoute>
+        <Route path="/email/verify/:id/:hash">
+          <Verify />
+        </Route>
         <GuestGuardedRoute path="/accounts/new">
           <Auth />
         </GuestGuardedRoute>
