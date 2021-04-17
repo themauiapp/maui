@@ -24,7 +24,7 @@ const AuthGuardedRoute = ({ path, exact, children }) => {
       {children}
     </Route>
   ) : (
-    <Redirect to="/accounts/new" />
+    <Redirect to="/session/new" />
   );
 };
 
@@ -34,7 +34,7 @@ const GuestGuardedRoute = ({ path, exact, children }) => {
       {children}
     </Route>
   ) : (
-    <Redirect to="/dashboard" />
+    <Redirect to="/my/dashboard" />
   );
 };
 
@@ -43,11 +43,11 @@ function App() {
     <Router>
       <ToastContainer />
       <Switch>
-        <AuthGuardedRoute path="/dashboard">
+        <AuthGuardedRoute path="/my">
           <AuthHome />
         </AuthGuardedRoute>
         <GuestGuardedRoute path="/google/login">
-            <Verify />
+          <Verify />
         </GuestGuardedRoute>
         <GuestGuardedRoute path="/accounts/new">
           <Auth />

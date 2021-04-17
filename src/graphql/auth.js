@@ -20,6 +20,7 @@ export const SIGNUP = gql`
       message
       errorId
       user {
+        id
         name
         email
         email_verified_at
@@ -36,6 +37,7 @@ export const LOGIN = gql`
       message
       errorId
       user {
+        id
         name
         email
         email_verified_at
@@ -60,6 +62,7 @@ export const VERIFYGOOGLELOGIN = gql`
       message
       errorId
       user {
+        id
         name
         email
         email_verified_at
@@ -68,4 +71,12 @@ export const VERIFYGOOGLELOGIN = gql`
       }
     }
   }
+`;
+
+export const RESENDVERIFICATIONEMAIL = gql`
+    mutation ResendVerificationEmail($id: ID!) {
+        resendVerificationEmail(id: $id) {
+            message
+        }
+    }
 `;

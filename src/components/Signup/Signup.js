@@ -11,11 +11,10 @@ import errorHandler from "../../utilities/errorHandler";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 
-const Signup = ({ setError, toggleSpinner }) => {
+const Signup = ({ setError }) => {
   const [signupMutation] = useMutation(SIGNUP);
   const [googleLoginMutation] = useMutation(GOOGLELOGIN);
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const history = useHistory();
   const { changeUser } = useContext(AppContext);
 
@@ -88,7 +87,7 @@ const Signup = ({ setError, toggleSpinner }) => {
         throw error;
       }
       setUserCookie(data, changeUser);
-      history.push("/dashboard");
+      history.push("/my/dashboard");
       notifySuccess("signed up successfully");
     } catch (error) {
       errorHandler(error, history);
@@ -97,12 +96,10 @@ const Signup = ({ setError, toggleSpinner }) => {
   };
 
   const signupWithGoogle = async () => {
-    if (googleLoading) {
+    if (loading) {
       return;
     }
-
-    toggleSpinner();
-    setGoogleLoading(true);
+    setLoading(true);
     try {
       await setCookie();
       const response = await googleLoginMutation({ variables: { id: 100 } });
@@ -110,8 +107,7 @@ const Signup = ({ setError, toggleSpinner }) => {
       window.location.href = redirect_url;
     } catch (error) {
       errorHandler(error, history);
-      toggleSpinner();
-      setGoogleLoading(false);
+      setLoading(false);
     }
   };
 

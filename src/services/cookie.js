@@ -6,8 +6,15 @@ const setCsrfCookie = () => {
 };
 
 const setUserCookie = (data, setUser) => {
-  const { name, email, email_verified_at, avatar, total_income } = data.user;
-  const user = { name, email, email_verified_at, avatar, total_income };
+  const {
+    id,
+    name,
+    email,
+    email_verified_at,
+    avatar,
+    total_income,
+  } = data.user;
+  const user = { id, name, email, email_verified_at, avatar, total_income };
   const cookies = new Cookies();
   const expiryDateObject = new Date(
     new Date().getTime() + 1000 * 20 * 365 * 86400

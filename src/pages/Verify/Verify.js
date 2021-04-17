@@ -4,7 +4,7 @@ import { VERIFYGOOGLELOGIN } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
 import Spinner from "../../components/Spinner/Spinner";
 import { AppContext } from "../../contexts/AppContext";
-import { setCsrfCookie, setUserCookie } from "../../services/cookie";
+import { setUserCookie } from "../../services/cookie";
 import { notifySuccess, notifyError } from "../../services/notify";
 import createApolloClient from "../../utilities/createApolloClient";
 
@@ -30,7 +30,6 @@ const Verify = () => {
       Intl.DateTimeFormat().resolvedOptions().timeZone ?? "Africa/Lagos";
     const variables = { timezone };
     try {
-      await setCsrfCookie();
       const response = await verifyGoogleLoginMutation({ variables });
       const data = response.data.verifyGoogleLogin;
       if (data.errorId) {
@@ -38,7 +37,7 @@ const Verify = () => {
         throw error;
       }
       setUserCookie(data, changeUser);
-      history.push("/dashboard");
+      history.push("/my/dashboard");
       notifySuccess("logged in successfully");
     } catch (error) {
       console.log(error);
