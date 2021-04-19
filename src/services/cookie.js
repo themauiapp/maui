@@ -13,8 +13,17 @@ const setUserCookie = (data, setUser) => {
     email_verified_at,
     avatar,
     total_income,
+    timezone,
   } = data.user;
-  const user = { id, name, email, email_verified_at, avatar, total_income };
+  const user = {
+    id,
+    name,
+    email,
+    email_verified_at,
+    avatar,
+    total_income,
+    timezone,
+  };
   const cookies = new Cookies();
   const expiryDateObject = new Date(
     new Date().getTime() + 1000 * 20 * 365 * 86400

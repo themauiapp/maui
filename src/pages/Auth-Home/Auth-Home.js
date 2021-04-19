@@ -5,8 +5,9 @@ import { RESENDVERIFICATIONEMAIL } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
 import { notifySuccess, notifyError } from "../../services/notify";
 import { AppContext } from "../../contexts/AppContext";
-import AuthHomeSidebar from "../../components/Auth-Home-Sidebar/Auth-Home-Sidebar";
-// import Dashboard from "../../components/Dashboard/Dashboard";
+import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
+import Header from "../../components/Header/Header";
+import Dashboard from "../../components/Dashboard/Dashboard";
 import Spinner from "../../components/Spinner/Spinner";
 
 const AuthHome = () => {
@@ -23,7 +24,6 @@ const AuthHome = () => {
       await resendVerificationEmailMutation({ variables });
       notifySuccess("email resent successfully");
     } catch (error) {
-      console.log(error);
       notifyError("an error occured");
     }
   };
@@ -37,7 +37,7 @@ const AuthHome = () => {
       <div className="col-span-2">
         <AuthHomeSidebar />
       </div>
-      <div className="col-span-10">
+      <div className="col-span-10" style={{ background: "rgba(0,0,0,0.006)" }}>
         {!user.email_verified_at && (
           <div className="w-full h-full flex flex-col justify-center items-center">
             <img
@@ -65,11 +65,14 @@ const AuthHome = () => {
         )}
         {user.email_verified_at && (
           <AuthHomeContext.Provider value={{ toggleSpinner }}>
-            <Switch>
-              <Route path="/my/dashboard">
-                <div>leke</div>
-              </Route>
-            </Switch>
+            <Header />
+            <div className=" px-24">
+              <Switch>
+                <Route path="/my/dashboard">
+                  <Dashboard />
+                </Route>
+              </Switch>
+            </div>
           </AuthHomeContext.Provider>
         )}
       </div>

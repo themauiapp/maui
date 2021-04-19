@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Home-Sidebar.css";
+import "./HomeSidebar.css";
 
 const HomeSidebar = ({ active, scrollTo }) => {
   const [display, setDisplay] = useState(active);

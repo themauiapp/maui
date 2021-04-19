@@ -27,8 +27,10 @@ const AuthHomeSidebar = () => {
       return (
         <div
           key={index}
-          className={`relative transition-colors duration-300 ease-in flex items-center mb-10 ${
-            activeLink === link.name ? "text-white" : ""
+          className={`relative transition-colors duration-500 ease-in pl-5 pr-4 py-3 rounded-full flex items-center mb-6 ${
+            activeLink === link.name
+              ? "bg-light-grey text-revolver-purple font-semibold"
+              : ""
           }`}
         >
           <i className={`fas fa-${link.icon} mr-5`}></i>
@@ -41,12 +43,6 @@ const AuthHomeSidebar = () => {
           >
             {link.name.charAt(0).toUpperCase() + link.name.slice(1)}
           </Link>
-          <div
-            className={`transition-colors duration-300 ease-in absolute top-0 right-0 ${
-              activeLink === link.name ? "bg-white" : null
-            } h-full`}
-            style={{ width: "3px" }}
-          ></div>
         </div>
       );
     });
@@ -54,10 +50,10 @@ const AuthHomeSidebar = () => {
 
   return (
     <div
-      className="bg-revolver-purple w-full h-full py-10 pl-10 pr-1 flex flex-col"
-      style={{ color: "rgba(255, 255, 255, 0.75)", fontSize: "14.5px" }}
+      className="bg-revolver-purple w-full h-full py-10 px-6 text-white flex flex-col"
+      style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "14.5px" }}
     >
-      <div className="py-5 mb-20 text-md text-white">
+      <div className="py-5 pl-5 mb-20 text-md text-white">
         <p>Maui</p>
       </div>
       {displayLinks()}

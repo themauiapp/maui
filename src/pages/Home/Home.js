@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Feature from "../../components/Feature/Feature";
 import Footer from "../../components/Footer/Footer";
-import HomeSidebar from "../../components/Home-Sidebar/Home-Sidebar";
+import HomeSidebar from "../../components/HomeSidebar/HomeSidebar";
 import { features } from "./data";
 import "./Home.css";
 

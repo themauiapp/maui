@@ -26,6 +26,7 @@ export const SIGNUP = gql`
         email_verified_at
         avatar
         total_income
+        timezone
       }
     }
   }
@@ -43,6 +44,7 @@ export const LOGIN = gql`
         email_verified_at
         avatar
         total_income
+        timezone
       }
     }
   }
@@ -68,6 +70,7 @@ export const VERIFYGOOGLELOGIN = gql`
         email_verified_at
         avatar
         total_income
+        timezone
       }
     }
   }
