@@ -1,0 +1,12 @@
+.auth-home__sidebar {
+  position: fixed;
+  width: 16.67vw;
+  height: 100vh;
+}
+
+.auth-home__main {
+  margin-left: 16.67vw;
+  width: 83.37vw;
+  background: "rgba(0,0,0,0.006)";
+  min-height: 100vh;
+}

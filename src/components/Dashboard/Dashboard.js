@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import CurrentMonthData from "../CurrentMonthData/CurrentMonthData";
 import IncomeStats from "../IncomeStats/IncomeStats";
+import TopExpenses from "../TopExpenses/TopExpenses";
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,9 @@ const Dashboard = () => {
         <div className="col-span-5">
           <IncomeStats />
         </div>
+      </div>
+      <div className="my-5">
+        <TopExpenses />
       </div>
     </div>
   );

@@ -60,8 +60,10 @@ const CurrentMonthData = () => {
       const hours = Math.floor(
         (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      minutes = String(minutes).length === 1 ? "0" + String(minutes) : minutes;
+      seconds = String(seconds).length === 1 ? "0" + String(seconds) : seconds;
       const countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       return countdown;
     }
@@ -76,7 +78,8 @@ const CurrentMonthData = () => {
     const month = months[date.getMonth()];
     const year = date.getFullYear();
     const hour = date.getHours();
-    const mins = date.getMinutes();
+    let mins = date.getMinutes();
+    mins = String(mins).length === 1 ? "0" + String(mins) : mins;
 
     return `${day} ${dt} ${month} ${year} ${hour}:${mins}`;
   };
@@ -85,15 +88,15 @@ const CurrentMonthData = () => {
     <div className="h-full relative p-8 shadow bg-white w-full">
       <div className="flex flex-col w-full">
         <div
-          className="flex flex-col mb-6 w-full py-8 rounded-lg bg-revolver-purple"
+          className="flex flex-col mb-6 w-full py-4 bg-revolver-purple"
           style={{ background: "#fff" }}
         >
           <div
             className="relative w-full"
-            style={{ height: "3px", background: "rgba(255, 255, 255, 0.4)" }}
+            style={{ height: "4px", background: "rgba(0,0, 0, 0.06)" }}
           >
             <div
-              className="absolute top-0 left-0 bg-revolver-purple h-full transition-all ease-in duration-500 mb-3"
+              className="absolute top-0 left-0 h-full bg-revolver-purple transition-all ease-in duration-500 mb-3"
               style={{
                 width: income
                   ? String((income.remainder / income.total) * 100) + "%"
@@ -103,16 +106,16 @@ const CurrentMonthData = () => {
           </div>
         </div>
         {income && (
-          <p className="mb-5">
+          <p className="mb-6">
             <i className="fa fa-money-bill-alt mr-2 text-revolver-purple"></i> N
             {income.remainder} left of N{income.total}
           </p>
         )}
-        <p className="mb-5">
+        <p className="mb-6">
           <i className="far fa-calendar-minus mr-2 text-revolver-purple"></i>{" "}
           {getTodaysDate()}
         </p>
-        <p className="mb-5">
+        <p className="mb-6">
           <i className="far fa-map mr-2 text-revolver-purple"></i>{" "}
           {user.timezone}
         </p>

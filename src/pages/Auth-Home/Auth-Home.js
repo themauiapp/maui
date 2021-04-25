@@ -9,6 +9,7 @@ import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
 import Header from "../../components/Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import Spinner from "../../components/Spinner/Spinner";
+import "./AuthHome.css";
 
 const AuthHome = () => {
   const { user } = useContext(AppContext);
@@ -33,11 +34,11 @@ const AuthHome = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen grid grid-cols-12">
-      <div className="col-span-2">
+    <div className="w-screen min-h-screen flex">
+      <div className="auth-home__sidebar">
         <AuthHomeSidebar />
       </div>
-      <div className="col-span-10" style={{ background: "rgba(0,0,0,0.006)" }}>
+      <div className="auth-home__main">
         {!user.email_verified_at && (
           <div className="w-full h-full flex flex-col justify-center items-center">
             <img

@@ -11,11 +11,13 @@ const Header = () => {
           className="object-cover mr-4 w-12 h-12 rounded-lg"
           alt={user.name}
         />
-        <div className="mr-10 flex flex-col">
+        <div className="mr-4 flex flex-col">
           <p>
             {user.name.length > 25 ? user.name.slice(0, 22) + "..." : user.name}
           </p>
-          <p className="text-gray-800" style={{ fontSize:"13px" }}>{user.email}</p>
+          <p className="text-gray-800" style={{ fontSize: "13px" }}>
+            {user.email}
+          </p>
         </div>
         <i
           style={{ top: "1px", transform: "rotate(90deg)" }}
