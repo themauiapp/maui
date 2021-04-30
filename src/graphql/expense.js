@@ -53,3 +53,26 @@ export const WEEKLYEXPENSES = gql`
     }
   }
 `;
+
+export const INCOMEEXPENSES = gql`
+  query IncomeExpenses(
+    $number: Int
+    $page: Int
+    $date: String!
+    $all: Boolean
+  ) {
+    incomeExpenses(number: $number, page: $page, date: $date, all: $all) {
+      expenses {
+        name
+        amount
+        time
+      }
+      sum
+      errorId
+      pagination {
+        currentPage
+        maxPages
+      }
+    }
+  }
+`;

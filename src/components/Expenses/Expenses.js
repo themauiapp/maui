@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import { DAILYEXPENSES, WEEKLYEXPENSES } from "../../graphql/expense";
+import {
+  DAILYEXPENSES,
+  WEEKLYEXPENSES,
+  INCOMEEXPENSES,
+} from "../../graphql/expense";
 import { useLazyQuery } from "@apollo/client";
 import Button from "../Button/Button";
 import Table from "../Common/Table/Table";
@@ -19,8 +23,13 @@ const Expenses = () => {
   ] = useLazyQuery(WEEKLYEXPENSES, {
     fetchPolicy: "network-only",
   });
+  const [
+    fetchIncomeExpenses,
+    { data: incomeExpenses, loading: incomeLoading, error: incomeError },
+  ] = useLazyQuery(INCOMEEXPENSES, {
+    fetchPolicy: "network-only",
+  });
   const [periods, setPeriods] = useState({ expense: "d", table: "d" });
-  const [page, setPage] = useState(1);
   const [dates, setDates] = useState({
     expense: new Date(),
     table: new Date(),
@@ -39,9 +48,16 @@ const Expenses = () => {
     if (weeklyExpenses) {
       parseExpenses(weeklyExpenses.weeklyExpenses);
     }
-    console.log(weeklyError);
     //eslint-disable-next-line
   }, [weeklyExpenses, weeklyError]);
+
+  useEffect(() => {
+    if (incomeExpenses) {
+      parseExpenses(incomeExpenses.incomeExpenses);
+    }
+    // console.log(incomeError);
+    //eslint-disable-next-line
+  }, [incomeExpenses, incomeError]);
 
   const parseExpenses = (expenseData) => {
     const {
@@ -53,24 +69,39 @@ const Expenses = () => {
     setPagination({ currentPage, maxPages });
   };
 
+  const parseDate = () => {
+    const year = dates.expense.getFullYear();
+    const month =
+      String(dates.expense.getMonth() + 1).length === 1
+        ? "0" + String(dates.expense.getMonth() + 1)
+        : dates.expense.getMonth() + 1;
+    const day =
+      String(dates.expense.getDate() + 1).length === 1
+        ? "0" + String(dates.expense.getDate())
+        : dates.expense.getDate();
+
+    return `${year}-${month}-${day}`;
+  };
+
   const fetchExpenses = async (dt = null, prd = null, pg = null) => {
-    const date =
-      dt ??
-      `${dates.expense.getFullYear()}-${
-        String(dates.expense.getMonth() + 1).length === 1
-          ? "0" + String(dates.expense.getMonth() + 1)
-          : dates.expense.getMonth() + 1
-      }-${dates.expense.getDate()}`;
+    const date = dt ?? parseDate();
+
+    console.log(date);
     const period = prd ?? periods.expense;
 
     if (period === "d") {
-      const variables = { number: 10, page: pg ?? page, date };
+      const variables = { number: 10, page: pg ?? 1, date };
       await fetchDailyExpenses({ variables });
     }
 
     if (period === "w") {
-      const variables = { number: 10, days: 7, page: pg ?? page, date };
+      const variables = { number: 10, days: 7, page: pg ?? 1, date };
       await fetchWeeklyExpenses({ variables });
+    }
+
+    if (period === "m") {
+      const variables = { number: 10, page: pg ?? 1, date };
+      await fetchIncomeExpenses({ variables });
     }
 
     if (!dt) {
@@ -119,7 +150,8 @@ const Expenses = () => {
               setDates({ ...dates, expense: date });
             }}
             className="w-full bg-transparent border border-revolver-purple focus:outline-none pl-6 py-3"
-            readonly
+            dateFormat={periods.expense === "m" ? "MM-yyyy" : "yyyy-MM-dd"}
+            showMonthYearPicker={periods.expense === "m"}
           />
         </div>
         <div style={{ position: "relative" }}>
@@ -131,7 +163,7 @@ const Expenses = () => {
           >
             View
           </Button>
-          <Loader display={dailyLoading || weeklyLoading} />
+          <Loader display={dailyLoading || weeklyLoading || incomeLoading} />
         </div>
       </div>
       {expenses && (
@@ -141,7 +173,7 @@ const Expenses = () => {
           date={dates.table}
           period={periods.table}
           fetch={fetchExpenses}
-          loading={dailyLoading || weeklyLoading}
+          loading={dailyLoading || weeklyLoading || incomeLoading}
         />
       )}
     </div>
