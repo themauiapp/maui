@@ -1,4 +1,22 @@
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.react-datepicker {
+  font-family: "Quicksand", sans-serif !important;
+}
+
+/* #301B3F */
+.react-datepicker__day--selected {
+  background-color: rgba(48, 27, 63, 0.8) !important;
+}
+
+.react-datepicker__day--selected:hover {
+  background-color: rgba(48, 27, 63, 1) !important;
+}
 
 .Toastify__toast-body {
-    font-family: "Quicksand", sans-serif !important;
+  font-family: "Quicksand", sans-serif !important;
 }

@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 const AuthHomeSidebar = () => {
   const { user } = useContext(AppContext);
+  const link = document.URL.split("/my/")[1];
   const [activeLink, setActiveLink] = useState(
-    user.email_verified_at ? "dashboard" : null
+    user.email_verified_at ? link : null
   );
   const links = [
     { name: "dashboard", icon: "clone" },

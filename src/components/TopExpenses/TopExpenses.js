@@ -10,7 +10,7 @@ const TopExpenses = () => {
     labels: null,
     datasets: [
       {
-        label: "Top 3 Expenses",
+        label: "Top 5 Expense Items",
         backgroundColor: "rgba(48, 27, 63, 0.2)",
         borderColor: "transparent",
         borderWidth: 2,
@@ -19,7 +19,7 @@ const TopExpenses = () => {
     ],
   };
   const [chartState, setChartState] = useState(defaultChartState);
-  const { loading, error, data } = useQuery(TOPEXPENSES, {
+  const { error, data } = useQuery(TOPEXPENSES, {
     variables: { id: user.id },
     fetchPolicy: "network-only",
   });
@@ -49,7 +49,7 @@ const TopExpenses = () => {
           options={{
             title: {
               display: true,
-              text: "Top 3 Expenses",
+              text: "Top 5 Expenses",
               font: { family: "Quicksand" },
             },
             legend: {

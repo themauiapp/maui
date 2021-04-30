@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { AppContext } from "../../contexts/AppContext";
+import React from "react";
 import CurrentMonthData from "../CurrentMonthData/CurrentMonthData";
 import IncomeStats from "../IncomeStats/IncomeStats";
 import TopExpenses from "../TopExpenses/TopExpenses";

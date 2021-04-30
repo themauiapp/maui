@@ -8,6 +8,7 @@ import { AppContext } from "../../contexts/AppContext";
 import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
 import Header from "../../components/Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
+import Expenses from "../../components/Expenses/Expenses";
 import Spinner from "../../components/Spinner/Spinner";
 import "./AuthHome.css";
 
@@ -38,7 +39,7 @@ const AuthHome = () => {
       <div className="auth-home__sidebar">
         <AuthHomeSidebar />
       </div>
-      <div className="auth-home__main">
+      <div className="auth-home__main bg-light-grey">
         {!user.email_verified_at && (
           <div className="w-full h-full flex flex-col justify-center items-center">
             <img
@@ -67,10 +68,13 @@ const AuthHome = () => {
         {user.email_verified_at && (
           <AuthHomeContext.Provider value={{ toggleSpinner }}>
             <Header />
-            <div className=" px-24">
+            <div className="px-24">
               <Switch>
                 <Route path="/my/dashboard">
                   <Dashboard />
+                </Route>
+                <Route path="/my/expenses">
+                  <Expenses />
                 </Route>
               </Switch>
             </div>
@@ -78,9 +82,11 @@ const AuthHome = () => {
         )}
       </div>
 
-      <div className=" fixed bottom-0 right-0 mb-8 mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white">
-        <i className="fas fa-coins"></i>
-      </div>
+      {user.email_verified_at && (
+        <div className=" fixed bottom-0 right-0 cursor-pointer mb-8 mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white">
+          <i className="fas fa-plus"></i>
+        </div>
+      )}
       <Spinner display={loading} />
     </div>
   );

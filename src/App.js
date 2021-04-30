@@ -12,6 +12,7 @@ import AuthHome from "./pages/Auth-Home/Auth-Home";
 import Verify from "./pages/Verify/Verify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 const isAuthenticated = () => {
   const cookies = new Cookies();
