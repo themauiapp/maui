@@ -141,6 +141,7 @@ const Expenses = () => {
           date={dates.table}
           period={periods.table}
           fetch={fetchExpenses}
+          loading={dailyLoading || weeklyLoading}
         />
       )}
     </div>

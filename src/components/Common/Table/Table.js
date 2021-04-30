@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Table = ({ data, pagination, date, period, fetch }) => {
+const Table = ({ data, pagination, date, period, fetch, loading }) => {
   const pages = new Array(pagination.maxPages).fill("");
+  const [clickedPage, setClickedPage] = useState(null);
+
+  useEffect(() => {
+    setClickedPage(null);
+  }, [data]);
+
+  const fetchExpenses = async (page) => {
+    setClickedPage(page - 1);
+    await fetch(date, period, page);
+  };
   return (
     <div className="w-full flex flex-col bg-white shadow px-12 pt-12 pb-8">
       <div className="flex mb-5 w-full justify-between items-center">
@@ -52,7 +62,7 @@ const Table = ({ data, pagination, date, period, fetch }) => {
             const onClick =
               pagination.currentPage !== index + 1
                 ? () => {
-                    fetch(date, period, index + 1);
+                    fetchExpenses(index + 1);
                   }
                 : null;
             return (
@@ -64,7 +74,17 @@ const Table = ({ data, pagination, date, period, fetch }) => {
                     : ""
                 }`}
               >
-                {index + 1}
+                {loading && clickedPage === index ? (
+                  <div
+                    className="loader"
+                    style={{
+                      borderColor: "#301B3F",
+                      borderTopColor: "transparent",
+                    }}
+                  />
+                ) : (
+                  index + 1
+                )}
                 {page}
               </div>
             );
