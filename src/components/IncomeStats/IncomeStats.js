@@ -6,6 +6,7 @@ import Spinner from "../Spinner/Spinner";
 
 const IncomeStats = () => {
   const { user } = useContext(AppContext);
+  const currency = user.currency ?? "";
   const { data, error, loading } = useQuery(INCOMESTATS, {
     variables: { id: user.id },
     fetchPolicy: "network-only",
@@ -26,7 +27,10 @@ const IncomeStats = () => {
           <i className="fa fa-wallet text-white"></i>
         </div>
         <div className="flex flex-col">
-          <p className="text-lg mb-1">N{stats && stats.income_total}</p>
+          <p className="text-lg mb-1">
+            {currency}
+            {stats && stats.income_total}
+          </p>
           <p style={{ fontSize: "13px" }}>Total income earned</p>
         </div>
       </div>
@@ -35,7 +39,10 @@ const IncomeStats = () => {
           <i className="fa fa-credit-card text-white"></i>
         </div>
         <div className="flex flex-col">
-          <p className="text-lg mb-1">N{stats && stats.income_spent}</p>
+          <p className="text-lg mb-1">
+            {currency}
+            {stats && stats.income_spent}
+          </p>
           <p style={{ fontSize: "13px" }}>Income spent</p>
         </div>
       </div>
@@ -47,7 +54,10 @@ const IncomeStats = () => {
           <i className="fa fa-coins text-white"></i>
         </div>
         <div className="flex flex-col">
-          <p className="text-lg mb-1">N{stats && stats.income_remainder}</p>
+          <p className="text-lg mb-1">
+            {currency}
+            {stats && stats.income_remainder}
+          </p>
           <p style={{ fontSize: "13px" }}>Income remaining</p>
         </div>
       </div>

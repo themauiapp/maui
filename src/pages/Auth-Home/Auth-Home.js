@@ -5,16 +5,31 @@ import { RESENDVERIFICATIONEMAIL } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
 import { notifySuccess, notifyError } from "../../services/notify";
 import { AppContext } from "../../contexts/AppContext";
+import { months } from "../../components/CurrentMonthData/CurrentMonthData";
 import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
 import Header from "../../components/Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import Expenses from "../../components/Expenses/Expenses";
 import Spinner from "../../components/Spinner/Spinner";
+import AddIncome from "../../components/AddIncome/AddIncome";
+import Expense from "../../components/Expense/Expense";
 import "./AuthHome.css";
 
 const AuthHome = () => {
   const { user } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+  const determineIncomeState = () => {
+    const dt = new Date();
+    const month = months[dt.getMonth()];
+    const year = dt.getFullYear();
+    const currentPeriod = `${month} ${year}`;
+    return user.latest_income_period !== currentPeriod;
+  };
+  const [dialogs, setDialogs] = useState({
+    income: determineIncomeState(),
+    expense: false,
+  });
+  const [expense, setExpense] = useState(null);
   const [resendVerificationEmailMutation] = useMutation(
     RESENDVERIFICATIONEMAIL
   );
@@ -28,6 +43,18 @@ const AuthHome = () => {
     } catch (error) {
       notifyError("an error occured");
     }
+  };
+
+  const closeDialog = () => {
+    const { income } = dialogs;
+
+    if (income) {
+      if (determineIncomeState()) {
+        return;
+      }
+    }
+
+    setDialogs({ income: false, expense: false });
   };
 
   const toggleSpinner = () => {
@@ -66,19 +93,35 @@ const AuthHome = () => {
           </div>
         )}
         {user.email_verified_at && (
-          <AuthHomeContext.Provider value={{ toggleSpinner }}>
-            <Header />
-            <div className="px-24">
-              <Switch>
-                <Route path="/my/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route path="/my/expenses">
-                  <Expenses />
-                </Route>
-              </Switch>
+          <>
+            <AuthHomeContext.Provider
+              value={{ toggleSpinner, setDialogs, setExpense }}
+            >
+              <Header />
+              <div className="px-24">
+                <Switch>
+                  <Route path="/my/dashboard">
+                    <Dashboard />
+                  </Route>
+                  <Route path="/my/expenses">
+                    <Expenses />
+                  </Route>
+                </Switch>
+              </div>
+            </AuthHomeContext.Provider>
+            <div
+              onClick={closeDialog}
+              className={`transition-opacity duration-500 ease-in fixed top-0 left-0 w-screen h-screen flex justify-center items-center ${
+                dialogs.expense || dialogs.income
+                  ? "opacity-100 z-10"
+                  : "opacity-0 z--9999"
+              }`}
+              style={{ background: "rgba(0,0,0,0.5)" }}
+            >
+              {dialogs.income && <AddIncome />}
+              {dialogs.expense && <Expense {...expense} />}
             </div>
-          </AuthHomeContext.Provider>
+          </>
         )}
       </div>
 

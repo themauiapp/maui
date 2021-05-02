@@ -85,8 +85,6 @@ const Expenses = () => {
 
   const fetchExpenses = async (dt = null, prd = null, pg = null) => {
     const date = dt ?? parseDate();
-
-    console.log(date);
     const period = prd ?? periods.expense;
 
     if (period === "d") {
@@ -114,15 +112,15 @@ const Expenses = () => {
     <div className="pb-10">
       <div className="p-12 mb-5 bg-white shadow flex items-end">
         <div className="flex flex-col">
-          <label for="type" className="text-sm mb-3">
+          <label htmlFor="type" className="text-sm mb-3">
             Type
           </label>
           <div className="relative">
             <select
+              id="type"
               onChange={(event) => {
                 setPeriods({ ...periods, expense: event.target.value });
               }}
-              id="type"
               className="focus:outline-none bg-transparent border border-revolver-purple pl-6 pr-12 py-3 mr-12"
             >
               <option value="d">Daily</option>
@@ -140,7 +138,7 @@ const Expenses = () => {
           </div>
         </div>
         <div className="flex flex-col mr-auto">
-          <label for="type" className="text-sm mb-3">
+          <label htmlFor="date" className="text-sm mb-3">
             Date
           </label>
           <DatePicker

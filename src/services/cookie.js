@@ -14,6 +14,8 @@ const setUserCookie = (data, setUser) => {
     avatar,
     total_income,
     timezone,
+    currency,
+    latest_income_period,
   } = data.user;
   const user = {
     id,
@@ -23,6 +25,8 @@ const setUserCookie = (data, setUser) => {
     avatar,
     total_income,
     timezone,
+    currency,
+    latest_income_period,
   };
   const cookies = new Cookies();
   const expiryDateObject = new Date(

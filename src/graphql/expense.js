@@ -76,3 +76,17 @@ export const INCOMEEXPENSES = gql`
     }
   }
 `;
+
+export const EXPENSESTATS = gql`
+  query ExpenseStats($name: String!) {
+    expenseStats(name: $name) {
+      name
+      total
+      first_recorded
+      last_recorded
+      times_recorded
+      message
+      errorId
+    }
+  }
+`;

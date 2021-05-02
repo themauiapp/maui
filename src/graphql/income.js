@@ -18,3 +18,25 @@ export const INCOMESTATS = gql`
     }
   }
 `;
+
+export const ADDINCOME = gql`
+  mutation AddIncome($income: Float!, $currency: String) {
+    addIncome(income: $income, currency: $currency) {
+      message
+      errorId
+      income {
+        user {
+          id
+          name
+          email
+          email_verified_at
+          avatar
+          total_income
+          timezone
+          currency
+          latest_income_period
+        }
+      }
+    }
+  }
+`;

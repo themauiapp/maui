@@ -27,6 +27,8 @@ export const SIGNUP = gql`
         avatar
         total_income
         timezone
+        currency
+        latest_income_period
       }
     }
   }
@@ -45,6 +47,8 @@ export const LOGIN = gql`
         avatar
         total_income
         timezone
+        currency
+        latest_income_period
       }
     }
   }
@@ -71,15 +75,17 @@ export const VERIFYGOOGLELOGIN = gql`
         avatar
         total_income
         timezone
+        currency
+        latest_income_period
       }
     }
   }
 `;
 
 export const RESENDVERIFICATIONEMAIL = gql`
-    mutation ResendVerificationEmail($id: ID!) {
-        resendVerificationEmail(id: $id) {
-            message
-        }
+  mutation ResendVerificationEmail($id: ID!) {
+    resendVerificationEmail(id: $id) {
+      message
     }
+  }
 `;

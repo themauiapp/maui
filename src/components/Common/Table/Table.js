@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthHomeContext } from "../../../contexts/AuthHomeContext";
 
 const Table = ({ data, pagination, date, period, fetch, loading }) => {
   const pages = new Array(pagination.maxPages).fill("");
   const [clickedPage, setClickedPage] = useState(null);
+  const { setDialogs, setExpense } = useContext(AuthHomeContext);
 
   useEffect(() => {
     setClickedPage(null);
   }, [data]);
 
   const fetchExpenses = async (page) => {
+    if (clickedPage) {
+      return;
+    }
     setClickedPage(page - 1);
     await fetch(date, period, page);
   };
@@ -36,9 +41,9 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((row) => {
+          {data.map((row, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td className="text-center pt-8">
                   {row.name.charAt(0).toUpperCase() + row.name.slice(1)}
                 </td>
@@ -46,9 +51,14 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
                 <td className="text-center pt-8">{row.time}</td>
                 <td className="text-center pt-8">
                   <img
+                    onClick={() => {
+                      setDialogs({ income: false, expense: true });
+                      setExpense({ name: row.name, amount: row.amount });
+                    }}
                     src="/images/auth-home/information.png"
                     alt="information"
-                    style={{ width: "24px", height: "24px" }}
+                    className="cursor-pointer"
+                    style={{ width: "22px", height: "22px" }}
                   />
                 </td>
               </tr>

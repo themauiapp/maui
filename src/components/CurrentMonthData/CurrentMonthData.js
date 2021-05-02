@@ -4,8 +4,24 @@ import { CURRENTMONTHINCOME } from "../../graphql/income";
 import { useQuery } from "@apollo/client";
 import Spinner from "../Spinner/Spinner";
 
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const CurrentMonthData = () => {
   const { user } = useContext(AppContext);
+  const currency = user.currency ?? "";
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       const countdown = getCountdown();
@@ -29,20 +45,6 @@ const CurrentMonthData = () => {
     // console.log(error);
   }, [data, error]);
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
   const monthEnds = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
   const initDate = new Date();
@@ -107,8 +109,10 @@ const CurrentMonthData = () => {
         </div>
         {income && (
           <p className="mb-6">
-            <i className="fa fa-money-bill-alt mr-2 text-revolver-purple"></i> N
-            {income.remainder} left of N{income.total}
+            <i className="fa fa-money-bill-alt mr-2 text-revolver-purple"></i>{" "}
+            {currency}
+            {income.remainder ?? "0"} left of {currency}
+            {income.total ?? "0"}
           </p>
         )}
         <p className="mb-6">
