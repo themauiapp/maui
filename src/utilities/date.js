@@ -26,13 +26,13 @@ const parseDate = (date) => {
   const day =
     String(date.getDate() + 1).length === 1
       ? "0" + String(date.getDate())
-      : date.expense.getDate();
+      : date.getDate();
 
   return `${year}-${month}-${day}`;
 };
 
-const getTodaysDate = () => {
-  const date = new Date();
+const getFormattedDate = (dateObject = null) => {
+  const date = dateObject ?? new Date();
   const day = days[date.getDay()];
   const dt = date.getDate();
   const month = months[date.getMonth()];
@@ -41,7 +41,10 @@ const getTodaysDate = () => {
   let mins = date.getMinutes();
   mins = String(mins).length === 1 ? "0" + String(mins) : mins;
 
-  return `${day} ${dt} ${month} ${year} ${hour}:${mins}`;
+  const value = dateObject
+    ? `${day} ${dt} ${month} ${year}`
+    : `${day} ${dt} ${month} ${year} ${hour}:${mins}`;
+  return value;
 };
 
 const getCountdown = (monthEnding) => {
@@ -62,4 +65,4 @@ const getCountdown = (monthEnding) => {
   }
 };
 
-export { days, months, monthEnds, getCountdown, getTodaysDate, parseDate };
+export { days, months, monthEnds, getCountdown, getFormattedDate, parseDate };

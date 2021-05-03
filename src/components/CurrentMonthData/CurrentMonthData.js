@@ -3,12 +3,12 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { CURRENTMONTHINCOME } from "../../graphql/income";
 import { useQuery } from "@apollo/client";
-import Spinner from "../Spinner/Spinner";
+import DataFetching from "../DataFetching/DataFetching";
 import {
   months,
   monthEnds,
   getCountdown,
-  getTodaysDate,
+  getFormattedDate,
 } from "../../utilities/date";
 import errorHandler from "../../utilities/errorHandler";
 
@@ -80,7 +80,7 @@ const CurrentMonthData = () => {
         )}
         <p className="mb-6">
           <i className="far fa-calendar-minus mr-2 text-revolver-purple"></i>{" "}
-          {getTodaysDate()}
+          {getFormattedDate()}
         </p>
         <p className="mb-6">
           <i className="far fa-map mr-2 text-revolver-purple"></i>{" "}
@@ -91,13 +91,7 @@ const CurrentMonthData = () => {
           {months[new Date().getMonth()]} ending in {countdown}
         </p>
       </div>
-      <div
-        className={`absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center transition-opacity duration-500 ease-in ${
-          loading ? "z-10 opacity-100" : "z--9999 opacity-0"
-        }`}
-      >
-        <Spinner display={true} fixed={false} />
-      </div>
+      <DataFetching display={loading} />
     </div>
   );
 };

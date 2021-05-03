@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../contexts/AppContext";
 import { AuthHomeContext } from "../../../contexts/AuthHomeContext";
+import { getFormattedDate, parseDate } from "../../../utilities/date";
 import "./Table.css";
 
-const Table = ({ data, pagination, date, period, fetch, loading }) => {
+const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
   const pages = new Array(pagination.maxPages).fill("");
   const [clickedPage, setClickedPage] = useState(null);
   const { user } = useContext(AppContext);
@@ -20,7 +21,38 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
       return;
     }
     setClickedPage(page - 1);
-    await fetch(date, period, page);
+    if (date) {
+      await fetch(date, period, page);
+      return;
+    }
+
+    await fetch(page);
+  };
+
+  const parseExpenseString = () => {
+    let expenseString;
+
+    if (parseDate(new Date()) === date) {
+      return "spent today";
+    }
+    switch (period) {
+      case "d":
+        expenseString = `spent on ${getFormattedDate(new Date(date))}`;
+        break;
+      case "w":
+        expenseString = `spent between ${getFormattedDate(
+          new Date(date)
+        )} and ${getFormattedDate(
+          new Date(new Date(date).getTime() + 604800000)
+        )}`;
+        break;
+      case "m":
+        expenseString = "";
+        break;
+      default:
+        expenseString = `spent on ${getFormattedDate(date)}`;
+    }
+    return expenseString;
   };
 
   const clearExpenseOptions = () => {
@@ -28,10 +60,12 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
     indexes.forEach((index, idx) => {
       const id = `options-${idx}`;
       const options = document.getElementById(id);
-      options.classList.add("opacity-0");
-      options.classList.add("z--9999");
-      options.classList.remove("opacity-100");
-      options.classList.remove("z-10");
+      if (options) {
+        options.classList.add("opacity-0");
+        options.classList.add("z--9999");
+        options.classList.remove("opacity-100");
+        options.classList.remove("z-10");
+      }
     });
   };
 
@@ -54,8 +88,11 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
 
   return (
     <div className="w-full flex flex-col bg-white shadow px-12 pt-12 pb-8">
-      <div className="flex mb-5 w-full justify-between items-center">
-        <p>Total - 30000</p>
+      <div className="flex mb-5 w-full justify-between">
+        <p>
+          {`${currency}
+          ${sum} ${parseExpenseString()}`}
+        </p>
         <div className="flex items-end">
           <img
             src="/images/auth-home/export.png"

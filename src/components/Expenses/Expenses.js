@@ -39,6 +39,7 @@ const Expenses = () => {
     table: new Date(),
   });
   const [expenses, setExpenses] = useState(null);
+  const [sum, setSum] = useState(null);
   const [pagination, setPagination] = useState(null);
 
   useEffect(() => {
@@ -77,11 +78,14 @@ const Expenses = () => {
   const parseExpenses = (expenseData) => {
     const {
       expenses,
+      sum,
       pagination: { currentPage, maxPages },
     } = expenseData;
-    console.log(expenses);
     setExpenses(expenses);
+    setSum(sum);
     setPagination({ currentPage, maxPages });
+    setDates({ ...dates, table: parseDate(dates.expense) });
+    setPeriods({ ...periods, table: periods.expense });
   };
 
   const fetchExpenses = async (dt = null, prd = null, pg = null) => {
@@ -101,11 +105,6 @@ const Expenses = () => {
     if (period === "m") {
       const variables = { number: 10, page: pg ?? 1, date };
       await fetchIncomeExpenses({ variables });
-    }
-
-    if (!dt) {
-      setDates({ ...dates, table: date });
-      setPeriods({ ...periods, table: period });
     }
   };
 
@@ -172,6 +171,7 @@ const Expenses = () => {
           date={dates.table}
           period={periods.table}
           fetch={fetchExpenses}
+          sum={sum}
           loading={dailyLoading || weeklyLoading || incomeLoading}
         />
       )}

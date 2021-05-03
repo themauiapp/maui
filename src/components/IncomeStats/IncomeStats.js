@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { INCOMESTATS } from "../../graphql/income";
 import { useQuery } from "@apollo/client";
-import Spinner from "../Spinner/Spinner";
+import DataFetching from "../DataFetching/DataFetching";
 
 const IncomeStats = () => {
   const { user } = useContext(AppContext);
@@ -64,13 +64,7 @@ const IncomeStats = () => {
           <p style={{ fontSize: "13px" }}>Income remaining</p>
         </div>
       </div>
-      <div
-        className={`absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center transition-opacity duration-500 ease-in ${
-          loading ? "z-10 opacity-100" : "z--9999 opacity-0"
-        }`}
-      >
-        <Spinner display={true} fixed={false} />
-      </div>
+      <DataFetching display={loading} />
     </div>
   );
 };
