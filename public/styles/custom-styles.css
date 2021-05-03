@@ -20,3 +20,7 @@ select {
 .Toastify__toast-body {
   font-family: "Quicksand", sans-serif !important;
 }
+
+.z--9999 {
+  z-index: -9999;
+}

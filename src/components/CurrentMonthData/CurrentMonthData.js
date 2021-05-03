@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { CURRENTMONTHINCOME } from "../../graphql/income";
 import { useQuery } from "@apollo/client";
 import Spinner from "../Spinner/Spinner";
+import errorHandler from "../../utilities/errorHandler";
 
 export const months = [
   "January",
@@ -22,6 +24,7 @@ export const months = [
 const CurrentMonthData = () => {
   const { user } = useContext(AppContext);
   const currency = user.currency ?? "";
+  const history = useHistory();
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       const countdown = getCountdown();
@@ -42,7 +45,11 @@ const CurrentMonthData = () => {
     if (data) {
       setIncome(data.currentMonthIncome);
     }
-    // console.log(error);
+
+    if (error) {
+      errorHandler(error, history);
+    }
+    // eslint-disable-next-line
   }, [data, error]);
 
   const monthEnds = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];

@@ -7,7 +7,7 @@ export const AppContext = createContext({});
 
 const AppContextProvider = ({ children }) => {
   const cookies = new Cookies();
-  const [user, setUser] = useState(cookies.get("user") ?? null);
+  const [user, setUser] = useState(cookies.get("maui_user") ?? null);
   const client = createApolloClient();
 
   return (

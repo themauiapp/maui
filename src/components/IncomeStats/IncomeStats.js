@@ -15,7 +15,10 @@ const IncomeStats = () => {
   useEffect(() => {
     if (data) {
       setStats(data.incomeStats);
-      console.log(data);
+    }
+
+    if (error) {
+      console.log(error);
     }
   }, [data, error]);
 

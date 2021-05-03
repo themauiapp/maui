@@ -1,6 +1,9 @@
 import createAxiosObject from "./axios";
 import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
+const mauiCookies = ["maui_cookie", "XSRF-TOKEN", "maui_user"];
+
 const setCsrfCookie = () => {
   return createAxiosObject().get("sanctum/csrf-cookie");
 };
@@ -28,15 +31,20 @@ const setUserCookie = (data, setUser) => {
     currency,
     latest_income_period,
   };
-  const cookies = new Cookies();
   const expiryDateObject = new Date(
     new Date().getTime() + 1000 * 20 * 365 * 86400
   );
-  cookies.set("user", user, {
+  cookies.set("maui_user", user, {
     path: "/",
     expires: expiryDateObject,
   });
   setUser(user);
 };
 
-export { setCsrfCookie, setUserCookie };
+const clearCookies = () => {
+  mauiCookies.forEach((cookie) => {
+    cookies.remove(cookie, { path: "/", domain: "localhost" });
+  });
+};
+
+export { setCsrfCookie, setUserCookie, clearCookies };

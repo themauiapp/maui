@@ -113,7 +113,7 @@ const AuthHome = () => {
               onClick={closeDialog}
               className={`transition-opacity duration-500 ease-in fixed top-0 left-0 w-screen h-screen flex justify-center items-center ${
                 dialogs.expense || dialogs.income
-                  ? "opacity-100 z-10"
+                  ? "opacity-100 z-50"
                   : "opacity-0 z--9999"
               }`}
               style={{ background: "rgba(0,0,0,0.5)" }}

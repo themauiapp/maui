@@ -38,6 +38,10 @@ const TopExpenses = () => {
       newChartState.datasets[0].data = amounts;
       setChartState(newChartState);
     }
+
+    if(error) {
+        console.log(error);
+    }
     // eslint-disable-next-line
   }, [data, error]);
 

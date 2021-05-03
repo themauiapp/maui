@@ -1,0 +1,7 @@
+.expense__options {
+  position: absolute;
+  width: 90px;
+  bottom: -3400%;
+  left: calc((100% - 90px) / 2);
+  transition: opacity 0.5s ease-in;
+}

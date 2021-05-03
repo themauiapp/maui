@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {
   DAILYEXPENSES,
@@ -9,6 +10,7 @@ import { useLazyQuery } from "@apollo/client";
 import Button from "../Button/Button";
 import Table from "../Common/Table/Table";
 import Loader from "../Loader/Loader";
+import errorHandler from "../../utilities/errorHandler";
 
 const Expenses = () => {
   const [
@@ -29,6 +31,7 @@ const Expenses = () => {
   ] = useLazyQuery(INCOMEEXPENSES, {
     fetchPolicy: "network-only",
   });
+  const history = useHistory();
   const [periods, setPeriods] = useState({ expense: "d", table: "d" });
   const [dates, setDates] = useState({
     expense: new Date(),
@@ -41,12 +44,20 @@ const Expenses = () => {
     if (dailyExpenses) {
       parseExpenses(dailyExpenses.dailyExpenses);
     }
+
+    if (dailyError) {
+      errorHandler(dailyError, history);
+    }
     //eslint-disable-next-line
   }, [dailyExpenses, dailyError]);
 
   useEffect(() => {
     if (weeklyExpenses) {
       parseExpenses(weeklyExpenses.weeklyExpenses);
+    }
+
+    if (weeklyError) {
+      errorHandler(weeklyError, history);
     }
     //eslint-disable-next-line
   }, [weeklyExpenses, weeklyError]);
@@ -55,7 +66,10 @@ const Expenses = () => {
     if (incomeExpenses) {
       parseExpenses(incomeExpenses.incomeExpenses);
     }
-    // console.log(incomeError);
+
+    if (incomeError) {
+      errorHandler(incomeError, history);
+    }
     //eslint-disable-next-line
   }, [incomeExpenses, incomeError]);
 
