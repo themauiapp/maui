@@ -5,7 +5,7 @@ import { RESENDVERIFICATIONEMAIL } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
 import { notifySuccess, notifyError } from "../../services/notify";
 import { AppContext } from "../../contexts/AppContext";
-import { months } from "../../components/CurrentMonthData/CurrentMonthData";
+import { months } from "../../utilities/date";
 import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
 import Header from "../../components/Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
@@ -119,7 +119,7 @@ const AuthHome = () => {
               style={{ background: "rgba(0,0,0,0.5)" }}
             >
               {dialogs.income && <AddIncome />}
-              {dialogs.expense && <Expense {...expense} />}
+              {dialogs.expense && <Expense name={expense} />}
             </div>
           </>
         )}

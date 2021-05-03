@@ -10,6 +10,7 @@ import { useLazyQuery } from "@apollo/client";
 import Button from "../Button/Button";
 import Table from "../Common/Table/Table";
 import Loader from "../Loader/Loader";
+import { parseDate } from "../../utilities/date";
 import errorHandler from "../../utilities/errorHandler";
 
 const Expenses = () => {
@@ -83,22 +84,8 @@ const Expenses = () => {
     setPagination({ currentPage, maxPages });
   };
 
-  const parseDate = () => {
-    const year = dates.expense.getFullYear();
-    const month =
-      String(dates.expense.getMonth() + 1).length === 1
-        ? "0" + String(dates.expense.getMonth() + 1)
-        : dates.expense.getMonth() + 1;
-    const day =
-      String(dates.expense.getDate() + 1).length === 1
-        ? "0" + String(dates.expense.getDate())
-        : dates.expense.getDate();
-
-    return `${year}-${month}-${day}`;
-  };
-
   const fetchExpenses = async (dt = null, prd = null, pg = null) => {
-    const date = dt ?? parseDate();
+    const date = dt ?? parseDate(dates.expense);
     const period = prd ?? periods.expense;
 
     if (period === "d") {

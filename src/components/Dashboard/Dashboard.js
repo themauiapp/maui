@@ -2,10 +2,11 @@ import React from "react";
 import CurrentMonthData from "../CurrentMonthData/CurrentMonthData";
 import IncomeStats from "../IncomeStats/IncomeStats";
 import TopExpenses from "../TopExpenses/TopExpenses";
+import TodaysExpenses from "../TodaysExpenses/TodaysExpenses";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-5">
       <div className="grid grid-cols-12 col-gap-5">
         <div className="col-span-7 flex flex-col">
           <CurrentMonthData />
@@ -16,6 +17,9 @@ const Dashboard = () => {
       </div>
       <div className="my-5">
         <TopExpenses />
+      </div>
+      <div>
+        <TodaysExpenses />
       </div>
     </div>
   );

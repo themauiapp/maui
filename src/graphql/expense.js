@@ -85,6 +85,7 @@ export const EXPENSESTATS = gql`
       first_recorded
       last_recorded
       times_recorded
+      percent_of_expenses
       message
       errorId
     }

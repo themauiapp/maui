@@ -6,7 +6,7 @@ import { AddIncomeSchema } from "../../schemas/income";
 import { ADDINCOME } from "../../graphql/income";
 import { useMutation } from "@apollo/client";
 import currencies from "./Currencies";
-import { months } from "../CurrentMonthData/CurrentMonthData";
+import { months } from "../../utilities/date";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import { notifySuccess } from "../../services/notify";

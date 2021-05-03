@@ -12,6 +12,7 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
 
   useEffect(() => {
     setClickedPage(null);
+    clearExpenseOptions();
   }, [data]);
 
   const fetchExpenses = async (page) => {
@@ -20,6 +21,18 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
     }
     setClickedPage(page - 1);
     await fetch(date, period, page);
+  };
+
+  const clearExpenseOptions = () => {
+    const indexes = new Array(10).fill("");
+    indexes.forEach((index, idx) => {
+      const id = `options-${idx}`;
+      const options = document.getElementById(id);
+      options.classList.add("opacity-0");
+      options.classList.add("z--9999");
+      options.classList.remove("opacity-100");
+      options.classList.remove("z-10");
+    });
   };
 
   const toggleExpenseOptions = (index) => {
@@ -92,7 +105,7 @@ const Table = ({ data, pagination, date, period, fetch, loading }) => {
                       <p
                         onClick={() => {
                           setDialogs({ income: false, expense: true });
-                          setExpense({ name: row.name, amount: row.amount });
+                          setExpense(row.name);
                         }}
                         className="cursor-pointer mb-2"
                       >

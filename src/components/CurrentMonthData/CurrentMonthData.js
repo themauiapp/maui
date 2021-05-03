@@ -4,22 +4,13 @@ import { AppContext } from "../../contexts/AppContext";
 import { CURRENTMONTHINCOME } from "../../graphql/income";
 import { useQuery } from "@apollo/client";
 import Spinner from "../Spinner/Spinner";
+import {
+  months,
+  monthEnds,
+  getCountdown,
+  getTodaysDate,
+} from "../../utilities/date";
 import errorHandler from "../../utilities/errorHandler";
-
-export const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 const CurrentMonthData = () => {
   const { user } = useContext(AppContext);
@@ -27,7 +18,7 @@ const CurrentMonthData = () => {
   const history = useHistory();
   useEffect(() => {
     const countdownInterval = setInterval(() => {
-      const countdown = getCountdown();
+      const countdown = getCountdown(monthEnding);
       setCountdown(countdown);
     }, 1000);
     return () => {
@@ -52,46 +43,13 @@ const CurrentMonthData = () => {
     // eslint-disable-next-line
   }, [data, error]);
 
-  const monthEnds = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
   const initDate = new Date();
   const monthEndingDate = `${monthEnds[initDate.getMonth()]} ${
     months[initDate.getMonth()]
   } ${initDate.getFullYear()}`;
   const monthEnding = new Date(monthEndingDate);
-
-  const getCountdown = () => {
-    const now = new Date().getTime();
-
-    if (monthEnding > now) {
-      const difference = monthEnding - now;
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      minutes = String(minutes).length === 1 ? "0" + String(minutes) : minutes;
-      seconds = String(seconds).length === 1 ? "0" + String(seconds) : seconds;
-      const countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      return countdown;
-    }
-  };
-  const [countdown, setCountdown] = useState(getCountdown());
+  const [countdown, setCountdown] = useState(getCountdown(monthEnding));
   const [income, setIncome] = useState(null);
-
-  const getTodaysDate = () => {
-    const date = new Date();
-    const day = days[date.getDay()];
-    const dt = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const hour = date.getHours();
-    let mins = date.getMinutes();
-    mins = String(mins).length === 1 ? "0" + String(mins) : mins;
-
-    return `${day} ${dt} ${month} ${year} ${hour}:${mins}`;
-  };
 
   return (
     <div className="h-full relative p-8 shadow bg-white w-full">
@@ -107,9 +65,7 @@ const CurrentMonthData = () => {
             <div
               className="absolute top-0 left-0 h-full bg-revolver-purple transition-all ease-in duration-500 mb-3"
               style={{
-                width: income
-                  ? String((income.remainder / income.total) * 100) + "%"
-                  : "0%",
+                width: income ? income.percent_remainder : "0%",
               }}
             ></div>
           </div>

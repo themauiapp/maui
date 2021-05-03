@@ -5,6 +5,7 @@ export const CURRENTMONTHINCOME = gql`
     currentMonthIncome(id: $id) {
       total
       remainder
+      percent_remainder
     }
   }
 `;
