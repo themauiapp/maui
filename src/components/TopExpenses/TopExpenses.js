@@ -10,7 +10,7 @@ const TopExpenses = () => {
     labels: null,
     datasets: [
       {
-        label: "Top 5 Expense Items",
+        label: "Top 5 Expenses",
         backgroundColor: "rgba(48, 27, 63, 0.2)",
         borderColor: "transparent",
         borderWidth: 2,
@@ -39,8 +39,8 @@ const TopExpenses = () => {
       setChartState(newChartState);
     }
 
-    if(error) {
-        console.log(error);
+    if (error) {
+      console.log(error);
     }
     // eslint-disable-next-line
   }, [data, error]);

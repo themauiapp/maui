@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {
@@ -11,9 +12,13 @@ import Button from "../Button/Button";
 import Table from "../Common/Table/Table";
 import Loader from "../Loader/Loader";
 import { parseDate } from "../../utilities/date";
+import exportToXlsx from "../../utilities/file";
 import errorHandler from "../../utilities/errorHandler";
 
 const Expenses = () => {
+  const {
+    user: { name, currency },
+  } = useContext(AppContext);
   const [
     fetchDailyExpenses,
     { data: dailyExpenses, loading: dailyLoading, error: dailyError },
@@ -41,6 +46,7 @@ const Expenses = () => {
   const [expenses, setExpenses] = useState(null);
   const [sum, setSum] = useState(null);
   const [pagination, setPagination] = useState(null);
+  const [download, setDownload] = useState(false);
 
   useEffect(() => {
     if (dailyExpenses) {
@@ -76,34 +82,62 @@ const Expenses = () => {
   }, [incomeExpenses, incomeError]);
 
   const parseExpenses = (expenseData) => {
-    const {
-      expenses,
-      sum,
-      pagination: { currentPage, maxPages },
-    } = expenseData;
-    setExpenses(expenses);
-    setSum(sum);
-    setPagination({ currentPage, maxPages });
-    setDates({ ...dates, table: parseDate(dates.expense) });
-    setPeriods({ ...periods, table: periods.expense });
+    const { expenses, sum } = expenseData;
+    console.log(expenses);
+
+    if (!download) {
+      const {
+        pagination: { currentPage, maxPages },
+      } = expenseData;
+      setExpenses(expenses);
+      setSum(sum);
+      setPagination({
+        currentPage,
+        maxPages,
+      });
+      setDates({ ...dates, table: parseDate(dates.expense) });
+      setPeriods({ ...periods, table: periods.expense });
+      return;
+    }
+
+    exportToXlsx(
+      name.replace(/ /g, "_"),
+      currency,
+      parseDate(dates.expense),
+      periods.expense,
+      expenses
+    );
+    setDownload(false);
   };
 
-  const fetchExpenses = async (dt = null, prd = null, pg = null) => {
+  const fetchExpenses = async (
+    dt = null,
+    prd = null,
+    pg = null,
+    all = null
+  ) => {
     const date = dt ?? parseDate(dates.expense);
     const period = prd ?? periods.expense;
+    setDownload(all);
 
     if (period === "d") {
-      const variables = { number: 10, page: pg ?? 1, date };
+      const variables = { number: 10, page: pg ?? 1, date, all: all ?? false };
       await fetchDailyExpenses({ variables });
     }
 
     if (period === "w") {
-      const variables = { number: 10, days: 7, page: pg ?? 1, date };
+      const variables = {
+        number: 10,
+        days: 7,
+        page: pg ?? 1,
+        date,
+        all: all ?? false,
+      };
       await fetchWeeklyExpenses({ variables });
     }
 
     if (period === "m") {
-      const variables = { number: 10, page: pg ?? 1, date };
+      const variables = { number: 10, page: pg ?? 1, date, all: all ?? false };
       await fetchIncomeExpenses({ variables });
     }
   };
@@ -148,6 +182,7 @@ const Expenses = () => {
               setDates({ ...dates, expense: date });
             }}
             className="w-full bg-transparent border border-revolver-purple focus:outline-none pl-6 py-3"
+            maxDate={new Date()}
             dateFormat={periods.expense === "m" ? "MM-yyyy" : "yyyy-MM-dd"}
             showMonthYearPicker={periods.expense === "m"}
           />

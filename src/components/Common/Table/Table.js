@@ -32,7 +32,7 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
   const parseExpenseString = () => {
     let expenseString;
 
-    if (parseDate(new Date()) === date) {
+    if (parseDate(new Date()) === date && period === "d") {
       return "spent today";
     }
     switch (period) {
@@ -47,7 +47,7 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
         )}`;
         break;
       case "m":
-        expenseString = "";
+        expenseString = `spent in ${getFormattedDate(new Date(date), true)}`;
         break;
       default:
         expenseString = `spent on ${getFormattedDate(date)}`;
@@ -93,7 +93,12 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
           {`${currency}
           ${sum} ${parseExpenseString()}`}
         </p>
-        <div className="flex items-end">
+        <div
+          onClick={() => {
+            fetch(date, period, null, true);
+          }}
+          className="flex items-end cursor-pointer"
+        >
           <img
             src="/images/auth-home/export.png"
             className="mr-1"
@@ -120,8 +125,8 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
                   {row.name.charAt(0).toUpperCase() + row.name.slice(1)}
                 </td>
                 <td className="text-center pt-8">
-                  {currency}
-                  {row.amount}
+                  {`${currency}
+                  ${row.amount_str}`}
                 </td>
                 <td className="text-center pt-8">{row.time}</td>
                 <td className="text-center">
@@ -158,7 +163,9 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
           })}
         </tbody>
       </table>
-      <div className={`flex ${pages.length > 1 ? "mt-10" : "mb-4"}`}>
+      <div
+        className={`flex justify-center ${pages.length > 1 ? "mt-10" : "mb-4"}`}
+      >
         {pages.length > 1 &&
           pages.map((page, index) => {
             const onClick =

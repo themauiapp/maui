@@ -11,7 +11,7 @@ export const DAILYEXPENSES = gql`
     dailyExpenses(number: $number, page: $page, date: $date, all: $all) {
       expenses {
         name
-        amount
+        amount_str
         time
       }
       sum
@@ -41,7 +41,7 @@ export const WEEKLYEXPENSES = gql`
     ) {
       expenses {
         name
-        amount
+        amount_str
         time
       }
       sum
@@ -64,7 +64,7 @@ export const INCOMEEXPENSES = gql`
     incomeExpenses(number: $number, page: $page, date: $date, all: $all) {
       expenses {
         name
-        amount
+        amount_str
         time
       }
       sum

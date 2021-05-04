@@ -31,7 +31,7 @@ const parseDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-const getFormattedDate = (dateObject = null) => {
+const getFormattedDate = (dateObject = null, monthFormat = null) => {
   const date = dateObject ?? new Date();
   const day = days[date.getDay()];
   const dt = date.getDate();
@@ -40,6 +40,10 @@ const getFormattedDate = (dateObject = null) => {
   const hour = date.getHours();
   let mins = date.getMinutes();
   mins = String(mins).length === 1 ? "0" + String(mins) : mins;
+
+  if (monthFormat) {
+    return `${month} ${year}`;
+  }
 
   const value = dateObject
     ? `${day} ${dt} ${month} ${year}`
