@@ -24,7 +24,7 @@ const parseDate = (date) => {
       ? "0" + String(date.getMonth() + 1)
       : date.getMonth() + 1;
   const day =
-    String(date.getDate() + 1).length === 1
+    String(date.getDate()).length === 1
       ? "0" + String(date.getDate())
       : date.getDate();
 

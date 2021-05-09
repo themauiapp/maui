@@ -5,7 +5,9 @@ import { TOPEXPENSES } from "../../graphql/expense";
 import { useQuery } from "@apollo/client";
 
 const TopExpenses = () => {
-  const { user } = useContext(AppContext);
+  const {
+    user: { id },
+  } = useContext(AppContext);
   const defaultChartState = {
     labels: null,
     datasets: [
@@ -20,7 +22,7 @@ const TopExpenses = () => {
   };
   const [chartState, setChartState] = useState(defaultChartState);
   const { error, data } = useQuery(TOPEXPENSES, {
-    variables: { id: user.id },
+    variables: { id },
     fetchPolicy: "network-only",
   });
 
@@ -42,6 +44,7 @@ const TopExpenses = () => {
     if (error) {
       console.log(error);
     }
+
     // eslint-disable-next-line
   }, [data, error]);
 

@@ -83,7 +83,6 @@ const Expenses = () => {
 
   const parseExpenses = (expenseData) => {
     const { expenses, sum } = expenseData;
-    console.log(expenses);
 
     if (!download) {
       const {

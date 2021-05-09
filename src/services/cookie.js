@@ -18,7 +18,7 @@ const setUserCookie = (data, setUser) => {
     total_income,
     timezone,
     currency,
-    latest_income_period,
+    latest_income,
   } = data.user;
   const user = {
     id,
@@ -29,7 +29,7 @@ const setUserCookie = (data, setUser) => {
     total_income,
     timezone,
     currency,
-    latest_income_period,
+    latest_income,
   };
   const expiryDateObject = new Date(
     new Date().getTime() + 1000 * 20 * 365 * 86400

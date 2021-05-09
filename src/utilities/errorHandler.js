@@ -1,10 +1,10 @@
 import { notifyError } from "../services/notify";
 import { clearCookies } from "../services/cookie";
 
-const errorHandler = async (error, history) => {
+const errorHandler = async (error, history, context = null) => {
   let errorMessage = "an error occured";
 
-  if (error.networkError.statusCode === 419) {
+  if (error.networkError && error.networkError.statusCode === 419) {
     notifyError("Session expired");
     await clearCookies();
     history.push("/session/new");
@@ -19,7 +19,14 @@ const errorHandler = async (error, history) => {
     errorMessage = "user with email exists already";
   }
 
-  console.log(error.networkError);
+  if (
+    error.message === "NoPeriodIncomeExists" ||
+    error.message === "PeriodDoesNotExist"
+  ) {
+    errorMessage = `no income recorded for ${context.month} ${context.year}`;
+  }
+
+  console.log(error);
   notifyError(errorMessage);
 };
 

@@ -28,7 +28,13 @@ export const SIGNUP = gql`
         total_income
         timezone
         currency
-        latest_income_period
+        latest_income {
+          total
+          period {
+            month
+            year
+          }
+        }
       }
     }
   }
@@ -48,7 +54,13 @@ export const LOGIN = gql`
         total_income
         timezone
         currency
-        latest_income_period
+        latest_income {
+          total
+          period {
+            month
+            year
+          }
+        }
       }
     }
   }
@@ -76,7 +88,13 @@ export const VERIFYGOOGLELOGIN = gql`
         total_income
         timezone
         currency
-        latest_income_period
+        latest_income {
+          total
+          period {
+            month
+            year
+          }
+        }
       }
     }
   }

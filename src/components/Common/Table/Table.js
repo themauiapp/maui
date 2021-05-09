@@ -9,7 +9,7 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
   const [clickedPage, setClickedPage] = useState(null);
   const { user } = useContext(AppContext);
   const currency = user.currency ?? "";
-  const { setDialogs, setExpense } = useContext(AuthHomeContext);
+  const { dialogs, setDialogs, setExpense } = useContext(AuthHomeContext);
 
   useEffect(() => {
     setClickedPage(null);
@@ -146,7 +146,7 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
                     >
                       <p
                         onClick={() => {
-                          setDialogs({ income: false, expense: true });
+                          setDialogs({ ...dialogs, expense: true });
                           setExpense(row.name);
                         }}
                         className="cursor-pointer mb-2"

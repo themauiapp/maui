@@ -13,6 +13,7 @@ import Expenses from "../../components/Expenses/Expenses";
 import Spinner from "../../components/Spinner/Spinner";
 import AddIncome from "../../components/AddIncome/AddIncome";
 import Expense from "../../components/Expense/Expense";
+import AddExpense from "../../components/AddExpense/AddExpense";
 import "./AuthHome.css";
 
 const AuthHome = () => {
@@ -23,11 +24,16 @@ const AuthHome = () => {
     const month = months[dt.getMonth()];
     const year = dt.getFullYear();
     const currentPeriod = `${month} ${year}`;
-    return user.latest_income_period !== currentPeriod;
+    const {
+      latest_income: { period },
+    } = user;
+    const latestPeriod = `${period.month} ${period.year}`;
+    return currentPeriod !== latestPeriod;
   };
   const [dialogs, setDialogs] = useState({
     income: determineIncomeState(),
     expense: false,
+    addExpense: false,
   });
   const [expense, setExpense] = useState(null);
   const [resendVerificationEmailMutation] = useMutation(
@@ -54,7 +60,7 @@ const AuthHome = () => {
       }
     }
 
-    setDialogs({ income: false, expense: false });
+    setDialogs({ income: false, expense: false, addExpense: false });
   };
 
   const toggleSpinner = () => {
@@ -95,7 +101,7 @@ const AuthHome = () => {
         {user.email_verified_at && (
           <>
             <AuthHomeContext.Provider
-              value={{ toggleSpinner, setDialogs, setExpense }}
+              value={{ toggleSpinner, dialogs, setDialogs, setExpense }}
             >
               <Header />
               <div className="px-24">
@@ -108,25 +114,31 @@ const AuthHome = () => {
                   </Route>
                 </Switch>
               </div>
+              <div
+                onClick={closeDialog}
+                className={`transition-opacity duration-500 ease-in fixed top-0 left-0 w-screen h-screen flex justify-center items-center ${
+                  dialogs.expense || dialogs.income || dialogs.addExpense
+                    ? "opacity-100 z-50"
+                    : "opacity-0 z--9999"
+                }`}
+                style={{ background: "rgba(0,0,0,0.5)" }}
+              >
+                {dialogs.income && <AddIncome />}
+                {dialogs.expense && <Expense name={expense} />}
+                {dialogs.addExpense && <AddExpense />}
+              </div>
             </AuthHomeContext.Provider>
-            <div
-              onClick={closeDialog}
-              className={`transition-opacity duration-500 ease-in fixed top-0 left-0 w-screen h-screen flex justify-center items-center ${
-                dialogs.expense || dialogs.income
-                  ? "opacity-100 z-50"
-                  : "opacity-0 z--9999"
-              }`}
-              style={{ background: "rgba(0,0,0,0.5)" }}
-            >
-              {dialogs.income && <AddIncome />}
-              {dialogs.expense && <Expense name={expense} />}
-            </div>
           </>
         )}
       </div>
 
       {user.email_verified_at && (
-        <div className=" fixed bottom-0 right-0 cursor-pointer z-20 mb-8 mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white">
+        <div
+          onClick={() => {
+            setDialogs({ ...dialogs, addExpense: true });
+          }}
+          className=" fixed bottom-0 right-0 cursor-pointer z-20 mb-8 mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white"
+        >
           <i className="fas fa-plus"></i>
         </div>
       )}
