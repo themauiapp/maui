@@ -14,6 +14,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import AddIncome from "../../components/AddIncome/AddIncome";
 import Expense from "../../components/Expense/Expense";
 import AddExpense from "../../components/AddExpense/AddExpense";
+import UpdateExpense from "../../components/UpdateExpense/UpdateExpense";
 import "./AuthHome.css";
 
 const AuthHome = () => {
@@ -32,9 +33,11 @@ const AuthHome = () => {
   };
   const [dialogs, setDialogs] = useState({
     income: determineIncomeState(),
-    expense: false,
+    viewExpense: false,
     addExpense: false,
+    updateExpense: false,
   });
+  const [viewedExpense, setViewedExpense] = useState(null);
   const [expense, setExpense] = useState(null);
   const [resendVerificationEmailMutation] = useMutation(
     RESENDVERIFICATIONEMAIL
@@ -101,7 +104,13 @@ const AuthHome = () => {
         {user.email_verified_at && (
           <>
             <AuthHomeContext.Provider
-              value={{ toggleSpinner, dialogs, setDialogs, setExpense }}
+              value={{
+                toggleSpinner,
+                dialogs,
+                setDialogs,
+                setViewedExpense,
+                setExpense,
+              }}
             >
               <Header />
               <div className="px-24">
@@ -117,15 +126,16 @@ const AuthHome = () => {
               <div
                 onClick={closeDialog}
                 className={`transition-opacity duration-500 ease-in fixed top-0 left-0 w-screen h-screen flex justify-center items-center ${
-                  dialogs.expense || dialogs.income || dialogs.addExpense
+                  Object.values(dialogs).includes(true)
                     ? "opacity-100 z-50"
                     : "opacity-0 z--9999"
                 }`}
                 style={{ background: "rgba(0,0,0,0.5)" }}
               >
                 {dialogs.income && <AddIncome />}
-                {dialogs.expense && <Expense name={expense} />}
+                {dialogs.viewExpense && <Expense name={viewedExpense} />}
                 {dialogs.addExpense && <AddExpense />}
+                {dialogs.updateExpense && <UpdateExpense expense={expense} />}
               </div>
             </AuthHomeContext.Provider>
           </>

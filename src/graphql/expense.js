@@ -10,9 +10,11 @@ export const DAILYEXPENSES = gql`
   query DailyExpenses($number: Int, $page: Int, $date: String!, $all: Boolean) {
     dailyExpenses(number: $number, page: $page, date: $date, all: $all) {
       expenses {
+        id
         name
         amount_str
         time
+        created_at
       }
       sum
       errorId
@@ -40,9 +42,11 @@ export const WEEKLYEXPENSES = gql`
       all: $all
     ) {
       expenses {
+        id
         name
         amount_str
         time
+        created_at
       }
       sum
       errorId
@@ -63,9 +67,11 @@ export const INCOMEEXPENSES = gql`
   ) {
     incomeExpenses(number: $number, page: $page, date: $date, all: $all) {
       expenses {
+        id
         name
         amount_str
         time
+        created_at
       }
       sum
       errorId
@@ -95,6 +101,14 @@ export const EXPENSESTATS = gql`
 export const ADDEXPENSE = gql`
   mutation AddExpense($name: String!, $amount: Float!, $date: String) {
     addExpense(name: $name, amount: $amount, date: $date) {
+      errorId
+    }
+  }
+`;
+
+export const UPDATEEXPENSE = gql`
+  mutation UpdateExpense($id: ID!, $name: String, $amount: Float) {
+    updateExpense(id: $id, name: $name, amount: $amount) {
       message
       errorId
       sum
