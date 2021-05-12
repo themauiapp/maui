@@ -85,4 +85,4 @@ const TopExpenses = () => {
   );
 };
 
-export default TopExpenses;
+export default React.memo(TopExpenses);

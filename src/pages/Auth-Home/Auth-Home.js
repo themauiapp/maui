@@ -10,6 +10,7 @@ import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
 import Header from "../../components/Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import Expenses from "../../components/Expenses/Expenses";
+import Analytics from "../../components/Analytics/Analytics";
 import Spinner from "../../components/Spinner/Spinner";
 import AddIncome from "../../components/AddIncome/AddIncome";
 import Expense from "../../components/Expense/Expense";
@@ -120,6 +121,9 @@ const AuthHome = () => {
                   </Route>
                   <Route path="/my/expenses">
                     <Expenses />
+                  </Route>
+                  <Route path="/my/analytics">
+                    <Analytics />
                   </Route>
                 </Switch>
               </div>

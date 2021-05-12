@@ -115,3 +115,9 @@ export const UPDATEEXPENSE = gql`
     }
   }
 `;
+
+export const COMPAREWEEKEXPENSES = gql`
+  query CompareWeekExpenses($dateOne: String!, $dateTwo: String!) {
+    compareWeekExpenses(dateOne: $dateOne, dateTwo: $dateTwo)
+  }
+`;
