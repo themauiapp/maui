@@ -1,24 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {
   DAILYEXPENSES,
   WEEKLYEXPENSES,
   INCOMEEXPENSES,
+  DELETEEXPENSE,
 } from "../../graphql/expense";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import Button from "../Button/Button";
 import Table from "../Common/Table/Table";
 import Loader from "../Loader/Loader";
 import { parseDate } from "../../utilities/date";
 import exportToXlsx from "../../utilities/file";
 import errorHandler from "../../utilities/errorHandler";
+import { notifySuccess } from "../../services/notify";
 
 const Expenses = () => {
   const {
     user: { name, currency },
   } = useContext(AppContext);
+  const { setLoading } = useContext(AuthHomeContext);
   const [
     fetchDailyExpenses,
     { data: dailyExpenses, loading: dailyLoading, error: dailyError },
@@ -37,6 +41,7 @@ const Expenses = () => {
   ] = useLazyQuery(INCOMEEXPENSES, {
     fetchPolicy: "network-only",
   });
+  const [deleteExpenseMutation] = useMutation(DELETEEXPENSE);
   const history = useHistory();
   const [periods, setPeriods] = useState({ expense: "d", table: "d" });
   const [dates, setDates] = useState({
@@ -141,6 +146,29 @@ const Expenses = () => {
     }
   };
 
+  const deleteExpense = async (id, date, period, page) => {
+    const proceed = window.confirm("are you sure you want to delete ?");
+    if (!proceed) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const variables = { id };
+      const response = await deleteExpenseMutation({ variables });
+      const data = response.data.deleteExpense;
+      if (data.errorId) {
+        const error = new Error(data.errorId);
+        throw error;
+      }
+      await fetchExpenses(date, period, page);
+      notifySuccess("expense deleted successfully");
+    } catch (error) {
+      errorHandler(error, history);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="pb-10">
       <div className="p-12 mb-5 bg-white shadow flex items-end">
@@ -207,6 +235,7 @@ const Expenses = () => {
           fetch={fetchExpenses}
           sum={sum}
           loading={dailyLoading || weeklyLoading || incomeLoading}
+          deleteExpense={deleteExpense}
         />
       )}
     </div>

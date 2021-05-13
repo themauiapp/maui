@@ -4,7 +4,16 @@ import { AuthHomeContext } from "../../../contexts/AuthHomeContext";
 import { getFormattedDate, parseDate } from "../../../utilities/date";
 import "./Table.css";
 
-const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
+const Table = ({
+  data,
+  pagination,
+  date,
+  period,
+  fetch,
+  sum,
+  loading,
+  deleteExpense,
+}) => {
   const pages = new Array(pagination.maxPages).fill("");
   const [clickedPage, setClickedPage] = useState(null);
   const { user } = useContext(AppContext);
@@ -169,7 +178,19 @@ const Table = ({ data, pagination, date, period, fetch, sum, loading }) => {
                       >
                         Edit
                       </p>
-                      <p className="cursor-pointer">Delete</p>
+                      <p
+                        onClick={() => {
+                          deleteExpense(
+                            row.id,
+                            date,
+                            period,
+                            pagination.currentPage
+                          );
+                        }}
+                        className="cursor-pointer"
+                      >
+                        Delete
+                      </p>
                     </div>
                   </div>
                 </td>

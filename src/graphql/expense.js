@@ -127,3 +127,12 @@ export const COMPAREMONTHEXPENSES = gql`
     compareMonthExpenses(dateOne: $dateOne, dateTwo: $dateTwo)
   }
 `;
+
+export const DELETEEXPENSE = gql`
+  mutation DeleteExpense($id: ID!) {
+    deleteExpense(id: $id) {
+      message
+      errorId
+    }
+  }
+`;
