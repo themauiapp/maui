@@ -1,0 +1,20 @@
+.header__options {
+  position: absolute;
+  top: 120%;
+  left: calc((100% - 130px) / 2);
+  height: fit-content;
+  width: 130px;
+  transition: opacity 0.2s ease-in;
+}
+/* 
+.header__options::before {
+  position: absolute;
+  top: -26px;
+  left: calc((100% - 13px) / 2 - 9px);
+  display: block;
+  content: "";
+  border: 13px solid #fff;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+} */

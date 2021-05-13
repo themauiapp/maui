@@ -107,6 +107,7 @@ const AuthHome = () => {
             <AuthHomeContext.Provider
               value={{
                 toggleSpinner,
+                setLoading,
                 dialogs,
                 setDialogs,
                 setViewedExpense,
@@ -149,14 +150,21 @@ const AuthHome = () => {
       {user.email_verified_at && (
         <div
           onClick={() => {
+            if (loading) {
+              return;
+            }
             setDialogs({ ...dialogs, addExpense: true });
           }}
           className=" fixed bottom-0 right-0 cursor-pointer z-20 mb-8 mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white"
         >
-          <i className="fas fa-plus"></i>
+          {loading ? (
+            <Spinner display={true} fixed={false} alt={true} />
+          ) : (
+            <i className="fas fa-plus"></i>
+          )}
         </div>
       )}
-      <Spinner display={loading} />
+      {!user.email_verified_at && <Spinner display={loading} />}
     </div>
   );
 };

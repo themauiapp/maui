@@ -107,3 +107,11 @@ export const RESENDVERIFICATIONEMAIL = gql`
     }
   }
 `;
+
+export const LOGOUT = gql`
+  mutation Logout {
+    logout {
+      message
+    }
+  }
+`;

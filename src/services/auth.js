@@ -7,4 +7,9 @@ const verifyEmail = (id, hash, expires, signature) => {
   );
 };
 
-export { verifyEmail };
+const logout = () => {
+  const API = createAxiosObject();
+  return API.post("/api/logout");
+};
+
+export { verifyEmail, logout };
