@@ -121,3 +121,9 @@ export const COMPAREWEEKEXPENSES = gql`
     compareWeekExpenses(dateOne: $dateOne, dateTwo: $dateTwo)
   }
 `;
+
+export const COMPAREMONTHEXPENSES = gql`
+  query CompareMonthExpenses($dateOne: String!, $dateTwo: String!) {
+    compareMonthExpenses(dateOne: $dateOne, dateTwo: $dateTwo)
+  }
+`;

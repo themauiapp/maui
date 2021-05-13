@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import { COMPAREWEEKEXPENSES } from "../../graphql/expense";
+import {
+  COMPAREWEEKEXPENSES,
+  COMPAREMONTHEXPENSES,
+} from "../../graphql/expense";
 import LineChart from "../LineChart/LineChart";
 import Button from "../Button/Button";
 import { useLazyQuery } from "@apollo/client";
@@ -14,6 +17,10 @@ const Analytics = () => {
     fetchWeeklyComparison,
     { data: weeklyData, loading: weeklyLoading, error: weeklyError },
   ] = useLazyQuery(COMPAREWEEKEXPENSES, { fetchPolicy: "network-only" });
+  const [
+    fetchMonthlyComparison,
+    { data: monthlyData, loading: monthlyLoading, error: monthlyError },
+  ] = useLazyQuery(COMPAREMONTHEXPENSES, { fetchPolicy: "network-only" });
   const [periods, setPeriods] = useState({ expense: "w", chart: null });
   const [dateOne, setDateOne] = useState(new Date(Date.now() - 2592000000));
   const [dateTwo, setDateTwo] = useState(new Date());
@@ -44,6 +51,30 @@ const Analytics = () => {
     // eslint-disable-next-line
   }, [weeklyData, weeklyError]);
 
+  useEffect(() => {
+    if (monthlyData) {
+      const data = JSON.parse(monthlyData.compareMonthExpenses);
+      const { months } = data;
+      console.log(months);
+      const labels = [];
+      const datasets = [];
+      months.forEach((month) => {
+        const monthLabels = Object.keys(month);
+        const monthData = Object.values(month);
+        labels.push(monthLabels);
+        datasets.push(monthData);
+      });
+      setLabels(labels);
+      setDatasets(datasets);
+      setPeriods({ ...periods, chart: "m" });
+    }
+
+    if (weeklyError) {
+      errorHandler(monthlyError, history);
+    }
+    // eslint-disable-next-line
+  }, [monthlyData, monthlyError]);
+
   const fetchComparison = async () => {
     try {
       if (periods.expense === "w") {
@@ -52,6 +83,14 @@ const Analytics = () => {
           dateTwo: parseDate(dateTwo),
         };
         await fetchWeeklyComparison({ variables });
+      }
+
+      if (periods.expense === "m") {
+        const variables = {
+          dateOne: parseDate(dateOne),
+          dateTwo: parseDate(dateTwo),
+        };
+        await fetchMonthlyComparison({ variables });
       }
     } catch (error) {
       errorHandler(error, history);
@@ -87,11 +126,11 @@ const Analytics = () => {
           </div>
         </div>
         <div className="flex flex-col mr-12">
-          <label htmlFor="date" className="text-sm mb-3">
+          <label htmlFor="date1" className="text-sm mb-3">
             1st {periods.expense === "w" ? "week" : "month"}
           </label>
           <DatePicker
-            id="date"
+            id="date1"
             selected={dateOne}
             onChange={(date) => {
               setDateOne(date);
@@ -102,11 +141,11 @@ const Analytics = () => {
           />
         </div>
         <div className="flex flex-col mr-auto">
-          <label htmlFor="date" className="text-sm mb-3">
+          <label htmlFor="date2" className="text-sm mb-3">
             2nd {periods.expense === "w" ? "week" : "month"}
           </label>
           <DatePicker
-            id="date"
+            id="date2"
             selected={dateTwo}
             onChange={(date) => {
               setDateTwo(date);
@@ -125,7 +164,7 @@ const Analytics = () => {
           >
             View
           </Button>
-          <Loader display={weeklyLoading} />
+          <Loader display={weeklyLoading || monthlyLoading} />
         </div>
       </div>
       {labels && datasets && (

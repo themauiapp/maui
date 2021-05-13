@@ -1,14 +1,22 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { getFormattedDate } from "../../utilities/date";
+import { getFormattedDate, months } from "../../utilities/date";
 
 const LineChart = ({ datasets, labels, period }) => {
+  console.log(datasets);
   const determineLegend = (index) => {
     const label = labels[index];
     if (period === "w") {
       return `${getFormattedDate(new Date(label[0]))} - ${getFormattedDate(
         new Date(label[label.length - 1])
       )}`;
+    }
+
+    if (period === "m") {
+      const date = new Date(label[0]);
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
+      return `${months[monthIndex]} ${year}`;
     }
   };
 
@@ -47,7 +55,6 @@ const LineChart = ({ datasets, labels, period }) => {
         options={{
           title: {
             display: true,
-            text: "Top 5 Expenses",
             font: { family: "Quicksand" },
           },
           legend: {
