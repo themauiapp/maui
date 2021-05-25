@@ -99,18 +99,18 @@ const Analytics = () => {
 
   return (
     <div className="pb-10">
-      <div className="p-12 mb-5 bg-white shadow flex items-end">
-        <div className="flex flex-col">
+      <div className="p-8 bsm:p-12 mb-5 bg-white shadow flex flex-wrap justify-between lg:justify-start items-end">
+        <div className="flex flex-col mb-4 lg:mb-0 w-full bsm:w-3/7 lg:w-fc">
           <label htmlFor="type" className="text-sm mb-3">
             Type
           </label>
-          <div className="relative">
+          <div className="relative lg:mr-12">
             <select
               id="type"
               onChange={(event) => {
                 setPeriods({ ...periods, expense: event.target.value });
               }}
-              className="focus:outline-none bg-transparent border border-revolver-purple pl-6 pr-12 py-3 mr-12"
+              className="focus:outline-none bg-transparent w-full border border-revolver-purple pl-6 pr-12 py-3"
             >
               <option value="w">Weekly</option>
               <option value="m">Monthly</option>
@@ -120,12 +120,12 @@ const Analytics = () => {
               style={{
                 transform: "rotate(90deg)",
                 top: "calc((100% - 13px)/2)",
-                marginRight: "4.3rem",
+                marginRight: window.screen.width > 610 ? "2.3rem" : "1.5rem",
               }}
             ></i>
           </div>
         </div>
-        <div className="flex flex-col mr-12">
+        <div className="flex flex-col mb-4 lg:mb-0 w-full bsm:w-3/7 lg:w-fc lg:mr-12">
           <label htmlFor="date1" className="text-sm mb-3">
             1st {periods.expense === "w" ? "week" : "month"}
           </label>
@@ -140,7 +140,7 @@ const Analytics = () => {
             maxDate={new Date()}
           />
         </div>
-        <div className="flex flex-col mr-auto">
+        <div className="flex flex-col mb-5 bsm:mb-0 w-full bsm:w-3/7 lg:w-fc lg:mr-auto">
           <label htmlFor="date2" className="text-sm mb-3">
             2nd {periods.expense === "w" ? "week" : "month"}
           </label>
@@ -155,7 +155,10 @@ const Analytics = () => {
             maxDate={new Date()}
           />
         </div>
-        <div style={{ position: "relative" }}>
+        <div
+          className="w-full bsm:w-3/7 lg:w-fc"
+          style={{ position: "relative" }}
+        >
           <Button
             type="outlined"
             onClick={() => {

@@ -18,9 +18,8 @@ const Table = ({
   const [clickedPage, setClickedPage] = useState(null);
   const { user } = useContext(AppContext);
   const currency = user.currency ?? "";
-  const { dialogs, setDialogs, setViewedExpense, setExpense } = useContext(
-    AuthHomeContext
-  );
+  const { dialogs, setDialogs, setViewedExpense, setExpense } =
+    useContext(AuthHomeContext);
 
   useEffect(() => {
     setClickedPage(null);
@@ -98,9 +97,9 @@ const Table = ({
   };
 
   return (
-    <div className="w-full flex flex-col bg-white shadow px-12 pt-12 pb-8">
-      <div className="flex mb-5 w-full justify-between">
-        <p>
+    <div className="w-full flex flex-col bg-white shadow px-8 pt-8 bsm:px-12 bsm:pt-12 pb-8">
+      <div className="flex flex-col bsm:flex-row mb-5 w-full justify-between">
+        <p className="mb-2 bsm:mb-0">
           {`${currency}
           ${sum} ${parseExpenseString()}`}
         </p>

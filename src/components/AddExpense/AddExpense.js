@@ -104,8 +104,7 @@ const AddExpense = () => {
       onClick={(e) => {
         e.stopPropagation();
       }}
-      className="bg-white rounded p-10 flex flex-col"
-      style={{ width: "450px" }}
+      className="bg-white rounded p-10 flex flex-col dialog"
     >
       <p className="text-lg text-center font-semibold mb-5">Add New Expense</p>
       <form noValidate className="w-full flex flex-col">

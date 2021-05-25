@@ -4,11 +4,20 @@ select {
   appearance: none;
 }
 
+.dialog {
+  width: 450px;
+}
+
+@media (max-width: 500px) {
+  .dialog {
+    width: 90%;
+  }
+}
+
 .react-datepicker {
   font-family: "Quicksand", sans-serif !important;
 }
 
-/* #301B3F */
 .react-datepicker__day--selected {
   background-color: rgba(48, 27, 63, 0.8) !important;
 }

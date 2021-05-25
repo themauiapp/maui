@@ -10,6 +10,7 @@ import AuthHomeSidebar from "../../components/AuthHomeSidebar/AuthHomeSidebar";
 import Header from "../../components/Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import Expenses from "../../components/Expenses/Expenses";
+import Income from "../../components/Income/Income";
 import Analytics from "../../components/Analytics/Analytics";
 import Spinner from "../../components/Spinner/Spinner";
 import AddIncome from "../../components/AddIncome/AddIncome";
@@ -115,13 +116,16 @@ const AuthHome = () => {
               }}
             >
               <Header />
-              <div className="px-24">
+              <div className="px-8 sm:px-16 bmd:px-24">
                 <Switch>
                   <Route path="/my/dashboard">
                     <Dashboard />
                   </Route>
                   <Route path="/my/expenses">
                     <Expenses />
+                  </Route>
+                  <Route path="/my/income">
+                    <Income />
                   </Route>
                   <Route path="/my/analytics">
                     <Analytics />
@@ -155,7 +159,7 @@ const AuthHome = () => {
             }
             setDialogs({ ...dialogs, addExpense: true });
           }}
-          className=" fixed bottom-0 right-0 cursor-pointer z-20 mb-8 mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white"
+          className=" fixed bottom-0 right-0 cursor-pointer z-20 mb-6 mr-6 bsm:mb-8 bsm:mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white"
         >
           {loading ? (
             <Spinner display={true} fixed={false} alt={true} />

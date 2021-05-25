@@ -107,8 +107,7 @@ const UpdateExpense = ({ expense: { id, name, amount, created_at } }) => {
       onClick={(e) => {
         e.stopPropagation();
       }}
-      className="bg-white rounded p-10 flex flex-col"
-      style={{ width: "450px" }}
+      className="bg-white rounded p-10 flex flex-col dialog"
     >
       <p className="text-lg text-center font-semibold mb-5">
         Update {formik.values.name}

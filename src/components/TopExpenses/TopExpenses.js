@@ -78,6 +78,7 @@ const TopExpenses = () => {
                 },
               },
             },
+            maintainAspectRatio: window.screen.width > 768,
           }}
         />
       )}

@@ -49,7 +49,7 @@ const LineChart = ({ datasets, labels, period }) => {
   };
 
   return (
-    <div className="quicksand bg-white p-12 shadow">
+    <div className="quicksand bg-white p-8 bsm:p-12 shadow">
       <Line
         data={data}
         options={{
@@ -76,6 +76,7 @@ const LineChart = ({ datasets, labels, period }) => {
               },
             },
           },
+          maintainAspectRatio: window.screen.width > 768,
         }}
       />
     </div>

@@ -30,7 +30,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full px-24 py-8 flex justify-between items-center">
+    <div className="w-full px-8 sm:px-16 bmd:px-24 py-8 flex justify-between items-center">
       <img
         src="/images/auth-home/search.png"
         alt="search"

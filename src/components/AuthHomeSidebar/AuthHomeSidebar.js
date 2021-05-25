@@ -11,9 +11,9 @@ const AuthHomeSidebar = () => {
   const links = [
     { name: "dashboard", icon: "clone" },
     { name: "expenses", icon: "credit-card" },
+    { name: "income", icon: "coins" },
     { name: "analytics", icon: "chart-line" },
     { name: "profile", icon: "user-circle" },
-    { name: "settings", icon: "wrench" },
   ];
 
   const switchLink = (link) => {

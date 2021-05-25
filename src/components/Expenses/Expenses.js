@@ -171,8 +171,8 @@ const Expenses = () => {
 
   return (
     <div className="pb-10">
-      <div className="p-12 mb-5 bg-white shadow flex items-end">
-        <div className="flex flex-col">
+      <div className="p-8 bsm:p-12 mb-5 bg-white shadow flex flex-col bsm:flex-row bsm:items-end">
+        <div className="flex flex-col mb-4 bsm:mb-0">
           <label htmlFor="type" className="text-sm mb-3">
             Type
           </label>
@@ -182,7 +182,7 @@ const Expenses = () => {
               onChange={(event) => {
                 setPeriods({ ...periods, expense: event.target.value });
               }}
-              className="focus:outline-none bg-transparent border border-revolver-purple pl-6 pr-12 py-3 mr-12"
+              className="focus:outline-none bg-transparent border border-revolver-purple w-full bsm:w-fc pl-6 pr-12 py-3 bsm:mr-12"
             >
               <option value="d">Daily</option>
               <option value="w">Weekly</option>
@@ -193,12 +193,12 @@ const Expenses = () => {
               style={{
                 transform: "rotate(90deg)",
                 top: "calc((100% - 13px)/2)",
-                marginRight: "4.3rem",
+                marginRight: window.screen.width > 610 ? "4.3rem" : "1.5rem",
               }}
             ></i>
           </div>
         </div>
-        <div className="flex flex-col mr-auto">
+        <div className="flex flex-col mb-6 bsm:mb-0 bsm:mr-auto">
           <label htmlFor="date" className="text-sm mb-3">
             Date
           </label>

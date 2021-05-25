@@ -7,10 +7,10 @@ import Spinner from "../Spinner/Spinner";
 const Expense = ({ name }) => {
   const { user } = useContext(AppContext);
   const currency = user.currency ?? "";
-  const [
-    fetchExpenseStats,
-    { data, error, loading },
-  ] = useLazyQuery(EXPENSESTATS, { fetchPolicy: "network-only" });
+  const [fetchExpenseStats, { data, error, loading }] = useLazyQuery(
+    EXPENSESTATS,
+    { fetchPolicy: "network-only" }
+  );
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const Expense = ({ name }) => {
       onClick={(e) => {
         e.stopPropagation();
       }}
-      className="relative bg-white p-10 flex flex-col rounded"
-      style={{ width: "450px", minHeight: "200px" }}
+      className="relative bg-white p-10 flex flex-col rounded dialog"
+      style={{ minHeight: "200px" }}
     >
       {stats && !error && (
         <>

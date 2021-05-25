@@ -8,10 +8,10 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col pb-5">
       <div className="grid grid-cols-12 col-gap-5">
-        <div className="col-span-7 flex flex-col">
+        <div className="col-span-12 bsm:col-span-7 mb-5 bsm:mb-0 flex flex-col">
           <CurrentMonthData />
         </div>
-        <div className="col-span-5">
+        <div className="col-span-12 bsm:col-span-5">
           <IncomeStats />
         </div>
       </div>
