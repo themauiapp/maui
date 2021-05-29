@@ -68,7 +68,11 @@ const AuthHome = () => {
     setDialogs({ income: false, expense: false, addExpense: false });
   };
 
-  const toggleSpinner = () => {
+  const toggleSpinner = (loadingState = null) => {
+    if (loadingState !== null) {
+      setLoading(loadingState);
+      return;
+    }
     setLoading(!loading);
   };
 

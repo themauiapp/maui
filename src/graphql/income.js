@@ -41,3 +41,23 @@ export const ADDINCOME = gql`
     }
   }
 `;
+
+export const FETCHINCOMES = gql`
+  query Incomes($page: Int!, $number: Int!) {
+    incomes(page: $page, number: $number) {
+      incomes {
+        total
+        remainder
+        period {
+          month
+          year
+        }
+        expenses_count
+      }
+      pagination {
+        currentPage
+        maxPages
+      }
+    }
+  }
+`;

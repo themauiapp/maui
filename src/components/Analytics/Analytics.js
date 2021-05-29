@@ -138,9 +138,10 @@ const Analytics = () => {
             dateFormat={periods.expense === "m" ? "MM-yyyy" : "yyyy-MM-dd"}
             className="w-full bg-transparent border border-revolver-purple focus:outline-none pl-6 py-3"
             maxDate={new Date()}
+            showMonthYearPicker={periods.expense === "m"}
           />
         </div>
-        <div className="flex flex-col mb-5 bsm:mb-0 w-full bsm:w-3/7 lg:w-fc lg:mr-auto">
+        <div className="flex flex-col mb-6 bsm:mb-0 w-full bsm:w-3/7 lg:w-fc lg:mr-auto">
           <label htmlFor="date2" className="text-sm mb-3">
             2nd {periods.expense === "w" ? "week" : "month"}
           </label>
@@ -153,6 +154,7 @@ const Analytics = () => {
             dateFormat={periods.expense === "m" ? "MM-yyyy" : "yyyy-MM-dd"}
             className="w-full bg-transparent border border-revolver-purple focus:outline-none pl-6 py-3"
             maxDate={new Date()}
+            showMonthYearPicker={periods.expense === "m"}
           />
         </div>
         <div
