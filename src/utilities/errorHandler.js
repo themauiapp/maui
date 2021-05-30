@@ -28,6 +28,10 @@ const errorHandler = async (error, history, context = null) => {
     errorMessage = `no income recorded for ${context.month} ${context.year}`;
   }
 
+  if (error.message === "AvatarNotUpdated") {
+    errorMessage = "Avatar not updated";
+  }
+
   console.log(error);
   notifyError(errorMessage);
 };

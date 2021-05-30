@@ -1,5 +1,6 @@
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
+import { notifyError } from "../services/notify";
 
 const fileType =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -43,6 +44,23 @@ const exportToXlsx = (name, currency, date, period, expenses) => {
   const data = new Blob([excelBuffer], { type: fileType });
   const fileName = `${name}_${date}_${periodText(period)}_expenses`;
   FileSaver.saveAs(data, fileName + fileExtension);
+};
+
+export const validateFile = (file) => {
+  const allowedTypes = ["jpg", "png", "jpeg"];
+  const type = file.type.split("/")[1].toLowerCase();
+
+  if (!allowedTypes.includes(type)) {
+    notifyError("Invalid image format");
+    return false;
+  }
+
+  if (file.size > 7000000) {
+    notifyError("Image is too large");
+    return false;
+  }
+
+  return true;
 };
 
 export default exportToXlsx;

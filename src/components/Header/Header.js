@@ -1,31 +1,74 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { UPDATEAVATAR } from "../../graphql/user";
 import { LOGOUT } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
-import { AppContext } from "../../contexts/AppContext";
 import { AuthHomeContext } from "../../contexts/AuthHomeContext";
-import { clearCookies } from "../../services/cookie";
+import { clearCookies, setUserCookie } from "../../services/cookie";
 import { notifySuccess } from "../../services/notify";
+import { validateFile } from "../../utilities/file";
+import Cookies from "universal-cookie";
 import errorHandler from "../../utilities/errorHandler";
 import "./Header.css";
 
 const Header = () => {
   const history = useHistory();
   const [options, setOptions] = useState(false);
-  const { user } = useContext(AppContext);
-  const { setLoading } = useContext(AuthHomeContext);
+  const [avatar, setAvatar] = useState(null);
+  const { toggleSpinner } = useContext(AuthHomeContext);
+  const [updateAvatarMutation] = useMutation(UPDATEAVATAR);
   const [logoutMutation] = useMutation(LOGOUT);
+  const user = new Cookies().get("maui_user");
 
   const logout = async () => {
-    setLoading(true);
+    toggleSpinner();
     try {
       await logoutMutation();
       clearCookies();
       notifySuccess("logged out successfully");
       history.push("/session/new");
     } catch (error) {
-      setLoading(false);
+      toggleSpinner();
       errorHandler(error, history);
+    }
+  };
+
+  const selectFile = () => {
+    const fileInput = document.getElementById("fileInput");
+    fileInput.click();
+  };
+
+  const parseFile = (event) => {
+    const file = event.target.files[0];
+    if (validateFile(file)) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const avatar = document.getElementById("avatar");
+        avatar.setAttribute("src", e.target.result);
+        setAvatar(file);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const updateAvatar = async () => {
+    toggleSpinner(true);
+    const variables = { avatar };
+    try {
+      const response = await updateAvatarMutation({ variables });
+      const data = response.data.updateAvatar;
+      if (data.errorId) {
+        const error = new Error(data.errorId);
+        throw error;
+      }
+      setUserCookie(data);
+      notifySuccess("Avatar updated successfully");
+      setOptions(false);
+      setAvatar(null);
+    } catch (error) {
+      errorHandler(error, history);
+    } finally {
+      toggleSpinner(false);
     }
   };
 
@@ -43,7 +86,12 @@ const Header = () => {
         className="relative flex items-center"
       >
         <img
-          src={user.avatar ?? "/images/auth-home/leke.JPG"}
+          id="avatar"
+          src={
+            user.avatar
+              ? user.avatar.url
+              : "/images/auth-home/DefaultAvatar.png"
+          }
           className="cursor-pointer object-cover mr-4 w-12 h-12 rounded-full"
           alt={user.name}
         />
@@ -67,7 +115,31 @@ const Header = () => {
             options ? "z-30 opacity-100" : "z--9999 opacity-0"
           }`}
         >
-          <p className="w-fc cursor-pointer my-1">Change Avatar</p>
+          <p
+            onClick={(e) => {
+              selectFile();
+              e.stopPropagation();
+            }}
+            className="w-fc cursor-pointer my-1"
+          >
+            Change Picture
+          </p>
+          <input
+            type="file"
+            onChange={parseFile}
+            id="fileInput"
+            className="hidden"
+          />
+          {avatar && (
+            <p
+              onClick={() => {
+                updateAvatar();
+              }}
+              className="w-fc cursor-pointer my-1"
+            >
+              Update
+            </p>
+          )}
           <p
             onClick={() => {
               logout();

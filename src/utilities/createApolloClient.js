@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { createHttpLink } from "apollo-link-http";
+import { createUploadLink } from "apollo-upload-client";
 import Cookies from "universal-cookie";
 
 const createApolloClient = (window = null) => {
@@ -12,7 +12,7 @@ const createApolloClient = (window = null) => {
     uri = `${uri}?code=${code}`;
   }
 
-  const httpLink = createHttpLink({
+  const httpLink = createUploadLink({
     uri,
     credentials: "include",
     fetchOptions: {

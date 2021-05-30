@@ -8,7 +8,7 @@ const setCsrfCookie = () => {
   return createAxiosObject().get("sanctum/csrf-cookie");
 };
 
-const setUserCookie = (data, setUser) => {
+const setUserCookie = (data, setUser = null) => {
   const {
     id,
     name,
@@ -38,7 +38,9 @@ const setUserCookie = (data, setUser) => {
     path: "/",
     expires: expiryDateObject,
   });
-  setUser(user);
+  if (setUser) {
+    setUser(user);
+  }
 };
 
 const clearCookies = () => {

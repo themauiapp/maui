@@ -24,7 +24,9 @@ export const SIGNUP = gql`
         name
         email
         email_verified_at
-        avatar
+        avatar {
+          url
+        }
         total_income
         timezone
         currency
@@ -50,7 +52,9 @@ export const LOGIN = gql`
         name
         email
         email_verified_at
-        avatar
+        avatar {
+          url
+        }
         total_income
         timezone
         currency
@@ -84,7 +88,9 @@ export const VERIFYGOOGLELOGIN = gql`
         name
         email
         email_verified_at
-        avatar
+        avatar {
+          url
+        }
         total_income
         timezone
         currency
