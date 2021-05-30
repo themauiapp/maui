@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-import { notifySuccess } from "../../services/notify";
+import { notifyError, notifySuccess } from "../../services/notify";
 import { setCsrfCookie, setUserCookie } from "../../services/cookie";
+import Cookies from "universal-cookie";
 import { useMutation } from "@apollo/client";
-import { LOGIN, GOOGLELOGIN } from "../../graphql/auth";
+import { LOGIN, GOOGLELOGIN, RESETPASSWORDEMAIL } from "../../graphql/auth";
 import { loginSchema } from "../../schemas/auth";
 import { AppContext } from "../../contexts/AppContext";
 import errorHandler from "../../utilities/errorHandler";
@@ -15,8 +16,10 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [loginMutation] = useMutation(LOGIN);
   const [googleLoginMutation] = useMutation(GOOGLELOGIN);
+  const [resetPasswordEmailMutation] = useMutation(RESETPASSWORDEMAIL);
   const { changeUser } = useContext(AppContext);
   const history = useHistory();
+  const cookies = new Cookies();
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -29,6 +32,10 @@ const Login = () => {
   });
 
   const setCookie = async (loading) => {
+    if (cookies.get("XSRF-TOKEN")) {
+      return;
+    }
+
     if (loading) {
       setLoading(true);
     }
@@ -52,7 +59,7 @@ const Login = () => {
       }
       setUserCookie(data, changeUser);
       history.push("/my/dashboard");
-      notifySuccess("logged in successfully");
+      notifySuccess("Logged in successfully");
     } catch (error) {
       errorHandler(error, history);
       setLoading(false);
@@ -100,6 +107,28 @@ const Login = () => {
     }
   };
 
+  const resetPasswordEmail = async () => {
+    const re =
+      // eslint-disable-next-line
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(formik.values.email)) {
+      return notifyError("Enter a valid email address");
+    }
+
+    await setCookie();
+    setLoading(true);
+    try {
+      const variables = { email: formik.values.email };
+      await resetPasswordEmailMutation({ variables });
+      notifySuccess("Continue at your email address");
+      formik.resetForm();
+    } catch (error) {
+      errorHandler(error, history);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <form
       noValidate
@@ -111,6 +140,16 @@ const Login = () => {
       <div className="relative mt-2 mx-10">
         <Button submit={true}>Login</Button>
         <Loader display={loading} />
+      </div>
+      <div className="mt-4">
+        <p
+          onClick={() => {
+            resetPasswordEmail();
+          }}
+          className="cursor-pointer text-center text-gray-800 underline"
+        >
+          forgot password
+        </p>
       </div>
       <div
         onClick={() => {

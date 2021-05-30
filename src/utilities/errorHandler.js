@@ -3,29 +3,29 @@ import { logout } from "../services/auth";
 import { clearCookies } from "../services/cookie";
 
 const errorHandler = async (error, history, context = null) => {
-  let errorMessage = "an error occured";
+  let errorMessage = "An error occured";
 
   if (error.networkError && error.networkError.statusCode === 419) {
-    await logout();
     await clearCookies();
+    await logout();
     notifyError("Session expired");
     history.push("/session/new");
     return;
   }
 
   if (error.message === "AuthenticationFailed") {
-    errorMessage = "incorrect username or password";
+    errorMessage = "Incorrect username or password";
   }
 
   if (error.message === "UserExistsAlready") {
-    errorMessage = "user with email exists already";
+    errorMessage = "User with email exists already";
   }
 
   if (
     error.message === "NoPeriodIncomeExists" ||
     error.message === "PeriodDoesNotExist"
   ) {
-    errorMessage = `no income recorded for ${context.month} ${context.year}`;
+    errorMessage = `No income recorded for ${context.month} ${context.year}`;
   }
 
   if (error.message === "AvatarNotUpdated") {

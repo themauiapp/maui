@@ -121,3 +121,29 @@ export const LOGOUT = gql`
     }
   }
 `;
+
+export const RESETPASSWORDEMAIL = gql`
+  mutation ResetPasswordEmail($email: String!) {
+    resetPasswordEmail(email: $email) {
+      message
+    }
+  }
+`;
+
+export const RESETPASSWORD = gql`
+  mutation ResetPassword(
+    $email: String!
+    $password: String!
+    $password_confirmation: String!
+    $token: String!
+  ) {
+    resetPassword(
+      email: $email
+      password: $password
+      password_confirmation: $password_confirmation
+      token: $token
+    ) {
+      message
+    }
+  }
+`;

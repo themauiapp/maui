@@ -6,6 +6,7 @@ import { SIGNUP, GOOGLELOGIN } from "../../graphql/auth";
 import { signupSchema } from "../../schemas/auth";
 import { AppContext } from "../../contexts/AppContext";
 import { setCsrfCookie, setUserCookie } from "../../services/cookie";
+import Cookies from "universal-cookie";
 import { notifySuccess } from "../../services/notify";
 import errorHandler from "../../utilities/errorHandler";
 import Button from "../Button/Button";
@@ -17,6 +18,7 @@ const Signup = ({ setError }) => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { changeUser } = useContext(AppContext);
+  const cookies = new Cookies();
 
   const formik = useFormik({
     initialValues: {
@@ -58,6 +60,10 @@ const Signup = ({ setError }) => {
   ];
 
   const setCookie = async (loading) => {
+    if (cookies.get("XSRF-TOKEN")) {
+      return;
+    }
+
     if (loading) {
       setLoading(true);
     }

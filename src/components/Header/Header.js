@@ -25,7 +25,7 @@ const Header = () => {
     try {
       await logoutMutation();
       clearCookies();
-      notifySuccess("logged out successfully");
+      notifySuccess("Logged out successfully");
       history.push("/session/new");
     } catch (error) {
       toggleSpinner();

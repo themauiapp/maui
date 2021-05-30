@@ -59,6 +59,9 @@ function App() {
         <GuestGuardedRoute path="/session/new">
           <Auth />
         </GuestGuardedRoute>
+        <GuestGuardedRoute path="/password/reset/:token">
+          <Auth />
+        </GuestGuardedRoute>
         <GuestGuardedRoute path="/">
           <Home />
         </GuestGuardedRoute>

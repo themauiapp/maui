@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Signup from "../../components/Signup/Signup";
 import Login from "../../components/Login/Login";
+import ResetPassword from "../../components/ResetPassword/ResetPassword";
 import Footer from "../../components/Footer/Footer";
 import "./Auth.css";
 
@@ -103,6 +104,9 @@ const Auth = () => {
               </Route>
               <Route exact path="/session/new">
                 <Login />
+              </Route>
+              <Route path="/password/reset/:token">
+                <ResetPassword />
               </Route>
             </Switch>
           </div>
