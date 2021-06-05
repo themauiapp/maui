@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { CURRENTMONTHINCOME } from "../../graphql/income";
+import CurrencyFormat from "react-currency-format";
 import { useQuery } from "@apollo/client";
 import DataFetching from "../DataFetching/DataFetching";
 import {
@@ -73,9 +74,27 @@ const CurrentMonthData = () => {
         {income && (
           <p className="mb-6">
             <i className="fa fa-money-bill-alt mr-2 text-revolver-purple"></i>{" "}
-            {currency}
-            {income.remainder ?? "0"} left of {currency}
-            {income.total ?? "0"}
+            {income.remainder ? (
+              <CurrencyFormat
+                value={income.remainder}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+            ) : (
+              currency + "0"
+            )}{" "}
+            left of
+            {income.total ? (
+              <CurrencyFormat
+                value={income.total}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+            ) : (
+              currency + "0"
+            )}
           </p>
         )}
         <p className="mb-6">

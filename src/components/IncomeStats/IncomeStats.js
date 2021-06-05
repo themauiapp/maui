@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import CurrencyFormat from "react-currency-format";
 import { INCOMESTATS } from "../../graphql/income";
 import { useQuery } from "@apollo/client";
 import DataFetching from "../DataFetching/DataFetching";
@@ -31,8 +32,14 @@ const IncomeStats = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-lg mb-1">
-            {currency}
-            {stats && stats.income_total}
+            {stats && (
+              <CurrencyFormat
+                value={stats.income_total}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+            )}
           </p>
           <p style={{ fontSize: "13px" }}>Total income earned</p>
         </div>
@@ -43,8 +50,14 @@ const IncomeStats = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-lg mb-1">
-            {currency}
-            {stats && stats.income_spent}
+            {stats && (
+              <CurrencyFormat
+                value={stats.income_spent}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+            )}
           </p>
           <p style={{ fontSize: "13px" }}>Income spent</p>
         </div>
@@ -58,8 +71,14 @@ const IncomeStats = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-lg mb-1">
-            {currency}
-            {stats && stats.income_remainder}
+            {stats && (
+              <CurrencyFormat
+                value={stats.income_remainder}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+            )}
           </p>
           <p style={{ fontSize: "13px" }}>Income remaining</p>
         </div>

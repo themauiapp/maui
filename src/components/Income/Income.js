@@ -4,6 +4,7 @@ import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { useHistory } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import { FETCHINCOMES } from "../../graphql/income";
+import CurrencyFormat from "react-currency-format";
 import { months } from "../../utilities/date";
 import errorHandler from "../../utilities/errorHandler";
 
@@ -77,14 +78,26 @@ const Income = () => {
             ) : null}
           </p>
           <p className="mb-3">
-            {currency} {income.total} in total
+            <CurrencyFormat
+              value={income.total}
+              displayType="text"
+              thousandSeparator={true}
+              prefix={currency}
+            />{" "}
+            in total
           </p>
           <p
             className={`mb-3 ${
-              income.remainder.startsWith("-") ? "text-red" : null
+              String(income.remainder).startsWith("-") ? "text-red" : null
             }`}
           >
-            {currency} {income.remainder} left
+            <CurrencyFormat
+              value={income.remainder}
+              displayType="text"
+              thousandSeparator={true}
+              prefix={currency}
+            />
+            {" left"}
           </p>
           <p>{income.expenses_count} expense items</p>
         </div>

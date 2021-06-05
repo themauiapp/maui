@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../contexts/AppContext";
 import { AuthHomeContext } from "../../../contexts/AuthHomeContext";
+import CurrencyFormat from "react-currency-format";
 import { getFormattedDate, parseDate } from "../../../utilities/date";
 import "./Table.css";
 
@@ -43,24 +44,24 @@ const Table = ({
     let expenseString;
 
     if (parseDate(new Date()) === date && period === "d") {
-      return "spent today";
+      return " spent today";
     }
     switch (period) {
       case "d":
-        expenseString = `spent on ${getFormattedDate(new Date(date))}`;
+        expenseString = ` spent on ${getFormattedDate(new Date(date))}`;
         break;
       case "w":
-        expenseString = `spent between ${getFormattedDate(
+        expenseString = ` spent between ${getFormattedDate(
           new Date(date)
         )} and ${getFormattedDate(
           new Date(new Date(date).getTime() + 604800000)
         )}`;
         break;
       case "m":
-        expenseString = `spent in ${getFormattedDate(new Date(date), true)}`;
+        expenseString = ` spent in ${getFormattedDate(new Date(date), true)}`;
         break;
       default:
-        expenseString = `spent on ${getFormattedDate(date)}`;
+        expenseString = ` spent on ${getFormattedDate(date)}`;
     }
     return expenseString;
   };
@@ -100,8 +101,13 @@ const Table = ({
     <div className="w-full flex flex-col bg-white shadow px-8 pt-8 bsm:px-12 bsm:pt-12 pb-8">
       <div className="flex flex-col bsm:flex-row mb-5 w-full justify-between">
         <p className="mb-2 bsm:mb-0">
-          {`${currency}
-          ${sum} ${parseExpenseString()}`}
+          <CurrencyFormat
+            value={sum}
+            displayType="text"
+            thousandSeparator={true}
+            prefix={currency}
+          />
+          {parseExpenseString()}
         </p>
         <div
           onClick={() => {
@@ -135,8 +141,12 @@ const Table = ({
                   {row.name.charAt(0).toUpperCase() + row.name.slice(1)}
                 </td>
                 <td className="text-center pt-8">
-                  {`${currency}
-                  ${row.amount_str}`}
+                  <CurrencyFormat
+                    value={row.amount}
+                    displayType="text"
+                    thousandSeparator={true}
+                    prefix={currency}
+                  />
                 </td>
                 <td className="text-center pt-8">{row.time}</td>
                 <td className="text-center">
@@ -169,7 +179,7 @@ const Table = ({
                           setExpense({
                             id: row.id,
                             name: row.name,
-                            amount: row.amount_str,
+                            amount: row.amount,
                             created_at: row.created_at,
                           });
                         }}

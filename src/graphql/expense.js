@@ -12,7 +12,7 @@ export const DAILYEXPENSES = gql`
       expenses {
         id
         name
-        amount_str
+        amount
         time
         created_at
       }
@@ -44,7 +44,7 @@ export const WEEKLYEXPENSES = gql`
       expenses {
         id
         name
-        amount_str
+        amount
         time
         created_at
       }
@@ -69,7 +69,7 @@ export const INCOMEEXPENSES = gql`
       expenses {
         id
         name
-        amount_str
+        amount
         time
         created_at
       }

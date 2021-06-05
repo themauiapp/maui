@@ -31,11 +31,19 @@ export const ADDINCOME = gql`
           name
           email
           email_verified_at
-          avatar
+          avatar {
+            url
+          }
           total_income
           timezone
           currency
-          latest_income_period
+          latest_income {
+            total
+            period {
+              month
+              year
+            }
+          }
         }
       }
     }
