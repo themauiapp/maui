@@ -84,7 +84,7 @@ const CurrentMonthData = () => {
             ) : (
               currency + "0"
             )}{" "}
-            left of
+            {"left of "}
             {income.total ? (
               <CurrencyFormat
                 value={income.total}

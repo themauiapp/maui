@@ -6,3 +6,9 @@ export const AddIncomeSchema = Yup.object().shape({
     .required("income is required")
     .min(1000, "valid income is required"),
 });
+
+export const UpdateIncomeSchema = Yup.object().shape({
+  income: Yup.number()
+    .required("income is required")
+    .min(1000, "valid income is required"),
+});

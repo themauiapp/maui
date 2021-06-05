@@ -48,7 +48,7 @@ const AddIncome = () => {
   return (
     <div
       className="bg-white rounded p-10 flex flex-col"
-      style={{ width: "500px" }}
+      style={{ width: "450px" }}
     >
       <p className="text-lg text-center font-semibold mb-3">
         Add Income for {months[new Date().getMonth()]}{" "}
@@ -58,7 +58,7 @@ const AddIncome = () => {
         <p className="leading-7 mb-4">
           Now that you are all verified, two final bits of information are
           required. What primary currency do you earn in and what is your total
-          income for this month.
+          income for this month ?
         </p>
       ) : (
         <p className="leading-7 mb-4">

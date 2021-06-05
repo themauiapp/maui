@@ -14,6 +14,7 @@ import Income from "../../components/Income/Income";
 import Analytics from "../../components/Analytics/Analytics";
 import Spinner from "../../components/Spinner/Spinner";
 import AddIncome from "../../components/AddIncome/AddIncome";
+import UpdateIncome from "../../components/UpdateIncome/UpdateIncome";
 import Expense from "../../components/Expense/Expense";
 import AddExpense from "../../components/AddExpense/AddExpense";
 import UpdateExpense from "../../components/UpdateExpense/UpdateExpense";
@@ -34,7 +35,8 @@ const AuthHome = () => {
     return currentPeriod !== latestPeriod;
   };
   const [dialogs, setDialogs] = useState({
-    income: determineIncomeState(),
+    addIncome: determineIncomeState(),
+    updateIncome: false,
     viewExpense: false,
     addExpense: false,
     updateExpense: false,
@@ -145,7 +147,8 @@ const AuthHome = () => {
                 }`}
                 style={{ background: "rgba(0,0,0,0.5)" }}
               >
-                {dialogs.income && <AddIncome />}
+                {dialogs.addIncome && <AddIncome />}
+                {dialogs.updateIncome && <UpdateIncome />}
                 {dialogs.viewExpense && <Expense name={viewedExpense} />}
                 {dialogs.addExpense && <AddExpense />}
                 {dialogs.updateExpense && <UpdateExpense expense={expense} />}

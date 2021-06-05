@@ -50,6 +50,36 @@ export const ADDINCOME = gql`
   }
 `;
 
+export const UPDATEINCOME = gql`
+  mutation UpdateIncome($income: Float!) {
+    updateIncome(income: $income) {
+      message
+      errorId
+      income {
+        user {
+          id
+          name
+          email
+          email_verified_at
+          avatar {
+            url
+          }
+          total_income
+          timezone
+          currency
+          latest_income {
+            total
+            period {
+              month
+              year
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const FETCHINCOMES = gql`
   query Incomes($page: Int!, $number: Int!) {
     incomes(page: $page, number: $number) {

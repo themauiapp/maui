@@ -12,7 +12,7 @@ const Income = () => {
   const {
     user: { currency },
   } = useContext(AppContext);
-  const { toggleSpinner } = useContext(AuthHomeContext);
+  const { toggleSpinner, dialogs, setDialogs } = useContext(AuthHomeContext);
   const [pageFetching, setPageFetching] = useState(null);
   const [incomes, setIncomes] = useState([]);
   const [pagination, setPagination] = useState(null);
@@ -73,6 +73,9 @@ const Income = () => {
             months[new Date().getMonth()] + " " + new Date().getFullYear() ? (
               <i
                 className="relative ml-2 cursor-pointer text-sm text-revolver-purple fa fa-pencil-alt"
+                onClick={() => {
+                  setDialogs({ ...dialogs, updateIncome: true });
+                }}
                 style={{ bottom: "1px" }}
               ></i>
             ) : null}
