@@ -72,7 +72,7 @@ const Login = () => {
     const formFields = [...fields];
     return formFields.map((field, index) => {
       return (
-        <div key={index} className="w-full px-10 mb-4 flex flex-col">
+        <div key={index} className="w-full px-8 sm:px-10 mb-4 flex flex-col">
           <input
             id={field.name}
             className="focus:outline-none p-3 text-gray-700"
@@ -135,9 +135,11 @@ const Login = () => {
       className="w-full pt-8 flex flex-col"
       onSubmit={formik.handleSubmit}
     >
-      <p className="text-lg sm:text-xl mb-5 px-10 nunito">Welcome back</p>
+      <p className="text-lg sm:text-xl mb-5 px-8 sm:px-10 nunito">
+        Welcome back
+      </p>
       {displayFields()}
-      <div className="relative mt-2 mx-10">
+      <div className="relative mt-2 mx-8 sm:mx-10">
         <Button submit={true}>Login</Button>
         <Loader display={loading} />
       </div>

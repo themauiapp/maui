@@ -11,8 +11,8 @@ const HomeSidebar = ({ active, scrollTo }) => {
   }, [active]);
 
   let classes =
-    "home__sidebar active z-20 transition-all duration-300 ease-in bg-white";
-  classes = display ? classes : classes.replace(/active z-20/, "z--9999");
+    "home__sidebar active z-9999 transition-all duration-300 ease-in bg-white";
+  classes = display ? classes : classes.replace(/active z-9999/, "z--9999");
 
   let linkClasses =
     "cursor-pointer mb-8 w-fc text-revolver-purple font-semibold";

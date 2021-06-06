@@ -144,8 +144,6 @@ const Home = () => {
               </Link>
             </div>
           )}
-          <Overlay active={sidebar} setActive={setSidebar} />
-          <HomeSidebar active={sidebar} scrollTo={scrollTo} />
         </div>
       </section>
       <section id="about" className="px-8 sm:px-12 md:px-24">
@@ -201,7 +199,7 @@ const Home = () => {
             processes to ensure a great user experience.
           </p>
         </div>
-        <div className="col-span-12 bmd:col-span-7 mb-10 bmd:mb-0 px-8 sm:px-12 md:px-24 py-8 sm:py-12 md:py-20 bg-light-grey">
+        <div className="col-span-12 bmd:col-span-7 mb-10 bmd:mb-0 px-8 sm:px-12 md:px-24 sm:py-12 md:py-20 sm:bg-light-grey">
           <div id="features" className="features flex">
             {displayFeatures()}
           </div>
@@ -281,6 +279,8 @@ const Home = () => {
         </div>
       </section>
       <Footer />
+      <HomeSidebar active={sidebar} scrollTo={scrollTo} />
+      <Overlay active={sidebar} setActive={setSidebar} width={768} />
     </div>
   );
 };

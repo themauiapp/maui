@@ -40,10 +40,10 @@ const ResetPassword = () => {
   };
   return (
     <form noValidate onSubmit={submit} className="w-full pt-8 flex flex-col">
-      <p className="text-lg sm:text-xl mb-5 px-10 nunito">
+      <p className="text-lg sm:text-xl mb-5 px-8 sm:px-10 nunito">
         Reset Your Password
       </p>
-      <div className="w-full px-10 mb-4 flex flex-col">
+      <div className="w-full px-8 sm:px-10 mb-4 flex flex-col">
         <input
           id={"password"}
           className="focus:outline-none p-3 text-gray-700"
@@ -63,7 +63,7 @@ const ResetPassword = () => {
           </p>
         )}
       </div>
-      <div className="relative mt-2 mx-10">
+      <div className="relative mt-2 mx-8 sm:mx-10">
         <Button submit={true}>Reset</Button>
         <Loader display={loading} />
       </div>

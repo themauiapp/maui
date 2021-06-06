@@ -10,7 +10,7 @@ const Overlay = ({ active, setActive, width }) => {
   return (
     <div
       onClick={() => {
-        if (window.screen.width <= width ?? 768) {
+        if (window.screen.width <= width) {
           setActive(!active);
         }
       }}
