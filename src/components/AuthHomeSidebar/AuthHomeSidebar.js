@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { Link } from "react-router-dom";
 
-const AuthHomeSidebar = () => {
+const AuthHomeSidebar = ({ toggle }) => {
   const { user } = useContext(AppContext);
   const link = document.URL.split("/my/")[1];
   const [activeLink, setActiveLink] = useState(
@@ -21,6 +21,9 @@ const AuthHomeSidebar = () => {
       return;
     }
     setActiveLink(link);
+    if (window.screen.width < 1025) {
+      toggle();
+    }
   };
 
   const displayLinks = () => {

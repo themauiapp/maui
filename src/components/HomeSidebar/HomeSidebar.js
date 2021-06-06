@@ -74,8 +74,8 @@ const HomeSidebar = ({ active, scrollTo }) => {
       <div className="quicksand bg-revolver-purple px-12 bsm:px-16 flex items-center h-1/2 text-white">
         <div className="flex flex-col">
           <p className="leading-7">
-            Creating good sustainable financial future in the modern diaspora
-            that is today.
+            Empowering you to take control over your financial future by
+            presenting you with trends and patterns of your spending habits.
           </p>
         </div>
       </div>

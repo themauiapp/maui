@@ -19,10 +19,12 @@ import Expense from "../../components/Expense/Expense";
 import AddExpense from "../../components/AddExpense/AddExpense";
 import UpdateExpense from "../../components/UpdateExpense/UpdateExpense";
 import "./AuthHome.css";
+import Overlay from "../../components/Overlay/Overlay";
 
 const AuthHome = () => {
   const { user } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
   const determineIncomeState = () => {
     const dt = new Date();
     const month = months[dt.getMonth()];
@@ -59,15 +61,21 @@ const AuthHome = () => {
   };
 
   const closeDialog = () => {
-    const { income } = dialogs;
+    const { addIncome } = dialogs;
 
-    if (income) {
+    if (addIncome) {
       if (determineIncomeState()) {
         return;
       }
     }
 
-    setDialogs({ income: false, expense: false, addExpense: false });
+    setDialogs({
+      addIncome: false,
+      updateIncome: false,
+      viewExpense: false,
+      addExpense: false,
+      updateExpense: false,
+    });
   };
 
   const toggleSpinner = (loadingState = null) => {
@@ -78,10 +86,14 @@ const AuthHome = () => {
     setLoading(!loading);
   };
 
+  const toggleSidebar = () => {
+    setSidebar(!sidebar);
+  };
+
   return (
     <div className="w-screen min-h-screen flex">
-      <div className="auth-home__sidebar">
-        <AuthHomeSidebar />
+      <div className={`auth-home__sidebar ${sidebar ? "active" : ""}`}>
+        <AuthHomeSidebar toggle={toggleSidebar} />
       </div>
       <div className="auth-home__main bg-light-grey">
         {!user.email_verified_at && (
@@ -121,7 +133,7 @@ const AuthHome = () => {
                 setExpense,
               }}
             >
-              <Header />
+              <Header toggleSidebar={toggleSidebar} />
               <div className="px-8 sm:px-16 bmd:px-24">
                 <Switch>
                   <Route path="/my/dashboard">
@@ -138,6 +150,7 @@ const AuthHome = () => {
                   </Route>
                 </Switch>
               </div>
+              <Overlay active={sidebar} setActive={setSidebar} width={1025} />
               <div
                 onClick={closeDialog}
                 className={`transition-opacity duration-500 ease-in fixed top-0 left-0 w-screen h-screen flex justify-center items-center ${

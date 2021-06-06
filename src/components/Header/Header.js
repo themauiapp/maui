@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 import errorHandler from "../../utilities/errorHandler";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ toggleSidebar }) => {
   const history = useHistory();
   const [options, setOptions] = useState(false);
   const [avatar, setAvatar] = useState(null);
@@ -72,13 +72,35 @@ const Header = () => {
     }
   };
 
+  const parseName = () => {
+    if (window.screen.width > 370) {
+      if (user.name.length > 25) {
+        return user.name.slice(0, 22) + "...";
+      }
+      return user.name;
+    }
+
+    return user.name.slice(0, 12) + "...";
+  };
+
   return (
     <div className="w-full px-8 sm:px-16 bmd:px-24 py-8 flex justify-between items-center">
-      <img
-        src="/images/auth-home/search.png"
-        alt="search"
-        style={{ width: "28px", height: "28px" }}
-      />
+      {window.screen.width > 1024 ? (
+        <img
+          src="/images/auth-home/search.png"
+          alt="search"
+          style={{ width: "28px", height: "28px" }}
+        />
+      ) : (
+        <div
+          onClick={() => {
+            toggleSidebar();
+          }}
+          className="w-12 h-12 rounded bg-revolver-purple flex justify-center items-center"
+        >
+          <i className="fa fa-bars text-lg text-white"></i>
+        </div>
+      )}
       <div
         onClick={() => {
           setOptions(!options);
@@ -92,15 +114,15 @@ const Header = () => {
               ? user.avatar.url
               : "/images/auth-home/DefaultAvatar.png"
           }
-          className="cursor-pointer object-cover mr-4 w-12 h-12 rounded-full"
+          className="cursor-pointer object-cover mr-3 sm:mr-4 w-12 h-12 rounded-full"
           alt={user.name}
         />
         <div className="cursor-pointer mr-4 flex flex-col">
-          <p>
-            {user.name.length > 25 ? user.name.slice(0, 22) + "..." : user.name}
-          </p>
+          <p>{parseName()}</p>
           <p className="text-gray-800" style={{ fontSize: "13px" }}>
-            {user.email}
+            {window.screen.width > 370
+              ? user.email
+              : user.email.slice(0, 15) + "..."}
           </p>
         </div>
         <i
@@ -112,7 +134,7 @@ const Header = () => {
             e.stopPropagation();
           }}
           className={`header__options absolute bottom-0 bg-white text-sm text-center shadow px-4 py-3 flex flex-col ${
-            options ? "z-30 opacity-100" : "z--9999 opacity-0"
+            options ? "z-20 opacity-100" : "z--9999 opacity-0"
           }`}
         >
           <p

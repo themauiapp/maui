@@ -46,10 +46,7 @@ const AddIncome = () => {
   };
 
   return (
-    <div
-      className="bg-white rounded p-10 flex flex-col"
-      style={{ width: "450px" }}
-    >
+    <div className="dialog bg-white rounded p-10 flex flex-col">
       <p className="text-lg text-center font-semibold mb-3">
         Add Income for {months[new Date().getMonth()]}{" "}
         {new Date().getFullYear()}

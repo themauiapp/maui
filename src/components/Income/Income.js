@@ -56,7 +56,7 @@ const Income = () => {
     }
 
     setPageFetching(page);
-    const variables = { page, number: 9 };
+    const variables = { page, number: 8 };
     await fetchIncomesQuery({ variables });
   };
 
@@ -65,44 +65,57 @@ const Income = () => {
       return (
         <div
           key={index}
-          className="shadow bg-white p-5 mb-5 flex flex-col col-span-4"
+          className="shadow bg-white p-5 mb-5 flex flex-col col-span-12 bsm:col-span-6 grid grid-cols-12"
         >
-          <p className="mb-3 font-semibold text-revolver-purple">
-            {income.period.month} {income.period.year}{" "}
-            {income.period.month + " " + income.period.year ===
-            months[new Date().getMonth()] + " " + new Date().getFullYear() ? (
-              <i
-                className="relative ml-2 cursor-pointer text-sm text-revolver-purple fa fa-pencil-alt"
-                onClick={() => {
-                  setDialogs({ ...dialogs, updateIncome: true });
-                }}
-                style={{ bottom: "1px" }}
-              ></i>
-            ) : null}
-          </p>
-          <p className="mb-3">
-            <CurrencyFormat
-              value={income.total}
-              displayType="text"
-              thousandSeparator={true}
-              prefix={currency}
-            />{" "}
-            in total
-          </p>
-          <p
-            className={`mb-3 ${
-              String(income.remainder).startsWith("-") ? "text-red" : null
-            }`}
-          >
-            <CurrencyFormat
-              value={income.remainder}
-              displayType="text"
-              thousandSeparator={true}
-              prefix={currency}
-            />
-            {" left"}
-          </p>
-          <p>{income.expenses_count} expense items</p>
+          <div className="col-span-6 flex flex-col">
+            <p className="mb-3">
+              {income.period.month} {income.period.year}{" "}
+              {income.period.month + " " + income.period.year ===
+              months[new Date().getMonth()] + " " + new Date().getFullYear() ? (
+                <i
+                  className="relative ml-2 cursor-pointer text-sm text-revolver-purple fa fa-pencil-alt"
+                  onClick={() => {
+                    setDialogs({ ...dialogs, updateIncome: true });
+                  }}
+                  style={{ bottom: "1px" }}
+                ></i>
+              ) : null}
+            </p>
+            <p className="mb-3">
+              <CurrencyFormat
+                value={income.total}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />{" "}
+              earned
+            </p>
+            <p
+              className={`mb-3 ${
+                String(income.remainder).startsWith("-") ? "text-red" : null
+              }`}
+            >
+              <CurrencyFormat
+                value={income.remainder}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+              {" left"}
+            </p>
+            <p>{income.expenses_count} expense items</p>
+          </div>
+          <div className="col-span-6 flex flex-col justify-center items-center">
+            <p className="flex text-md italic sm:not-italic">
+              <CurrencyFormat
+                value={income.total - income.remainder}
+                displayType="text"
+                thousandSeparator={true}
+                prefix={currency}
+              />
+              <span className="ml-1">spent</span>
+            </p>
+          </div>
         </div>
       );
     });

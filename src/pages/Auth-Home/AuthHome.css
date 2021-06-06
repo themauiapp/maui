@@ -10,13 +10,43 @@
   min-height: 100vh;
 }
 
-@media(max-width:1024px) {
-    .auth-home__sidebar {
-        display: none;
-    }
+@media (max-width: 1024px) {
+  .auth-home__sidebar {
+    position: fixed;
+    top: 0;
+    left: -25vw;
+    width: 25vw;
+    transition: left 0.3s ease-in;
+    z-index: 9999;
+  }
 
-    .auth-home__main {
-        margin-left:0;
-        width:100vw;
-    }
+  .auth-home__sidebar.active {
+    left: 0;
+  }
+
+  .auth-home__main {
+    margin-left: 0;
+    width: 100vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-home__sidebar {
+    left: -35vw;
+    width: 35vw;
+  }
+}
+
+@media (max-width: 576px) {
+  .auth-home__sidebar {
+    left: -60vw;
+    width: 60vw;
+  }
+}
+
+@media (max-width: 359px) {
+  .auth-home__sidebar {
+    left: -70vw;
+    width: 70vw;
+  }
 }

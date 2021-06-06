@@ -91,6 +91,10 @@ export const FETCHINCOMES = gql`
           year
         }
         expenses_count
+        top_expense {
+          name
+          amount
+        }
       }
       pagination {
         currentPage

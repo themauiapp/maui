@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button";
 import Feature from "../../components/Feature/Feature";
 import Footer from "../../components/Footer/Footer";
 import HomeSidebar from "../../components/HomeSidebar/HomeSidebar";
+import Overlay from "../../components/Overlay/Overlay";
 import { features } from "./data";
 import "./Home.css";
 
@@ -59,12 +60,6 @@ const Home = () => {
     element.scrollIntoView({ behavior: "smooth" });
     setSidebar(false);
   };
-
-  let overlayClasses =
-    "fixed top-0 left-0 w-screen h-screen transition-all duration-300 ease-in opacity-100 z-10";
-  overlayClasses = sidebar
-    ? overlayClasses
-    : overlayClasses.replace(/opacity-100 z-10/, "opacity-0 z--9999");
 
   return (
     <div id="home" className="min-h-screen w-screen quicksand">
@@ -149,15 +144,7 @@ const Home = () => {
               </Link>
             </div>
           )}
-          <div
-            onClick={() => {
-              if (window.screen.width <= 768) {
-                setSidebar(!sidebar);
-              }
-            }}
-            className={overlayClasses}
-            style={{ background: "rgba(0,0,0,0.2)" }}
-          />
+          <Overlay active={sidebar} setActive={setSidebar} />
           <HomeSidebar active={sidebar} scrollTo={scrollTo} />
         </div>
       </section>

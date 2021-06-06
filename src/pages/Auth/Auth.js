@@ -32,6 +32,9 @@ const Auth = () => {
     return "-27.5%";
   };
 
+  const loginFormTop = () =>
+    document.URL.includes("password") ? "-6%" : "-12.5%";
+
   const signupFormMarginBottom = () => {
     if (window.screen.width > 576) {
       return "mb-20";
@@ -95,7 +98,7 @@ const Auth = () => {
           <div
             className="auth__form relative w-full bmd:w-1/2 lg:w-1/3 bg-white h-fc"
             style={{
-              top: signup ? signupFormTop() : "-10%",
+              top: signup ? signupFormTop() : loginFormTop(),
             }}
           >
             <Switch>
