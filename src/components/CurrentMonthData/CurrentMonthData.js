@@ -29,7 +29,6 @@ const CurrentMonthData = () => {
   }, []);
 
   const { data, error, loading } = useQuery(CURRENTMONTHINCOME, {
-    variables: { id: user.id },
     fetchPolicy: "network-only",
   });
 

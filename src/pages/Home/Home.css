@@ -66,6 +66,7 @@
 .features {
   overflow-x: scroll;
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 .features::-webkit-scrollbar {

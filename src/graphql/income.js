@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const CURRENTMONTHINCOME = gql`
-  query CurrentMonthIncome($id: ID!) {
-    currentMonthIncome(id: $id) {
+  query CurrentMonthIncome {
+    currentMonthIncome {
       total
       remainder
       percent_remainder

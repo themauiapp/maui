@@ -15,14 +15,14 @@ const displayFeatures = () => {
   });
 };
 
-// const scrollFeatures = (right = true) => {
-//   const features = document.getElementById("features");
-//   if (right) {
-//     features.scrollLeft += 150;
-//     return;
-//   }
-//   features.scrollLeft -= 150;
-// };
+const scrollFeatures = (right = true) => {
+  const features = document.getElementById("app_features");
+  if (right) {
+    features.scrollLeft += 300;
+    return;
+  }
+  features.scrollLeft -= 300;
+};
 
 const navScroll = () => {
   const nav = document.getElementById("nav");
@@ -200,8 +200,22 @@ const Home = () => {
           </p>
         </div>
         <div className="col-span-12 bmd:col-span-7 mb-10 bmd:mb-0 px-8 sm:px-12 md:px-24 sm:py-12 md:py-20 sm:bg-light-grey">
-          <div id="features" className="features flex">
+          <div id="app_features" className="features flex mb-4">
             {displayFeatures()}
+          </div>
+          <div className="flex justify-between">
+            <i
+              onClick={() => {
+                scrollFeatures(false);
+              }}
+              className="fa fa-long-arrow-alt-left text-lg cursor-pointer"
+            ></i>
+            <i
+              onClick={() => {
+                scrollFeatures();
+              }}
+              className="fa fa-long-arrow-alt-right text-lg cursor-pointer"
+            ></i>
           </div>
         </div>
         <div className="bmd:hidden col-span-12 flex flex-col justify-center px-8 sm:px-12 md:px-24">
@@ -218,36 +232,36 @@ const Home = () => {
       </section>
       <section className="bg-white px-8 sm:px-12 md:px-24 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16 bmd:p-24 grid grid-cols-12">
         <div className="col-span-12 lg:col-start-2 lg:col-end-12 grid grid-cols-12 items-center">
-          <div className="relative col-span-12 bmd:col-span-6 lg:col-span-5 flex flex-col h-fc">
+          <div className="hiddenrelative col-span-12 bmd:col-span-6 lg:col-span-5 flex flex-col h-fc">
             <div className="features__img-ease relative grid grid-cols-12 col-gap-5 sm:mb-5">
               <div className="col-span-12 sm:col-span-6">
                 <img
-                  src="/images/home/calculator.jpg"
+                  src="/images/home/man-headphones.jpg"
                   className="w-full object-cover"
-                  alt="calculator"
+                  alt="man wearing headphones"
                 />
               </div>
               <div className="hidden sm:block col-span-12 sm:col-span-6">
                 <img
-                  src="/images/home/calculator.jpg"
+                  src="/images/home/girl-walking.jpg"
                   className="w-full object-cover"
-                  alt="calculator"
+                  alt="girl walking"
                 />
               </div>
             </div>
             <div className="hidden features__img-ease relative sm:grid grid-cols-12 col-gap-5">
               <div className="col-span-6">
                 <img
-                  src="/images/home/calculator.jpg"
+                  src="/images/home/rasta-smiling.jpg"
                   className="w-full object-cover"
-                  alt="calculator"
+                  alt="black man smiling"
                 />
               </div>
               <div className="col-span-6">
                 <img
-                  src="/images/home/calculator.jpg"
+                  src="/images/home/people-on-road.jpg"
                   className="w-full object-cover"
-                  alt="calculator"
+                  alt="crowd walking on sidewalk"
                 />
               </div>
             </div>
