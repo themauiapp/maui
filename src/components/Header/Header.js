@@ -20,6 +20,21 @@ const Header = ({ toggleSidebar }) => {
   const [logoutMutation] = useMutation(LOGOUT);
   const user = new Cookies().get("maui_user");
 
+  const parseSearchText = () => {
+    const pathname = window.location.pathname;
+    if (pathname.startsWith("/my/search")) {
+      const pathArray = pathname.split("/");
+      let searchTerm = pathArray[pathArray.length - 1];
+      if (searchTerm.split("?").length > 1) {
+        searchTerm = searchTerm.split("?")[0];
+      }
+      return searchTerm;
+    }
+    return "";
+  };
+
+  const [searchTerm, setSearchTerm] = useState(parseSearchText());
+
   const logout = async () => {
     toggleSpinner();
     try {
@@ -83,14 +98,34 @@ const Header = ({ toggleSidebar }) => {
     return user.name.slice(0, 12) + "...";
   };
 
+  const search = (e) => {
+    e.preventDefault();
+    history.push(`/my/search/${searchTerm}`);
+  };
+
   return (
     <div className="w-full px-8 sm:px-16 bmd:px-24 py-8 flex justify-between items-center">
       {window.screen.width > 1024 ? (
-        <img
-          src="/images/auth-home/search.png"
-          alt="search"
-          style={{ width: "28px", height: "28px" }}
-        />
+        <form className="flex" onSubmit={search}>
+          <img
+            src="/images/auth-home/search.png"
+            className="mr-2 mt-2 cursor-pointer"
+            onClick={() => {
+              document.getElementById("searchInput").focus();
+            }}
+            alt="search"
+            style={{ width: "28px", height: "28px" }}
+          />
+          <input
+            id="searchInput"
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+            value={searchTerm}
+            className="focus:outline-none text-md mt-2 bg-transparent relative"
+            style={{ top: "-1px" }}
+          />
+        </form>
       ) : (
         <div
           onClick={() => {

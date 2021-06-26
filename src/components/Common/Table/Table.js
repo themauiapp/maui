@@ -10,6 +10,7 @@ const Table = ({
   pagination,
   date,
   period,
+  searchTerm,
   fetch,
   sum,
   loading,
@@ -42,6 +43,10 @@ const Table = ({
 
   const parseExpenseString = () => {
     let expenseString;
+
+    if (!date) {
+      return ` spent on ${searchTerm}`;
+    }
 
     if (parseDate(new Date()) === date && period === "d") {
       return " spent today";
@@ -111,7 +116,11 @@ const Table = ({
         </p>
         <div
           onClick={() => {
-            fetch(date, period, null, true);
+            if (date) {
+              fetch(date, period, null, true);
+              return;
+            }
+            fetch(1, true);
           }}
           className="flex items-end cursor-pointer"
         >

@@ -136,3 +136,33 @@ export const DELETEEXPENSE = gql`
     }
   }
 `;
+
+export const SEARCHEXPENSES = gql`
+  query SearchExpenses(
+    $searchTerm: String!
+    $number: Int
+    $page: Int
+    $all: Boolean
+  ) {
+    searchExpenses(
+      searchTerm: $searchTerm
+      number: $number
+      page: $page
+      all: $all
+    ) {
+      expenses {
+        id
+        name
+        amount
+        time
+        created_at
+      }
+      sum
+      errorId
+      pagination {
+        currentPage
+        maxPages
+      }
+    }
+  }
+`;

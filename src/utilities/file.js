@@ -20,7 +20,7 @@ const periodText = (period) => {
       text = "monthly";
       break;
     default:
-      text = "daily";
+      text = "";
   }
 
   return text;

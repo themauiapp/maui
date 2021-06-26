@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 const AuthHomeSidebar = ({ toggle }) => {
   const { user } = useContext(AppContext);
-  const link = document.URL.split("/my/")[1];
+  const link = document.URL.includes("search")
+    ? "dashboard"
+    : document.URL.split("/my/")[1];
   const [activeLink, setActiveLink] = useState(
     user.email_verified_at ? link : null
   );

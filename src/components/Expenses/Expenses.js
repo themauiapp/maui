@@ -22,7 +22,7 @@ const Expenses = () => {
   const {
     user: { name, currency },
   } = useContext(AppContext);
-  const { setLoading } = useContext(AuthHomeContext);
+  const { toggleSpinner } = useContext(AuthHomeContext);
   const [
     fetchDailyExpenses,
     { data: dailyExpenses, loading: dailyLoading, error: dailyError },
@@ -151,7 +151,7 @@ const Expenses = () => {
     if (!proceed) {
       return;
     }
-    setLoading(true);
+    toggleSpinner(true);
     try {
       const variables = { id };
       const response = await deleteExpenseMutation({ variables });
@@ -165,7 +165,7 @@ const Expenses = () => {
     } catch (error) {
       errorHandler(error, history);
     } finally {
-      setLoading(false);
+      toggleSpinner(false);
     }
   };
 

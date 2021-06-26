@@ -12,6 +12,7 @@ import Dashboard from "../../components/Dashboard/Dashboard";
 import Expenses from "../../components/Expenses/Expenses";
 import Income from "../../components/Income/Income";
 import Analytics from "../../components/Analytics/Analytics";
+import Search from "../../components/Search/Search";
 import Spinner from "../../components/Spinner/Spinner";
 import AddIncome from "../../components/AddIncome/AddIncome";
 import UpdateIncome from "../../components/UpdateIncome/UpdateIncome";
@@ -147,6 +148,9 @@ const AuthHome = () => {
                   </Route>
                   <Route path="/my/analytics">
                     <Analytics />
+                  </Route>
+                  <Route path="/my/search/:searchTerm">
+                    <Search />
                   </Route>
                 </Switch>
               </div>
