@@ -11,8 +11,8 @@ export const CURRENTMONTHINCOME = gql`
 `;
 
 export const INCOMESTATS = gql`
-  query IncomeStats($id: ID!) {
-    incomeStats(id: $id) {
+  query IncomeStats {
+    incomeStats {
       income_total
       income_spent
       income_remainder

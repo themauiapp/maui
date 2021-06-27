@@ -9,7 +9,6 @@ const IncomeStats = () => {
   const { user } = useContext(AppContext);
   const currency = user.currency ?? "";
   const { data, error, loading } = useQuery(INCOMESTATS, {
-    variables: { id: user.id },
     fetchPolicy: "network-only",
   });
 

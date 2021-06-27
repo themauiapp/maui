@@ -35,7 +35,7 @@
 .btn > .content {
   height: 100%;
   color: inherit;
-  z-index: 10;
+  z-index: 100;
 }
 
 .btn-outlined > .layer {
