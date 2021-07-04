@@ -5,14 +5,21 @@ import { useHistory } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import { FETCHINCOMES } from "../../graphql/income";
 import CurrencyFormat from "react-currency-format";
-import { months } from "../../utilities/date";
+import { monthEnds, months } from "../../utilities/date";
 import errorHandler from "../../utilities/errorHandler";
 
 const Income = () => {
   const {
     user: { currency },
   } = useContext(AppContext);
-  const { toggleSpinner, dialogs, setDialogs } = useContext(AuthHomeContext);
+  const {
+    toggleSpinner,
+    dialogs,
+    setDialogs,
+    lastUpdatedExpense,
+    setShowReloadPage,
+    reloadPage,
+  } = useContext(AuthHomeContext);
   const [pageFetching, setPageFetching] = useState(null);
   const [incomes, setIncomes] = useState([]);
   const [pagination, setPagination] = useState(null);
@@ -28,9 +35,51 @@ const Income = () => {
   }, []);
 
   useEffect(() => {
+    if (lastUpdatedExpense) {
+      isIncomeAffected(lastUpdatedExpense.created_at);
+    }
+    // eslint-disable-next-line
+  }, [lastUpdatedExpense]);
+
+  useEffect(() => {
+    if (reloadPage) {
+      fetchIncomes(pagination ? pagination.currentPage : 1, true);
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
+
+  // helper method to check if the latest updated expense
+  // is for an income period which the user is currently viewing
+  const isIncomeAffected = (dt) => {
+    const dateInMilliseconds = new Date(dt).getTime();
+    const lastIncomeTime = parseIncomeTime(incomes[0], true);
+    const firstIncomeTime = parseIncomeTime(incomes[incomes.length - 1]);
+    // eslint-disable-next-line
+    if (
+      dateInMilliseconds >= firstIncomeTime &&
+      dateInMilliseconds <= lastIncomeTime
+    ) {
+      setShowReloadPage(true);
+    }
+  };
+
+  const parseIncomeTime = (income, last = false) => {
+    const incomeYear = income.period.year;
+    const monthIndex = months.findIndex(
+      (month) => month === income.period.month
+    );
+    let incomeMonth = String(monthIndex + 1);
+    incomeMonth = incomeMonth.length === 1 ? "0" + incomeMonth : incomeMonth;
+    return new Date(
+      `${incomeYear}-${incomeMonth}-${
+        last ? monthEnds[monthIndex] : "01"
+      } 00:00:00`
+    ).getTime();
+  };
+
+  useEffect(() => {
     if (data) {
       toggleSpinner(false);
-      console.log(data);
       const incomes = data.incomes.incomes;
       const pagination = data.incomes.pagination;
       setIncomes(incomes);
@@ -47,12 +96,12 @@ const Income = () => {
     // eslint-disable-next-line
   }, [data, error]);
 
-  const fetchIncomes = async (page) => {
-    if (pagination && page === pagination.currentPage) {
+  const fetchIncomes = async (page, spin = false) => {
+    if (pagination && page === pagination.currentPage && !spin) {
       return;
     }
 
-    if (incomes.length === 0) {
+    if (incomes.length === 0 || spin) {
       toggleSpinner(true);
     }
 
