@@ -1,15 +1,13 @@
 import { notifyError } from "../services/notify";
-import { logout } from "../services/auth";
 import { clearCookies } from "../services/cookie";
 
 const errorHandler = async (error, history, context = null) => {
-  let errorMessage = "An error occured";
+  let errorMessage = "An Error Occured";
 
   if (error.networkError && error.networkError.statusCode === 419) {
-    await clearCookies();
-    await logout();
-    notifyError("Session expired");
     history.push("/session/new");
+    await clearCookies();
+    notifyError("Session Expired");
     return;
   }
 

@@ -102,6 +102,10 @@ export const ADDEXPENSE = gql`
   mutation AddExpense($name: String!, $amount: Float!, $date: String) {
     addExpense(name: $name, amount: $amount, date: $date) {
       errorId
+      expense {
+        name
+        created_at
+      }
     }
   }
 `;

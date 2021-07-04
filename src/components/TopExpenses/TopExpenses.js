@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Bar } from "react-chartjs-2";
 import { AppContext } from "../../contexts/AppContext";
+// import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { TOPEXPENSES } from "../../graphql/expense";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 
 const TopExpenses = () => {
   const {
     user: { id },
   } = useContext(AppContext);
+  //   const { reloadPage } = useContext(AuthHomeContext);
   const defaultChartState = {
     labels: null,
     datasets: [
@@ -21,10 +23,23 @@ const TopExpenses = () => {
     ],
   };
   const [chartState, setChartState] = useState(defaultChartState);
-  const { error, data } = useQuery(TOPEXPENSES, {
+  const [fetchTopExpenses, { error, data }] = useLazyQuery(TOPEXPENSES, {
     variables: { id },
     fetchPolicy: "network-only",
   });
+
+  useEffect(() => {
+    fetchTopExpenses();
+    // eslint-disable-next-line
+  }, []);
+
+  //   useEffect(() => {
+  //     alert("alal");
+  //     if (reloadPage) {
+  //       fetchTopExpenses();
+  //     }
+  //     // eslint-disable-next-line
+  //   }, [reloadPage]);
 
   useEffect(() => {
     if (data) {

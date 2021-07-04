@@ -23,6 +23,7 @@ const Income = () => {
 
   useEffect(() => {
     fetchIncomes(1);
+    window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
 

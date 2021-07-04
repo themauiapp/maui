@@ -54,6 +54,10 @@ const Expenses = () => {
   const [download, setDownload] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (dailyExpenses) {
       parseExpenses(dailyExpenses.dailyExpenses);
     }

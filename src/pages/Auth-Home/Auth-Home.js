@@ -46,6 +46,9 @@ const AuthHome = () => {
   });
   const [viewedExpense, setViewedExpense] = useState(null);
   const [expense, setExpense] = useState(null);
+  const [lastUpdatedExpense, setLastUpdatedExpense] = useState(null);
+  const [showReloadPage, setShowReloadPage] = useState(false);
+  const [reloadPage, setReloadPage] = useState(false);
   const [resendVerificationEmailMutation] = useMutation(
     RESENDVERIFICATIONEMAIL
   );
@@ -127,11 +130,14 @@ const AuthHome = () => {
             <AuthHomeContext.Provider
               value={{
                 toggleSpinner,
-                setLoading,
                 dialogs,
                 setDialogs,
                 setViewedExpense,
                 setExpense,
+                lastUpdatedExpense,
+                setLastUpdatedExpense,
+                setShowReloadPage,
+                reloadPage,
               }}
             >
               <Header toggleSidebar={toggleSidebar} />
@@ -176,21 +182,40 @@ const AuthHome = () => {
       </div>
 
       {user.email_verified_at && (
-        <div
-          onClick={() => {
-            if (loading) {
-              return;
-            }
-            setDialogs({ ...dialogs, addExpense: true });
-          }}
-          className=" fixed bottom-0 right-0 cursor-pointer z-20 mb-6 mr-6 bsm:mb-8 bsm:mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white"
-        >
-          {loading ? (
-            <Spinner display={true} fixed={false} alt={true} />
-          ) : (
-            <i className="fas fa-plus"></i>
-          )}
-        </div>
+        <>
+          <div
+            onClick={() => {
+              if (loading) {
+                return;
+              }
+              setDialogs({ ...dialogs, addExpense: true });
+            }}
+            className="fixed bottom-0 right-0 cursor-pointer z-20 mb-6 mr-6 bsm:mb-8 bsm:mr-8 rounded-full w-16 h-16 flex justify-center items-center bg-revolver-purple text-white"
+          >
+            {loading ? (
+              <Spinner display={true} fixed={false} alt={true} />
+            ) : (
+              <i className="fas fa-plus"></i>
+            )}
+          </div>
+          <div
+            onClick={() => {
+              setReloadPage(true);
+              setTimeout(() => {
+                setReloadPage(false);
+                setLastUpdatedExpense(null);
+              }, 1500);
+              setShowReloadPage(false);
+            }}
+            className={`fixed bottom-0 left-0 mb-8 cursor-pointer transition-opacity duration-300 ease-in flex items-center w-64 ml-10 p-5 shadow bg-white rounded-md ${
+              showReloadPage ? "z-10 opacity-100" : "z--9999 opacity-0"
+            }`}
+            style={{ fontSize: "14.5px", borderRadius: "6px" }}
+          >
+            <i className="far fa-lightbulb text-2xl mr-4"></i>
+            <p>reload the page to see the updates</p>
+          </div>
+        </>
       )}
       {!user.email_verified_at && <Spinner display={loading} />}
     </div>

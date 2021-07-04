@@ -29,6 +29,10 @@ const Analytics = () => {
   const history = useHistory();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (weeklyData) {
       const data = JSON.parse(weeklyData.compareWeekExpenses);
       const { weeks } = data;

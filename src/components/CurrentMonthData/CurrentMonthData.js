@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
+import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { CURRENTMONTHINCOME } from "../../graphql/income";
 import CurrencyFormat from "react-currency-format";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import DataFetching from "../DataFetching/DataFetching";
 import {
   months,
@@ -15,6 +16,8 @@ import errorHandler from "../../utilities/errorHandler";
 
 const CurrentMonthData = () => {
   const { user } = useContext(AppContext);
+  const { reloadPage } = useContext(AuthHomeContext);
+  const [altLoading, setAltLoading] = useState(true);
   const currency = user.currency ?? "";
   const history = useHistory();
   useEffect(() => {
@@ -28,13 +31,29 @@ const CurrentMonthData = () => {
     // eslint-disable-next-line
   }, []);
 
-  const { data, error, loading } = useQuery(CURRENTMONTHINCOME, {
-    fetchPolicy: "network-only",
-  });
+  const [fetchCurrentIncome, { data, error, loading }] = useLazyQuery(
+    CURRENTMONTHINCOME,
+    {
+      fetchPolicy: "network-only",
+    }
+  );
+
+  useEffect(() => {
+    fetchCurrentIncome();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (reloadPage) {
+      fetchCurrentIncome();
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
 
   useEffect(() => {
     if (data) {
       setIncome(data.currentMonthIncome);
+      setAltLoading(false);
     }
 
     if (error) {
@@ -109,7 +128,7 @@ const CurrentMonthData = () => {
           {months[new Date().getMonth()]} ending in {countdown}
         </p>
       </div>
-      <DataFetching display={loading} />
+      <DataFetching display={loading || altLoading} />
     </div>
   );
 };

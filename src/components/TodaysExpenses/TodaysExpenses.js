@@ -15,11 +15,12 @@ const TodaysExpenses = () => {
   const {
     user: { name, currency },
   } = useContext(AppContext);
-  const { setLoading } = useContext(AuthHomeContext);
-  const [
-    fetchDailyExpenses,
-    { data, loading, error },
-  ] = useLazyQuery(DAILYEXPENSES, { fetchPolicy: "network-only" });
+  const { toggleSpinner, lastUpdatedExpense, reloadPage } =
+    useContext(AuthHomeContext);
+  const [fetchDailyExpenses, { data, loading, error }] = useLazyQuery(
+    DAILYEXPENSES,
+    { fetchPolicy: "network-only" }
+  );
   const [deleteExpenseMutation] = useMutation(DELETEEXPENSE);
   const [expenses, setExpenses] = useState(null);
   const [sum, setSum] = useState(null);
@@ -31,6 +32,17 @@ const TodaysExpenses = () => {
     fetchExpenses(1);
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (reloadPage && lastUpdatedExpense) {
+      if (
+        lastUpdatedExpense.created_at.split(" ")[0] === parseDate(new Date())
+      ) {
+        fetchExpenses(1);
+      }
+    }
+    // eslint-disable-next-line
+  }, [lastUpdatedExpense, reloadPage]);
 
   useEffect(() => {
     if (data) {
@@ -78,7 +90,7 @@ const TodaysExpenses = () => {
     if (!proceed) {
       return;
     }
-    setLoading(true);
+    toggleSpinner(true);
     try {
       const variables = { id };
       const response = await deleteExpenseMutation({ variables });
@@ -92,7 +104,7 @@ const TodaysExpenses = () => {
     } catch (error) {
       errorHandler(error, history);
     } finally {
-      setLoading(false);
+      toggleSpinner(false);
     }
   };
 
@@ -110,7 +122,7 @@ const TodaysExpenses = () => {
           deleteExpense={deleteExpense}
         />
       )}
-      <DataFetching display={loading && !expenses} />
+      <DataFetching display={loading} />
     </div>
   );
 };

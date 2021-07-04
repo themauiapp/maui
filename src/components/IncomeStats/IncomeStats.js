@@ -1,20 +1,39 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import CurrencyFormat from "react-currency-format";
 import { INCOMESTATS } from "../../graphql/income";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import DataFetching from "../DataFetching/DataFetching";
 
 const IncomeStats = () => {
   const { user } = useContext(AppContext);
+  const { reloadPage } = useContext(AuthHomeContext);
   const currency = user.currency ?? "";
-  const { data, error, loading } = useQuery(INCOMESTATS, {
-    fetchPolicy: "network-only",
-  });
+  const [altLoading, setAltLoading] = useState(true);
+  const [fetchIncomeStats, { data, error, loading }] = useLazyQuery(
+    INCOMESTATS,
+    {
+      fetchPolicy: "network-only",
+    }
+  );
+
+  useEffect(() => {
+    fetchIncomeStats();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (reloadPage) {
+      fetchIncomeStats();
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
 
   useEffect(() => {
     if (data) {
       setStats(data.incomeStats);
+      setAltLoading(false);
     }
 
     if (error) {
@@ -82,7 +101,7 @@ const IncomeStats = () => {
           <p style={{ fontSize: "13px" }}>Income remaining</p>
         </div>
       </div>
-      <DataFetching display={loading} />
+      <DataFetching display={loading || altLoading} />
     </div>
   );
 };

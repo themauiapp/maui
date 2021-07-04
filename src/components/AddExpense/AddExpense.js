@@ -13,7 +13,8 @@ import errorHandler from "../../utilities/errorHandler";
 import { notifySuccess } from "../../services/notify";
 
 const AddExpense = () => {
-  const { dialogs, setDialogs } = useContext(AuthHomeContext);
+  const { dialogs, setDialogs, setLastUpdatedExpense } =
+    useContext(AuthHomeContext);
   const [addExpenseMutation, { loading }] = useMutation(ADDEXPENSE);
   const history = useHistory();
   const [date, setDate] = useState(new Date());
@@ -45,6 +46,7 @@ const AddExpense = () => {
       }
       notifySuccess(`${variables.name} added successfully`);
       setDialogs({ ...dialogs, addExpense: false });
+      setLastUpdatedExpense(data.expense);
       formik.resetForm();
     } catch (error) {
       errorHandler(error, history, {
