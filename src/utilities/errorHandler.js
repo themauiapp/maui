@@ -2,7 +2,7 @@ import { notifyError } from "../services/notify";
 import { clearCookies } from "../services/cookie";
 
 const errorHandler = async (error, history, context = null) => {
-  let errorMessage = "An Error Occured";
+  let errorMessage = "Failed to Connect to API";
 
   if (error.networkError && error.networkError.statusCode === 419) {
     history.push("/session/new");

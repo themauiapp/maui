@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import {
   COMPAREWEEKEXPENSES,
   COMPAREMONTHEXPENSES,
@@ -10,9 +11,12 @@ import Button from "../Button/Button";
 import { useLazyQuery } from "@apollo/client";
 import Loader from "../Loader/Loader";
 import { parseDate } from "../../utilities/date";
+import checkExpenseUpdated from "../../utilities/expenseUpdate";
 import errorHandler from "../../utilities/errorHandler";
 
 const Analytics = () => {
+  const { lastUpdatedExpense, setShowReloadPage, reloadPage } =
+    useContext(AuthHomeContext);
   const [
     fetchWeeklyComparison,
     { data: weeklyData, loading: weeklyLoading, error: weeklyError },
@@ -31,6 +35,35 @@ const Analytics = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (lastUpdatedExpense) {
+      const datasetOneUpdated = checkExpenseUpdated(
+        lastUpdatedExpense,
+        datasets,
+        periods.expense,
+        dateOne
+      );
+      const datasetTwoUpdated = checkExpenseUpdated(
+        lastUpdatedExpense,
+        datasets,
+        periods.expense,
+        dateTwo
+      );
+
+      if (datasetOneUpdated || datasetTwoUpdated) {
+        setShowReloadPage(true);
+      }
+    }
+    // eslint-disable-next-line
+  }, [lastUpdatedExpense]);
+
+  useEffect(() => {
+    if (reloadPage) {
+      fetchComparison();
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
 
   useEffect(() => {
     if (weeklyData) {
@@ -59,7 +92,6 @@ const Analytics = () => {
     if (monthlyData) {
       const data = JSON.parse(monthlyData.compareMonthExpenses);
       const { months } = data;
-      console.log(months);
       const labels = [];
       const datasets = [];
       months.forEach((month) => {
