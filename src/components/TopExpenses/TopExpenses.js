@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Bar } from "react-chartjs-2";
+import BarChart from "../BarChart/BarChart";
 import { AppContext } from "../../contexts/AppContext";
-// import { AuthHomeContext } from "../../contexts/AuthHomeContext";
+import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { TOPEXPENSES } from "../../graphql/expense";
 import { useLazyQuery } from "@apollo/client";
 
@@ -9,7 +9,7 @@ const TopExpenses = () => {
   const {
     user: { id },
   } = useContext(AppContext);
-  //   const { reloadPage } = useContext(AuthHomeContext);
+  const { reloadPage } = useContext(AuthHomeContext);
   const defaultChartState = {
     labels: null,
     datasets: [
@@ -33,13 +33,12 @@ const TopExpenses = () => {
     // eslint-disable-next-line
   }, []);
 
-  //   useEffect(() => {
-  //     alert("alal");
-  //     if (reloadPage) {
-  //       fetchTopExpenses();
-  //     }
-  //     // eslint-disable-next-line
-  //   }, [reloadPage]);
+  useEffect(() => {
+    if (reloadPage) {
+      fetchTopExpenses();
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
 
   useEffect(() => {
     if (data) {
@@ -66,36 +65,7 @@ const TopExpenses = () => {
   return (
     <div className="quicksand bg-white p-8 shadow">
       {chartState.labels && (
-        <Bar
-          data={chartState}
-          options={{
-            title: {
-              display: true,
-              text: "Top 5 Expenses",
-              font: { family: "Quicksand" },
-            },
-            legend: {
-              display: true,
-              position: "left",
-              font: { family: "Quicksand" },
-            },
-            scales: {
-              y: {
-                grid: { display: false, drawBorder: false },
-                ticks: {
-                  font: { family: "Quicksand", size: 13 },
-                },
-              },
-              x: {
-                grid: { display: false, drawBorder: false },
-                ticks: {
-                  font: { family: "Quicksand", size: 13 },
-                },
-              },
-            },
-            maintainAspectRatio: window.screen.width > 768,
-          }}
-        />
+        <BarChart data={chartState} text="Top 5 Expenses" />
       )}
     </div>
   );
