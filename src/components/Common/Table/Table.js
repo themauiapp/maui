@@ -171,7 +171,7 @@ const Table = ({
 
                     <div
                       id={`options-${index}`}
-                      className="expense__options opacity-0 z--9999 shadow p-3 z-50 bg-white text-sm flex flex-col items-center"
+                      className="expense__options opacity-0 z--9999 shadow p-3 z-10 bg-white text-sm flex flex-col items-center"
                     >
                       <p
                         onClick={() => {

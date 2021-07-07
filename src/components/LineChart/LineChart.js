@@ -3,7 +3,6 @@ import { Line } from "react-chartjs-2";
 import { getFormattedDate, months } from "../../utilities/date";
 
 const LineChart = ({ datasets, labels, period }) => {
-  console.log(datasets);
   const determineLegend = (index) => {
     const label = labels[index];
     if (period === "w") {
