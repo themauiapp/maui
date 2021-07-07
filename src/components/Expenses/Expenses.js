@@ -13,7 +13,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import Button from "../Button/Button";
 import Table from "../Common/Table/Table";
 import Loader from "../Loader/Loader";
-import { parseDate } from "../../utilities/date";
+import { monthEnds, parseDate } from "../../utilities/date";
 import exportToXlsx from "../../utilities/file";
 import errorHandler from "../../utilities/errorHandler";
 import { notifySuccess } from "../../services/notify";
@@ -22,7 +22,8 @@ const Expenses = () => {
   const {
     user: { name, currency },
   } = useContext(AppContext);
-  const { toggleSpinner } = useContext(AuthHomeContext);
+  const { toggleSpinner, lastUpdatedExpense, setShowReloadPage, reloadPage } =
+    useContext(AuthHomeContext);
   const [
     fetchDailyExpenses,
     { data: dailyExpenses, loading: dailyLoading, error: dailyError },
@@ -56,6 +57,87 @@ const Expenses = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (lastUpdatedExpense && checkExpenseUpdated(lastUpdatedExpense)) {
+      setShowReloadPage(true);
+    }
+    // eslint-disable-next-line
+  }, [lastUpdatedExpense]);
+
+  useEffect(() => {
+    if (reloadPage) {
+      fetchExpenses(
+        parseDate(dates.expense),
+        periods.expense,
+        pagination.currentPage
+      );
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
+
+  // helper method to check if the latest updated expense is one
+  // that the user is currently viewing. if it is the option to reload
+  // the page shows up
+  const checkExpenseUpdated = (lastExpense) => {
+    if (!expenses) {
+      return false;
+    }
+
+    if (periods.expense === "d") {
+      return checkExpenseUpdatedDaily(lastExpense);
+    }
+
+    if (periods.expense === "w") {
+      return checkExpenseUpdatedWeekly(lastExpense);
+    }
+
+    return checkExpenseUpdatedMonthly(lastExpense);
+  };
+
+  const checkExpenseUpdatedDaily = (lastExpense) => {
+    const dateInMilliSeconds = new Date(lastExpense.created_at).getTime();
+    const parsedDate = parseDate(dates.expense);
+    const from = new Date(`${parsedDate} 00:00:00`).getTime();
+    const to = new Date(`${parsedDate} 23:59:59`).getTime();
+
+    if (dateInMilliSeconds >= from && dateInMilliSeconds <= to) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const checkExpenseUpdatedWeekly = (lastExpense) => {
+    const dateInMilliSeconds = new Date(lastExpense.created_at).getTime();
+    const parsedDate = parseDate(dates.expense);
+    const from = new Date(`${parsedDate} 00:00:00`).getTime();
+    const to = from + 8 * 86400000;
+
+    if (dateInMilliSeconds >= from && dateInMilliSeconds <= to) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const checkExpenseUpdatedMonthly = (lastExpense) => {
+    const dateInMilliSeconds = new Date(lastExpense.created_at).getTime();
+    const monthIndex = dates.expense.getMonth();
+    let month = String(monthIndex + 1);
+    month = month.length === 1 ? "0" + month : month;
+    const year = dates.expense.getFullYear();
+    const from = new Date(`${year}-${month}-01 00:00:00`).getTime();
+    const to = new Date(
+      `${year}-${month}-${monthEnds[monthIndex]} 23:59:59`
+    ).getTime();
+
+    if (dateInMilliSeconds >= from && dateInMilliSeconds <= to) {
+      return true;
+    }
+
+    return false;
+  };
 
   useEffect(() => {
     if (dailyExpenses) {
@@ -231,16 +313,18 @@ const Expenses = () => {
         </div>
       </div>
       {expenses && (
-        <Table
-          data={expenses}
-          pagination={pagination}
-          date={dates.table}
-          period={periods.table}
-          fetch={fetchExpenses}
-          sum={sum}
-          loading={dailyLoading || weeklyLoading || incomeLoading}
-          deleteExpense={deleteExpense}
-        />
+        <div className="pb-5">
+          <Table
+            data={expenses}
+            pagination={pagination}
+            date={dates.table}
+            period={periods.table}
+            fetch={fetchExpenses}
+            sum={sum}
+            loading={dailyLoading || weeklyLoading || incomeLoading}
+            deleteExpense={deleteExpense}
+          />
+        </div>
       )}
     </div>
   );

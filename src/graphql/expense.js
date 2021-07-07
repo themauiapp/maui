@@ -116,6 +116,10 @@ export const UPDATEEXPENSE = gql`
       message
       errorId
       sum
+      expense {
+        name
+        created_at
+      }
     }
   }
 `;

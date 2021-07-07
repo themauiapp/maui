@@ -14,6 +14,10 @@ select {
   }
 }
 
+.react-datepicker-popper {
+  z-index: 30 !important;
+}
+
 .react-datepicker {
   font-family: "Quicksand", sans-serif !important;
 }

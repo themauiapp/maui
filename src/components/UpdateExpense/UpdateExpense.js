@@ -12,7 +12,8 @@ import { notifySuccess } from "../../services/notify";
 import errorHandler from "../../utilities/errorHandler";
 
 const UpdateExpense = ({ expense: { id, name, amount, created_at } }) => {
-  const { dialogs, setDialogs } = useContext(AuthHomeContext);
+  const { dialogs, setDialogs, setLastUpdatedExpense } =
+    useContext(AuthHomeContext);
   const [updateExpenseMutation, { loading }] = useMutation(UPDATEEXPENSE);
   const history = useHistory();
   const formik = useFormik({
@@ -54,6 +55,7 @@ const UpdateExpense = ({ expense: { id, name, amount, created_at } }) => {
       }
       notifySuccess(`${variables.name ?? name} updated successfully`);
       setDialogs({ ...dialogs, updateExpense: false });
+      setLastUpdatedExpense(data.expense);
       formik.resetForm();
     } catch (error) {
       errorHandler(error, history);
