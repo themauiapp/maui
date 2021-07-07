@@ -148,7 +148,7 @@ const Login = () => {
           onClick={() => {
             resetPasswordEmail();
           }}
-          className="cursor-pointer text-center text-gray-800 underline"
+          className="cursor-pointer text-center text-gray-800"
         >
           forgot password
         </p>

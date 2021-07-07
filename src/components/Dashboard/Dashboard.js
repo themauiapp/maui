@@ -16,10 +16,6 @@ const Dashboard = () => {
     if (lastUpdatedExpense) {
       setShowReloadPage(true);
     }
-
-    return () => {
-      setShowReloadPage(false);
-    };
     // eslint-disable-next-line
   }, [lastUpdatedExpense]);
 

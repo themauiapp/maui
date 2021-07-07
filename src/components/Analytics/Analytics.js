@@ -124,7 +124,7 @@ const Analytics = () => {
               style={{
                 transform: "rotate(90deg)",
                 top: "calc((100% - 13px)/2)",
-                marginRight: window.screen.width > 610 ? "2.3rem" : "1.5rem",
+                marginRight: window.screen.width > 610 ? "1.3rem" : "1.5rem",
               }}
             ></i>
           </div>

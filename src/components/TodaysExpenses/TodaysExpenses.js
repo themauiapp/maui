@@ -15,8 +15,12 @@ const TodaysExpenses = () => {
   const {
     user: { name, currency },
   } = useContext(AppContext);
-  const { toggleSpinner, lastUpdatedExpense, reloadPage } =
-    useContext(AuthHomeContext);
+  const {
+    toggleSpinner,
+    lastUpdatedExpense,
+    setLastUpdatedExpense,
+    reloadPage,
+  } = useContext(AuthHomeContext);
   const [fetchDailyExpenses, { data, loading, error }] = useLazyQuery(
     DAILYEXPENSES,
     { fetchPolicy: "network-only" }
@@ -99,6 +103,10 @@ const TodaysExpenses = () => {
         const error = new Error(data.errorId);
         throw error;
       }
+      const { name, created_at } = expenses.find(
+        (expense) => expense.id.toString() === id.toString()
+      );
+      setLastUpdatedExpense({ name, created_at });
       await fetchExpenses(date, period, page);
       notifySuccess("expense deleted successfully");
     } catch (error) {

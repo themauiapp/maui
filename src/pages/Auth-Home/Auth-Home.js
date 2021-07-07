@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { RESENDVERIFICATIONEMAIL } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
@@ -52,15 +52,16 @@ const AuthHome = () => {
   const [resendVerificationEmailMutation] = useMutation(
     RESENDVERIFICATIONEMAIL
   );
+  const location = useLocation();
 
   const resendVerificationEmail = async () => {
     const variables = { id: user.id };
     setLoading(true);
     try {
       await resendVerificationEmailMutation({ variables });
-      notifySuccess("email resent successfully");
+      notifySuccess("Email Resent Successfully");
     } catch (error) {
-      notifyError("an error occured");
+      notifyError("Failed to Connect to API");
     }
   };
 
@@ -92,6 +93,21 @@ const AuthHome = () => {
 
   const toggleSidebar = () => {
     setSidebar(!sidebar);
+  };
+
+  useEffect(() => {
+    setShowReloadPage(false);
+    setReloadPage(false);
+    setLastUpdatedExpense(null);
+  }, [location]);
+
+  const reloadView = () => {
+    setReloadPage(true);
+    setTimeout(() => {
+      setReloadPage(false);
+      setLastUpdatedExpense(null);
+    }, 1500);
+    setShowReloadPage(false);
   };
 
   return (
@@ -199,21 +215,22 @@ const AuthHome = () => {
             )}
           </div>
           <div
-            onClick={() => {
-              setReloadPage(true);
-              setTimeout(() => {
-                setReloadPage(false);
-                setLastUpdatedExpense(null);
-              }, 1500);
-              setShowReloadPage(false);
-            }}
-            className={`fixed bottom-0 left-0 mb-8 cursor-pointer transition-opacity duration-300 ease-in flex items-center w-64 ml-10 p-5 shadow bg-white rounded-md ${
+            className={`fixed bottom-0 left-0 mb-8 transition-opacity duration-300 ease-in flex w-64 ml-10 p-5 shadow bg-white ${
               showReloadPage ? "z-10 opacity-100" : "z--9999 opacity-0"
             }`}
-            style={{ fontSize: "14.5px", borderRadius: "6px" }}
+            style={{ fontSize: "14.5px" }}
           >
-            <i className="far fa-lightbulb text-2xl mr-4"></i>
-            <p>reload the page to see the updates</p>
+            <i className="fas fa-info-circle text-revolver-purple text-xl mt-1 mr-4"></i>
+            <div className="flex flex-col">
+              <p className="mb-2">This page was updated</p>
+              <p
+                onClick={reloadView}
+                className="relative font-semibold cursor-pointer"
+                style={{ left: "2px" }}
+              >
+                Reload
+              </p>
+            </div>
           </div>
         </>
       )}
