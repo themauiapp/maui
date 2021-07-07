@@ -13,7 +13,8 @@ const Search = () => {
   const {
     user: { currency },
   } = useContext(AppContext);
-  const { toggleSpinner } = useContext(AuthHomeContext);
+  const { toggleSpinner, setShowReloadPage, reloadPage, lastUpdatedExpense } =
+    useContext(AuthHomeContext);
   const [expenses, setExpenses] = useState(null);
   const [sum, setSum] = useState(null);
   const [pagination, setPagination] = useState(null);
@@ -26,6 +27,23 @@ const Search = () => {
   const history = useHistory();
   const { searchTerm: searchText } = useRouteMatch().params;
   const [terms, setTerms] = useState({ search: searchText, table: searchText });
+
+  useEffect(() => {
+    if (
+      lastUpdatedExpense &&
+      lastUpdatedExpense.name.toLowerCase() === terms.search.toLowerCase()
+    ) {
+      setShowReloadPage(true);
+    }
+    // eslint-disable-next-line
+  }, [lastUpdatedExpense]);
+
+  useEffect(() => {
+    if (reloadPage) {
+      fetchExpenses(pagination ? pagination.currentPage : 1, false, true);
+    }
+    // eslint-disable-next-line
+  }, [reloadPage]);
 
   useEffect(() => {
     fetchExpenses(1);
