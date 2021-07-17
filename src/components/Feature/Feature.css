@@ -4,6 +4,10 @@
   margin-right: 25px;
 }
 
+.feature:last-of-type {
+  margin-right: 0;
+}
+
 .feature img {
   height: 400px;
 }

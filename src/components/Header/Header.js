@@ -119,7 +119,7 @@ const Header = ({ toggleSidebar }) => {
           <input
             id="searchInput"
             onChange={(e) => {
-              setSearchTerm(e.target.value);
+              setSearchTerm(e.target.value.replace(/\//g, ""));
             }}
             value={searchTerm}
             className="focus:outline-none text-md mt-2 bg-transparent relative"

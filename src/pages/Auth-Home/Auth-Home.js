@@ -112,6 +112,18 @@ const AuthHome = () => {
     setShowReloadPage(false);
   };
 
+  useEffect(() => {
+    window.document.addEventListener("keydown", focusSearch);
+  }, []);
+
+  const focusSearch = (e) => {
+    if (window.screen.width < 1024) return;
+    if (e.code === "Slash") {
+      const searchInput = window.document.getElementById("searchInput");
+      searchInput.focus();
+    }
+  };
+
   return (
     <div className="w-screen min-h-screen flex">
       <div className={`auth-home__sidebar ${sidebar ? "active" : ""}`}>

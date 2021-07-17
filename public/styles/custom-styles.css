@@ -9,6 +9,10 @@ input:focus {
   transition: border 1s ease-in-out;
 }
 
+#searchInput:focus {
+  border: none !important;
+}
+
 .dialog {
   width: 450px;
 }
