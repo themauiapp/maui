@@ -15,7 +15,7 @@ const Header = ({ toggleSidebar }) => {
   const history = useHistory();
   const [options, setOptions] = useState(false);
   const [avatar, setAvatar] = useState(null);
-  const { toggleSpinner } = useContext(AuthHomeContext);
+  const { setDialogs, dialogs, toggleSpinner } = useContext(AuthHomeContext);
   const [updateAvatarMutation] = useMutation(UPDATEAVATAR);
   const [logoutMutation] = useMutation(LOGOUT);
   const user = new Cookies().get("maui_user");
@@ -172,6 +172,14 @@ const Header = ({ toggleSidebar }) => {
             options ? "z-20 opacity-100" : "z--9999 opacity-0"
           }`}
         >
+          <p
+            onClick={() => {
+              setDialogs({ ...dialogs, search: true });
+            }}
+            className="lg:hidden w-fc cursor-pointer my-1"
+          >
+            Search
+          </p>
           <p
             onClick={(e) => {
               selectFile();

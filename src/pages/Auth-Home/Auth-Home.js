@@ -19,6 +19,7 @@ import UpdateIncome from "../../components/UpdateIncome/UpdateIncome";
 import Expense from "../../components/Expense/Expense";
 import AddExpense from "../../components/AddExpense/AddExpense";
 import UpdateExpense from "../../components/UpdateExpense/UpdateExpense";
+import SearchDialog from "../../components/SearchDialog/SearchDialog";
 import "./AuthHome.css";
 import Overlay from "../../components/Overlay/Overlay";
 
@@ -43,6 +44,7 @@ const AuthHome = () => {
     viewExpense: false,
     addExpense: false,
     updateExpense: false,
+    search: false,
   });
   const [viewedExpense, setViewedExpense] = useState(null);
   const [expense, setExpense] = useState(null);
@@ -191,6 +193,7 @@ const AuthHome = () => {
                 {dialogs.viewExpense && <Expense name={viewedExpense} />}
                 {dialogs.addExpense && <AddExpense />}
                 {dialogs.updateExpense && <UpdateExpense expense={expense} />}
+                {dialogs.search && <SearchDialog />}
               </div>
             </AuthHomeContext.Provider>
           </>
