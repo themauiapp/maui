@@ -75,12 +75,11 @@ const Login = () => {
         <div key={index} className="w-full px-8 sm:px-10 mb-4 flex flex-col">
           <input
             id={field.name}
-            className="focus:outline-none p-3 text-gray-700"
+            className="focus:outline-none border border-faint-rgba-black p-3 text-gray-900"
             type={field}
             name={field}
             onChange={formik.handleChange}
             placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-            style={{ border: "1px solid rgba(0,0,0,0.05)" }}
             autoFocus={field === "email"}
           />
           {formik.errors?.[field] && (

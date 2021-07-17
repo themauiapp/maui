@@ -131,7 +131,7 @@ const Header = ({ toggleSidebar }) => {
           onClick={() => {
             toggleSidebar();
           }}
-          className="w-12 h-12 rounded bg-revolver-purple flex justify-center items-center"
+          className="w-10 h-10 rounded bg-revolver-purple flex justify-center items-center"
         >
           <i className="fa fa-bars text-lg text-white"></i>
         </div>

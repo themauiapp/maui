@@ -156,7 +156,7 @@ const Income = () => {
             <p>{income.expenses_count} expense items</p>
           </div>
           <div className="col-span-6 flex flex-col justify-center items-center">
-            <p className="flex text-md italic sm:not-italic">
+            <p className="flex text-md">
               <CurrencyFormat
                 value={income.total - income.remainder}
                 displayType="text"

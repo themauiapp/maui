@@ -16,6 +16,7 @@ module.exports = {
         martini: "#B4A5A5",
         "light-grey": "#FBFBFB",
         "oxford-blue": "#3C415C",
+        "faint-rgba-black": "rgba(0,0,0,0.1)",
         "revolver-purple": "#301B3F",
         "eerie-black": "#151515",
         red: "#FF0000",

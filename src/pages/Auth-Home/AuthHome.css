@@ -39,8 +39,8 @@
 
 @media (max-width: 576px) {
   .auth-home__sidebar {
-    left: -60vw;
-    width: 60vw;
+    left: -65vw;
+    width: 65vw;
   }
 }
 

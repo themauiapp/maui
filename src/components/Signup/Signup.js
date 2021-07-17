@@ -124,9 +124,9 @@ const Signup = ({ setError }) => {
         <div key={index} className="w-full px-8 sm:px-10 mb-4 flex flex-col">
           <input
             id={field.name}
-            className={`focus:outline-none ${
+            className={`focus:outline-none border border-faint-rgba-black ${
               field.name.includes("name") ? "capitalize" : ""
-            } p-3 text-gray-700`}
+            } p-3 text-gray-900`}
             type={field.type}
             name={field.name}
             onChange={formik.handleChange}
@@ -134,7 +134,6 @@ const Signup = ({ setError }) => {
               field.name.replace(/_/, " ").charAt(0).toUpperCase() +
               field.name.replace(/_/, " ").slice(1)
             }
-            style={{ border: "1px solid rgba(0,0,0,0.05)" }}
             autoFocus={field.name === "first_name"}
           />
           {formik.errors?.[field.name] && (

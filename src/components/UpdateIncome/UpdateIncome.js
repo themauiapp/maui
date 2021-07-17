@@ -71,8 +71,8 @@ const UpdateIncome = () => {
             type="number"
             onChange={formik.handleChange}
             value={formik.values.income}
-            className="focus:outline-none w-full p-4 text-gray-700"
-            style={{ border: "1px solid rgba(0,0,0,0.05)" }}
+            className="focus:outline-none border border-faint-rgba-black w-full p-4 text-gray-700"
+            autoFocus
           />
           {formik.errors.income && (
             <p className="mt-2 text-sm text-red">{formik.errors.income}</p>

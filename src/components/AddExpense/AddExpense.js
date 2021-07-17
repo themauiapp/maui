@@ -72,10 +72,9 @@ const AddExpense = () => {
               onChange={(date) => {
                 setDate(date);
               }}
-              className="w-full bg-transparent border focus:outline-none pl-6 py-4"
+              className="w-full bg-transparent border border-faint-rgba-black focus:outline-none pl-6 py-4"
               dateFormat="yyyy-MM-dd"
               maxDate={new Date()}
-              style={{ border: "1px solid rgba(0,0,0,0.05)" }}
             />
           </div>
         );
@@ -91,8 +90,8 @@ const AddExpense = () => {
             type={field === "Amount" ? "number" : "text"}
             onChange={formik.handleChange}
             value={formik.values?.[id]}
-            className="focus:outline-none w-full p-4 text-gray-700"
-            style={{ border: "1px solid rgba(0,0,0,0.05)" }}
+            className="focus:outline-none border border-faint-rgba-black w-full p-4 text-gray-700"
+            autoFocus={field === "Name"}
           />
           {formik.errors?.[id] && (
             <p className="mt-2 text-sm text-red">{formik.errors?.[id]}</p>

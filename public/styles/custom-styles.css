@@ -4,6 +4,11 @@ select {
   appearance: none;
 }
 
+input:focus {
+  border: 1px dashed #301b3f !important;
+  transition: border 1s ease-in-out;
+}
+
 .dialog {
   width: 450px;
 }
@@ -20,6 +25,10 @@ select {
 
 .react-datepicker {
   font-family: "Quicksand", sans-serif !important;
+}
+
+.react-datepicker__input-container .border {
+  border-color: none;
 }
 
 .react-datepicker__day--selected {
