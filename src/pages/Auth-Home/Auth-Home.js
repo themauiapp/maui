@@ -32,6 +32,9 @@ const AuthHome = () => {
     const month = months[dt.getMonth()];
     const year = dt.getFullYear();
     const currentPeriod = `${month} ${year}`;
+    if(!user.latest_income) {
+      return true;
+    }
     const {
       latest_income: { period },
     } = user;
