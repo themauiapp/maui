@@ -58,8 +58,10 @@ const Header = ({ toggleSidebar }) => {
     if (validateFile(file)) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const avatar = document.getElementById("avatar");
-        avatar.setAttribute("src", e.target.result);
+        const avatars = document.getElementsByClassName("maui-avatar");
+        for(let i = 0; i < avatars.length; i++) {
+          avatars[i].setAttribute("src", e.target.result);
+        }
         setAvatar(file);
       };
       reader.readAsDataURL(file);
@@ -143,13 +145,12 @@ const Header = ({ toggleSidebar }) => {
         className="relative flex items-center"
       >
         <img
-          id="avatar"
           src={
             user.avatar
               ? user.avatar.url
               : "/images/auth-home/DefaultAvatar.png"
           }
-          className="cursor-pointer object-cover mr-3 sm:mr-4 w-12 h-12 rounded-full"
+          className="maui-avatar cursor-pointer object-cover mr-3 sm:mr-4 w-12 h-12 rounded-full"
           alt={user.name}
         />
         <div className="cursor-pointer mr-4 flex flex-col">
@@ -176,7 +177,7 @@ const Header = ({ toggleSidebar }) => {
             onClick={() => {
               setDialogs({ ...dialogs, search: true });
             }}
-            className="lg:hidden w-fc cursor-pointer my-1"
+            className="lg:hidden text-center cursor-pointer my-1"
           >
             Search
           </p>
@@ -200,7 +201,7 @@ const Header = ({ toggleSidebar }) => {
               onClick={() => {
                 updateAvatar();
               }}
-              className="w-fc cursor-pointer my-1"
+              className="text-center cursor-pointer my-1"
             >
               Update
             </p>
@@ -209,7 +210,7 @@ const Header = ({ toggleSidebar }) => {
             onClick={() => {
               logout();
             }}
-            className="w-fc cursor-pointer my-1"
+            className="cursor-pointer text-center my-1"
           >
             Logout
           </p>
