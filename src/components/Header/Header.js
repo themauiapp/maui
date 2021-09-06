@@ -6,10 +6,11 @@ import { useMutation } from "@apollo/client";
 import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { clearCookies, setUserCookie } from "../../services/cookie";
 import { notifySuccess } from "../../services/notify";
-import { validateFile } from "../../utilities/file";
+import { parseFile } from "../../avatar";
 import Cookies from "universal-cookie";
 import errorHandler from "../../utilities/errorHandler";
 import "./Header.css";
+import { AppContext } from "../../contexts/AppContext";
 
 const Header = ({ toggleSidebar }) => {
   const history = useHistory();
@@ -18,7 +19,7 @@ const Header = ({ toggleSidebar }) => {
   const { setDialogs, dialogs, toggleSpinner } = useContext(AuthHomeContext);
   const [updateAvatarMutation] = useMutation(UPDATEAVATAR);
   const [logoutMutation] = useMutation(LOGOUT);
-  const user = new Cookies().get("maui_user");
+  const { user, changeUser } = useContext(AppContext);
 
   const parseSearchText = () => {
     const pathname = window.location.pathname;
@@ -53,18 +54,10 @@ const Header = ({ toggleSidebar }) => {
     fileInput.click();
   };
 
-  const parseFile = (event) => {
+  const parseSelectedFile = (event) => {
     const file = event.target.files[0];
-    if (validateFile(file)) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const avatars = document.getElementsByClassName("maui-avatar");
-        for(let i = 0; i < avatars.length; i++) {
-          avatars[i].setAttribute("src", e.target.result);
-        }
-        setAvatar(file);
-      };
-      reader.readAsDataURL(file);
+    if (parseFile(file)) {
+      setAvatar(file);
     }
   };
 
@@ -78,7 +71,7 @@ const Header = ({ toggleSidebar }) => {
         const error = new Error(data.errorId);
         throw error;
       }
-      setUserCookie(data);
+      setUserCookie(data, changeUser);
       notifySuccess("Avatar updated successfully");
       setOptions(false);
       setAvatar(null);
@@ -192,7 +185,7 @@ const Header = ({ toggleSidebar }) => {
           </p>
           <input
             type="file"
-            onChange={parseFile}
+            onChange={parseSelectedFile}
             id="fileInput"
             className="hidden"
           />

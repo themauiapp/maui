@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
+import { useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useFormik } from "formik";
 import { profileSchema } from "../../schemas/user";
 import { UPDATEUSER } from "../../graphql/user";
 import { useMutation } from "@apollo/client";
+import { parseFile } from "../../avatar";
 import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
+import errorHandler from "../../utilities/errorHandler";
+import { notifySuccess } from "../../services/notify";
+import { setUserCookie } from "../../services/cookie";
 
 const Profile = () => {
+  const { changeUser } = useContext(AppContext);
   const [updateUserMutation, { loading }] = useMutation(UPDATEUSER);
+  const [avatar, setAvatar] = useState(null);
+  const history = useHistory();
   const user = new Cookies().get("maui_user");
   const fields = ["first_name", "last_name", "email", "password"];
   const [first_name, last_name] = user.name.split(" ");
@@ -17,9 +26,37 @@ const Profile = () => {
     validationSchema: profileSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      console.log(values);
+      if (values.password === "") {
+        delete values.password;
+      } else {
+        values["password_confirmation"] = values.password;
+      }
+
+      if (avatar) {
+        values["avatar"] = avatar;
+      }
+
+      updateUser(values);
     },
   });
+
+  const updateUser = async (variables) => {
+    try {
+      const response = await updateUserMutation({ variables });
+      const data = response.data.updateUser;
+      setUserCookie(data, changeUser);
+      notifySuccess("Profile Updated Successfully");
+    } catch (error) {
+      errorHandler(error, history);
+    }
+  };
+
+  const parseSelectedFile = (event) => {
+    const file = event.target.files[0];
+    if (parseFile(file)) {
+      setAvatar(file);
+    }
+  };
 
   const displayFields = () => {
     return fields.map((field, index) => {
@@ -33,7 +70,7 @@ const Profile = () => {
           <input
             id={field}
             className="focus:outline-none border border-faint-rgba-black p-3 text-gray-900"
-            type={"string"}
+            type={field !== "password" ? "text" : "password"}
             name={field}
             value={formik.values[field]}
             onChange={formik.handleChange}
@@ -63,7 +100,20 @@ const Profile = () => {
             alt={user.name}
           />
         </div>
-        <p className="cursor-pointer underline">Change Avatar</p>
+        <p
+          onClick={() => {
+            document.getElementById("avatarInput").click();
+          }}
+          className="cursor-pointer underline"
+        >
+          Change Avatar
+        </p>
+        <input
+          id="avatarInput"
+          onChange={parseSelectedFile}
+          type="file"
+          className="hidden"
+        />
       </div>
       <form
         noValidate
