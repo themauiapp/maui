@@ -8,3 +8,9 @@ export const profileSchema = Yup.object().shape({
     .email("invalid email address"),
   password: Yup.string().min(8, "password must be at least 8 characters"),
 });
+
+export const verifyResetEmailSchema = Yup.object().shape({
+  password: Yup.string()
+    .required("password is required")
+    .min(8, "password must be at least 8 characters"),
+});

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useFormik } from "formik";
@@ -15,6 +16,7 @@ import { setUserCookie } from "../../services/cookie";
 
 const Profile = () => {
   const { changeUser } = useContext(AppContext);
+  const { setDialogs, dialogs } = useContext(AuthHomeContext);
   const [updateUserMutation, { loading }] = useMutation(UPDATEUSER);
   const [avatar, setAvatar] = useState(null);
   const history = useHistory();
@@ -66,7 +68,17 @@ const Profile = () => {
       );
       return (
         <div key={index} className="w-full mb-5 flex flex-col col-span-6">
-          <p className="mb-2">{label}</p>
+          <p className="mb-2">
+            {label}
+            {field === "email" && (
+              <i
+                onClick={() => {
+                  setDialogs({ ...dialogs, verifyResetEmail: true });
+                }}
+                className="relative ml-2 cursor-pointer text-sm text-revolver-purple fa fa-edit"
+              ></i>
+            )}
+          </p>
           <input
             id={field}
             className="focus:outline-none border border-faint-rgba-black p-3 text-gray-900"

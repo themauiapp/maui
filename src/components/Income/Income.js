@@ -123,7 +123,7 @@ const Income = () => {
               {income.period.month + " " + income.period.year ===
               months[new Date().getMonth()] + " " + new Date().getFullYear() ? (
                 <i
-                  className="relative ml-2 cursor-pointer text-sm text-revolver-purple fa fa-pencil-alt"
+                  className="relative ml-2 cursor-pointer text-sm text-revolver-purple fa fa-edit"
                   onClick={() => {
                     setDialogs({ ...dialogs, updateIncome: true });
                   }}

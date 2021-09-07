@@ -12,11 +12,14 @@ const errorHandler = async (error, history, context = null) => {
   }
 
   if (error.message === "AuthenticationFailed") {
-    errorMessage = "Incorrect username or password";
+    errorMessage = "Incorrect username Or Password";
   }
 
-  if (error.message === "UserExistsAlready") {
-    errorMessage = "User with email exists already";
+  if (
+    error.message === "UserExistsAlready" ||
+    error.message === "InvalidEmailResetAddress"
+  ) {
+    errorMessage = "User With Email Exists Already";
   }
 
   if (
@@ -28,6 +31,10 @@ const errorHandler = async (error, history, context = null) => {
 
   if (error.message === "AvatarNotUpdated") {
     errorMessage = "Avatar not updated";
+  }
+
+  if (error.message === "InvalidEmailResetToken") {
+    errorMessage = "Invalid Email Reset Token";
   }
 
   console.log(error);

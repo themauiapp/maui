@@ -7,7 +7,6 @@ import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import { clearCookies, setUserCookie } from "../../services/cookie";
 import { notifySuccess } from "../../services/notify";
 import { parseFile } from "../../avatar";
-import Cookies from "universal-cookie";
 import errorHandler from "../../utilities/errorHandler";
 import "./Header.css";
 import { AppContext } from "../../contexts/AppContext";

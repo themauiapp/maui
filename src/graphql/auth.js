@@ -150,3 +150,11 @@ export const RESETPASSWORD = gql`
     }
   }
 `;
+
+export const SENDCHANGEEMAIL = gql`
+  mutation SendChangeEmail($email: String!, $token: String!) {
+    sendChangeEmail(email: $email, token: $token) {
+      errorId
+    }
+  }
+`;

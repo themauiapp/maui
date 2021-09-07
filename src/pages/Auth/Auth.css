@@ -9,10 +9,10 @@
 }
 
 @media (max-width: 576px) {
-    .auth {
-      height: 95vh;
-    }
+  .auth {
+    height: 95vh;
   }
+}
 
 @media (max-width: 385px) {
   .auth {
@@ -28,13 +28,9 @@
 
 .auth__image-parent {
   top: -10%;
-  height: 370px;
+  height: 52vh;
 }
 
 .auth__image-parent img {
-  height: 370px;
-}
-
-.auth__form {
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  height: 52vh;
 }

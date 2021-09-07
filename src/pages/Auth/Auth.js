@@ -96,7 +96,7 @@ const Auth = () => {
             />
           </div>
           <div
-            className="auth__form relative w-full bmd:w-1/2 lg:w-1/3 bg-white h-fc"
+            className="shadow-md relative w-full bmd:w-1/2 lg:w-1/3 bg-white h-fc"
             style={{
               top: signup ? signupFormTop() : loginFormTop(),
             }}

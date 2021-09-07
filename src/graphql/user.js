@@ -69,3 +69,11 @@ export const UPDATEAVATAR = gql`
     }
   }
 `;
+
+export const VERIFYRESETEMAIL = gql`
+  mutation VerifyResetEmail($password: String!) {
+    verifyResetEmail(password: $password) {
+      message
+    }
+  }
+`;

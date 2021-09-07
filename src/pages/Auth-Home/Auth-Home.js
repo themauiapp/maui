@@ -21,6 +21,7 @@ import Expense from "../../components/Expense/Expense";
 import AddExpense from "../../components/AddExpense/AddExpense";
 import UpdateExpense from "../../components/UpdateExpense/UpdateExpense";
 import SearchDialog from "../../components/SearchDialog/SearchDialog";
+import VerifyResetEmail from "../../components/VerifyResetEmail/VerifyResetEmail";
 import "./AuthHome.css";
 import Overlay from "../../components/Overlay/Overlay";
 
@@ -33,7 +34,7 @@ const AuthHome = () => {
     const month = months[dt.getMonth()];
     const year = dt.getFullYear();
     const currentPeriod = `${month} ${year}`;
-    if(!user.latest_income) {
+    if (!user.latest_income) {
       return true;
     }
     const {
@@ -49,6 +50,7 @@ const AuthHome = () => {
     addExpense: false,
     updateExpense: false,
     search: false,
+    verifyResetEmail: false,
   });
   const [viewedExpense, setViewedExpense] = useState(null);
   const [expense, setExpense] = useState(null);
@@ -213,6 +215,7 @@ const AuthHome = () => {
                 {dialogs.addExpense && <AddExpense />}
                 {dialogs.updateExpense && <UpdateExpense expense={expense} />}
                 {dialogs.search && <SearchDialog />}
+                {dialogs.verifyResetEmail && <VerifyResetEmail />}
               </div>
             </AuthHomeContext.Provider>
           </>

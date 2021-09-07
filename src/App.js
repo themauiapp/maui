@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home";
 import Auth from "./pages/Auth/Auth";
 import AuthHome from "./pages/Auth-Home/Auth-Home";
 import Verify from "./pages/Verify/Verify";
+import EmailChange from "./pages/EmailChange/EmailChange";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -44,6 +45,9 @@ function App() {
     <Router>
       <ToastContainer />
       <Switch>
+        <AuthGuardedRoute path="/email/change/:token">
+          <EmailChange />
+        </AuthGuardedRoute>
         <AuthGuardedRoute path="/my">
           <AuthHome />
         </AuthGuardedRoute>
