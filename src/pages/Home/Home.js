@@ -275,19 +275,34 @@ const Home = () => {
               users can add and view expenses without having to access the
               platform. As a Maui user however, MauiBot is not enabled by
               default. To enable MauiBot simply visit{" "}
-              <a href="/" className="text-blue-800 mr-1">
+              <a
+                href="https://t.me/themauibot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-revolver-purple mr-1"
+                style={{
+                  borderBottom: "1px solid black",
+                  paddingBottom: 0,
+                }}
+              >
                 him
               </a>
               and follow his prompts. In no time, you will be enjoying the ease
               he provides.
             </p>
             <div className="w-fc">
-              <Button>
-                <p>
-                  MauiBot{" "}
-                  <i className="ml-2 text-sm fa fa-external-link-alt"></i>
-                </p>
-              </Button>
+              <a
+                href="https://t.me/themauibot"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button botBtn>
+                  <p>
+                    MauiBot{" "}
+                    <i className="ml-2 text-sm fa fa-external-link-alt"></i>
+                  </p>
+                </Button>
+              </a>
             </div>
           </div>
         </div>
