@@ -158,3 +158,32 @@ export const SENDCHANGEEMAIL = gql`
     }
   }
 `;
+
+export const RESETEMAIL = gql`
+  mutation ResetEmail($email: String!, $token: String!) {
+    resetEmail(email: $email, token: $token) {
+      message
+      errorId
+      user {
+        id
+        name
+        email
+        email_verified_at
+        avatar {
+          url
+        }
+        total_income
+        timezone
+        currency
+        telegram_id
+        latest_income {
+          total
+          period {
+            month
+            year
+          }
+        }
+      }
+    }
+  }
+`;

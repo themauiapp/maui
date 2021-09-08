@@ -45,6 +45,9 @@ function App() {
     <Router>
       <ToastContainer />
       <Switch>
+        <AuthGuardedRoute path="/email/change/confirm/:token">
+          <Verify />
+        </AuthGuardedRoute>
         <AuthGuardedRoute path="/email/change/:token">
           <EmailChange />
         </AuthGuardedRoute>

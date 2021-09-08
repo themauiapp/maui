@@ -23,6 +23,7 @@ const EmailChange = () => {
       return setError(true);
     }
 
+    setError(false);
     try {
       const response = await sendChangeEmailMutation({
         variables: { email, token },
@@ -32,7 +33,7 @@ const EmailChange = () => {
         throw new Error(data.errorId);
       }
       notifySuccess(`Continue at ${email}`);
-      history.push("/session/new");
+      history.push("/my/dashboard");
     } catch (error) {
       errorHandler(error, history);
     }

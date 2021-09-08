@@ -12,7 +12,7 @@ const errorHandler = async (error, history, context = null) => {
   }
 
   if (error.message === "AuthenticationFailed") {
-    errorMessage = "Incorrect username Or Password";
+    errorMessage = "Incorrect Username Or Password";
   }
 
   if (
@@ -30,7 +30,7 @@ const errorHandler = async (error, history, context = null) => {
   }
 
   if (error.message === "AvatarNotUpdated") {
-    errorMessage = "Avatar not updated";
+    errorMessage = "Avatar Not Updated";
   }
 
   if (error.message === "InvalidEmailResetToken") {
