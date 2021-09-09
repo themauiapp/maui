@@ -68,7 +68,10 @@ const Profile = () => {
         " "
       );
       return (
-        <div key={index} className="w-full mb-5 flex flex-col col-span-6">
+        <div
+          key={index}
+          className="w-full mb-5 flex flex-col col-span-12 md:col-span-6"
+        >
           <p className="mb-2">
             {label}
             {field === "email" && (
@@ -102,7 +105,7 @@ const Profile = () => {
   return (
     <div className="pb-10">
       <div className="flex flex-row items-end mb-8">
-        <div className="w-32 h-32 rounded-full border-4 border-white shadow mr-5">
+        <div className="w-24 h-24 bsm:w-32 bsm:h-32 rounded-full border-4 border-white shadow mr-5">
           <img
             src={
               user.avatar
@@ -134,8 +137,8 @@ const Profile = () => {
         className="p-8 bsm:p-12 mb-8 bg-white shadow grid grid-cols-12 col-gap-5"
       >
         {displayFields()}
-        <div className="col-span-6"></div>
-        <div className="col-span-6 mt-3 relative w-full">
+        <div className="col-span-12 md:col-span-6"></div>
+        <div className="col-span-12 md:col-span-6 mt-3 relative w-full">
           <Button submit={true}>Update</Button>
           <Loader display={loading} />
         </div>

@@ -44,6 +44,7 @@ const TelegramSettings = () => {
     } catch (error) {
       errorHandler(error, history);
     }
+    // eslint-disable-next-line
   }, [telegram]);
 
   const displayTelegramOptions = useCallback(() => {
@@ -64,7 +65,7 @@ const TelegramSettings = () => {
               [optionKeys[index]]: !options[key],
             });
           }}
-          className="flex"
+          className="flex mb-3 sm:mb-0"
         >
           <div
             className={`profile__check_container w-fc ${index !== 2 && "mb-6"}`}
@@ -86,16 +87,16 @@ const TelegramSettings = () => {
       {!loading && telegram && (
         <div>
           <div className="flex items-end mb-6">
-            <p className="text-2xl mr-3 font-semibold tracking-widest">
+            <p className="text-xl sm:text-2xl mr-3 font-semibold tracking-widest">
               {telegram.telegram_id}
             </p>
             <small className="mb-1">(Telegram ID)</small>
           </div>
-          <div className="flex justify-between mb-6">
+          <div className="flex flex-col md:flex-row justify-between mb-6 sm:mb-8 bsm:mb-10 md:mb-6">
             {displayTelegramOptions()}
           </div>
           <div className="flex justify-end">
-            <div className="pl-2 w-1/2">
+            <div className="md:pl-2 w-full md:w-1/2">
               <div className="relative">
                 <Button
                   type="outlined"
@@ -118,7 +119,7 @@ const TelegramSettings = () => {
             className="w-24 mb-5"
             alt="No Telegram Settings"
           />
-          <p>
+          <p className="text-center">
             Visit{" "}
             <a
               href="https://t.me/themauibot"
