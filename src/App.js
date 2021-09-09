@@ -43,7 +43,7 @@ const GuestGuardedRoute = ({ path, exact, children }) => {
 function App() {
   return (
     <Router>
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
       <Switch>
         <AuthGuardedRoute path="/email/change/confirm/:token">
           <Verify />

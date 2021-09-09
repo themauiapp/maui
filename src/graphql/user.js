@@ -1,5 +1,34 @@
 import { gql } from "@apollo/client";
 
+export const GETTELEGRAMSETTINGS = gql`
+  query User($id: ID!) {
+    user(id: $id) {
+      telegram {
+        telegram_id
+        notify_12pm
+        notify_6pm
+        notify_10pm
+      }
+    }
+  }
+`;
+
+export const UPDATETELEGRAMSETTINGS = gql`
+  mutation UpdateTelegramSettings(
+    $notify_12pm: Boolean!
+    $notify_6pm: Boolean!
+    $notify_10pm: Boolean!
+  ) {
+    updateTelegramSettings(
+      notify_12pm: $notify_12pm
+      notify_6pm: $notify_6pm
+      notify_10pm: $notify_10pm
+    ) {
+      message
+    }
+  }
+`;
+
 export const UPDATEUSER = gql`
   mutation UpdateUser(
     $first_name: String
@@ -28,7 +57,6 @@ export const UPDATEUSER = gql`
         total_income
         timezone
         currency
-        telegram_id
         latest_income {
           total
           period {
@@ -57,7 +85,6 @@ export const UPDATEAVATAR = gql`
         total_income
         timezone
         currency
-        telegram_id
         latest_income {
           total
           period {

@@ -18,7 +18,6 @@ const setUserCookie = (data, setUser = null) => {
     total_income,
     timezone,
     currency,
-    telegram_id,
     latest_income,
   } = data.user;
   const user = {
@@ -30,7 +29,6 @@ const setUserCookie = (data, setUser = null) => {
     total_income,
     timezone,
     currency,
-    telegram_id,
     latest_income,
   };
   const expiryDateObject = new Date(

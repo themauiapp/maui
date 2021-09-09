@@ -30,7 +30,6 @@ export const SIGNUP = gql`
         total_income
         timezone
         currency
-        telegram_id
         latest_income {
           total
           period {
@@ -59,7 +58,6 @@ export const LOGIN = gql`
         total_income
         timezone
         currency
-        telegram_id
         latest_income {
           total
           period {
@@ -96,7 +94,6 @@ export const VERIFYGOOGLELOGIN = gql`
         total_income
         timezone
         currency
-        telegram_id
         latest_income {
           total
           period {
@@ -175,7 +172,6 @@ export const RESETEMAIL = gql`
         total_income
         timezone
         currency
-        telegram_id
         latest_income {
           total
           period {

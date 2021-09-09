@@ -21,7 +21,7 @@
 
 .btn > div {
   position: absolute;
-  top: 0;
+  top: -2%;
   left: 0;
   height: 0;
   width: 100%;
@@ -49,7 +49,7 @@
 
 @media (min-width: 1025px) {
   .btn:hover > .layer {
-    height: 102%;
+    height: 104%;
     border: 1px solid #301b3f;
   }
 

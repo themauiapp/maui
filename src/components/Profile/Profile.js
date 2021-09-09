@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { AuthHomeContext } from "../../contexts/AuthHomeContext";
+import TelegramSettings from "../TelegramSettings/TelegramSettings";
 import { useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useFormik } from "formik";
@@ -135,15 +136,11 @@ const Profile = () => {
         {displayFields()}
         <div className="col-span-6"></div>
         <div className="col-span-6 mt-3 relative w-full">
-          <Button submit={true}>Update Profile</Button>
+          <Button submit={true}>Update</Button>
           <Loader display={loading} />
         </div>
       </form>
-      <div className="bg-white p-8 bsm:p-12 shadow flex justify-between">
-        <p className="text-2xl font-semibold tracking-widest">
-          {user.telegram_id}
-        </p>
-      </div>
+      <TelegramSettings />
     </div>
   );
 };
