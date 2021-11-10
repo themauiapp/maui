@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { UPDATEAVATAR } from "../../graphql/user";
 import { LOGOUT } from "../../graphql/auth";
@@ -15,10 +15,17 @@ const Header = ({ toggleSidebar }) => {
   const history = useHistory();
   const [options, setOptions] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const [isResponsive, setIsResponsive] = useState(false);
   const { setDialogs, dialogs, toggleSpinner } = useContext(AuthHomeContext);
   const [updateAvatarMutation] = useMutation(UPDATEAVATAR);
   const [logoutMutation] = useMutation(LOGOUT);
   const { user, changeUser } = useContext(AppContext);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setIsResponsive(window.screen.width < 1025);
+    });
+  }, []);
 
   const parseSearchText = () => {
     const pathname = window.location.pathname;
@@ -99,7 +106,7 @@ const Header = ({ toggleSidebar }) => {
 
   return (
     <div className="w-full px-8 bmd:px-16 lg:px-24 py-8 flex justify-between items-center">
-      {window.screen.width > 1024 ? (
+      {!isResponsive ? (
         <form className="flex" onSubmit={search}>
           <img
             src="/images/auth-home/search.png"
