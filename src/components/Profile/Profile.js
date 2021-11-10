@@ -3,7 +3,6 @@ import { AppContext } from "../../contexts/AppContext";
 import { AuthHomeContext } from "../../contexts/AuthHomeContext";
 import TelegramSettings from "../TelegramSettings/TelegramSettings";
 import { useHistory } from "react-router-dom";
-import Cookies from "universal-cookie";
 import { useFormik } from "formik";
 import { profileSchema } from "../../schemas/user";
 import { UPDATEUSER } from "../../graphql/user";
@@ -13,15 +12,14 @@ import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
 import errorHandler from "../../utilities/errorHandler";
 import { notifySuccess } from "../../services/notify";
-import { setUserCookie } from "../../services/cookie";
+import { setUserContext } from "../../services/cookie";
 
 const Profile = () => {
-  const { changeUser } = useContext(AppContext);
+  const { user, changeUser } = useContext(AppContext);
   const { setDialogs, dialogs } = useContext(AuthHomeContext);
   const [updateUserMutation, { loading }] = useMutation(UPDATEUSER);
   const [avatar, setAvatar] = useState(null);
   const history = useHistory();
-  const user = new Cookies().get("maui_user");
   const fields = ["first_name", "last_name", "email", "password"];
   const [first_name, last_name] = user.name.split(" ");
   const formik = useFormik({
@@ -47,7 +45,7 @@ const Profile = () => {
     try {
       const response = await updateUserMutation({ variables });
       const data = response.data.updateUser;
-      setUserCookie(data, changeUser);
+      setUserContext(data, changeUser);
       notifySuccess("Profile Updated Successfully");
     } catch (error) {
       errorHandler(error, history);

@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { SIGNUP, GOOGLELOGIN } from "../../graphql/auth";
 import { signupSchema } from "../../schemas/auth";
 import { AppContext } from "../../contexts/AppContext";
-import { setCsrfCookie, setUserCookie } from "../../services/cookie";
+import { setCsrfCookie, setUserContext } from "../../services/cookie";
 import Cookies from "universal-cookie";
 import { notifySuccess } from "../../services/notify";
 import errorHandler from "../../utilities/errorHandler";
@@ -92,7 +92,7 @@ const Signup = ({ setError }) => {
         const error = new Error(data.errorId);
         throw error;
       }
-      setUserCookie(data, changeUser);
+      setUserContext(data, changeUser);
       history.push("/my/dashboard");
       notifySuccess("signed up successfully");
     } catch (error) {

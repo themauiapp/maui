@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { notifyError, notifySuccess } from "../../services/notify";
-import { setCsrfCookie, setUserCookie } from "../../services/cookie";
+import { setCsrfCookie, setUserContext } from "../../services/cookie";
 import Cookies from "universal-cookie";
 import { useMutation } from "@apollo/client";
 import { LOGIN, GOOGLELOGIN, RESETPASSWORDEMAIL } from "../../graphql/auth";
@@ -57,7 +57,7 @@ const Login = () => {
         const error = new Error(data.errorId);
         throw error;
       }
-      setUserCookie(data, changeUser);
+      setUserContext(data, changeUser);
       history.push("/my/dashboard");
       notifySuccess("Logged in successfully");
     } catch (error) {

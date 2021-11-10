@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { verifyEmail as verifyEmailService } from "../../services/auth";
 import Spinner from "../../components/Spinner/Spinner";
 import { AppContext } from "../../contexts/AppContext";
-import { setUserCookie } from "../../services/cookie";
+import { setUserContext } from "../../services/cookie";
 import { notifySuccess, notifyError } from "../../services/notify";
 import createApolloClient from "../../utilities/createApolloClient";
 import errorHandler from "../../utilities/errorHandler";
@@ -48,7 +48,7 @@ const Verify = () => {
         const error = new Error(data.errorId);
         throw error;
       }
-      setUserCookie(data, changeUser);
+      setUserContext(data, changeUser);
       history.push("/my/dashboard");
       notifySuccess("Logged in successfully");
     } catch (error) {
@@ -69,7 +69,7 @@ const Verify = () => {
         expires,
         signature
       );
-      setUserCookie(response.data, changeUser);
+      setUserContext(response.data, changeUser);
       notifySuccess("Email Verified Successfully");
     } catch (error) {
       notifyError("an error occured");
@@ -89,7 +89,7 @@ const Verify = () => {
         const error = new Error(data.errorId);
         throw error;
       }
-      setUserCookie(data, changeUser);
+      setUserContext(data, changeUser);
       notifySuccess("Email Changed Successfully");
     } catch (error) {
       errorHandler(error, history);

@@ -10,7 +10,7 @@ import { months } from "../../utilities/date";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import { notifySuccess } from "../../services/notify";
-import { setUserCookie } from "../../services/cookie";
+import { setUserContext } from "../../services/cookie";
 import errorHandler from "../../utilities/errorHandler";
 
 const AddIncome = () => {
@@ -38,7 +38,7 @@ const AddIncome = () => {
         throw error;
       }
       notifySuccess("income details recorded");
-      setUserCookie(data.income, changeUser);
+      setUserContext(data.income, changeUser);
       window.location.href = window.location.pathname;
     } catch (error) {
       errorHandler(error, history);

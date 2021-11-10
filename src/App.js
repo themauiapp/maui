@@ -17,7 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const isAuthenticated = () => {
   const cookies = new Cookies();
-  return cookies.get("maui_user");
+  return cookies.get("maui_token");
 };
 
 const AuthGuardedRoute = ({ path, exact, children }) => {

@@ -2,13 +2,13 @@ import createAxiosObject from "./axios";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
-const mauiCookies = ["maui_cookie", "XSRF-TOKEN", "maui_user"];
+const mauiCookies = ["maui_cookie", "XSRF-TOKEN", "maui_token"];
 
 const setCsrfCookie = () => {
   return createAxiosObject().get("sanctum/csrf-cookie");
 };
 
-const setUserCookie = (data, setUser = null) => {
+const setUserContext = (data, setUser = null, key = "user") => {
   const {
     id,
     name,
@@ -19,7 +19,7 @@ const setUserCookie = (data, setUser = null) => {
     timezone,
     currency,
     latest_income,
-  } = data.user;
+  } = data[key];
   const user = {
     id,
     name,
@@ -31,22 +31,34 @@ const setUserCookie = (data, setUser = null) => {
     currency,
     latest_income,
   };
-  const expiryDateObject = new Date(
-    new Date().getTime() + 1000 * 20 * 365 * 86400
-  );
-  cookies.set("maui_user", user, {
+  const expiryDateObject = new Date(new Date().getTime() + 1000 * 3 * 86400);
+  cookies.set("maui_token", generateToken(), {
     path: "/",
     expires: expiryDateObject,
   });
   if (setUser) {
     setUser(user);
   }
+  if (setUser) {
+    setUser(user);
+  }
 };
 
+const generateToken = () => {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let hash = "#";
+
+  for (let i = 1; i < 8; i++) {
+    hash =
+      hash + characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  return hash;
+};
 const clearCookies = () => {
   mauiCookies.forEach((cookie) => {
     cookies.remove(cookie, { path: "/", domain: "localhost" });
   });
 };
 
-export { setCsrfCookie, setUserCookie, clearCookies };
+export { setCsrfCookie, setUserContext, clearCookies };

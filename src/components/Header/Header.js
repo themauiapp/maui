@@ -4,7 +4,7 @@ import { UPDATEAVATAR } from "../../graphql/user";
 import { LOGOUT } from "../../graphql/auth";
 import { useMutation } from "@apollo/client";
 import { AuthHomeContext } from "../../contexts/AuthHomeContext";
-import { clearCookies, setUserCookie } from "../../services/cookie";
+import { clearCookies, setUserContext } from "../../services/cookie";
 import { notifySuccess } from "../../services/notify";
 import { parseFile } from "../../avatar";
 import errorHandler from "../../utilities/errorHandler";
@@ -70,7 +70,7 @@ const Header = ({ toggleSidebar }) => {
         const error = new Error(data.errorId);
         throw error;
       }
-      setUserCookie(data, changeUser);
+      setUserContext(data, changeUser);
       notifySuccess("Avatar updated successfully");
       setOptions(false);
       setAvatar(null);

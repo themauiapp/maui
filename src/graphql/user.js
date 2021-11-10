@@ -1,5 +1,29 @@
 import { gql } from "@apollo/client";
 
+export const FETCHUSER = gql`
+  query Me {
+    me {
+      id
+      name
+      email
+      email_verified_at
+      avatar {
+        url
+      }
+      total_income
+      timezone
+      currency
+      latest_income {
+        total
+        period {
+          month
+          year
+        }
+      }
+    }
+  }
+`;
+
 export const GETTELEGRAMSETTINGS = gql`
   query User($id: ID!) {
     user(id: $id) {
