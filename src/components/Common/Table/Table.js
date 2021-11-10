@@ -103,7 +103,7 @@ const Table = ({
   };
 
   return (
-    <div className="w-full flex flex-col bg-white shadow px-8 pt-8 bsm:px-12 bsm:pt-12 pb-8">
+    <div className="maui-table-parent w-full flex flex-col bg-white shadow px-8 pt-8 bsm:px-12 bsm:pt-12 pb-8">
       <div className="flex flex-col bsm:flex-row mb-5 w-full justify-between">
         <p className="mb-2 bsm:mb-0">
           <CurrencyFormat
@@ -133,11 +133,12 @@ const Table = ({
           <p style={{ position: "relative", top: "3px" }}>Export</p>
         </div>
       </div>
-      <table className="w-full">
+      <table className="maui-table">
         <thead className="bg-light-grey mb-3">
           <tr>
             <td className="text-center py-5">Name</td>
             <td className="text-center py-5">Amount</td>
+            <td className="text-center py-5">Date</td>
             <td className="text-center py-5">Time</td>
             <td className="text-center py-5">Actions</td>
           </tr>
@@ -157,6 +158,7 @@ const Table = ({
                     prefix={currency}
                   />
                 </td>
+                <td className="text-center pt-8">{row.date}</td>
                 <td className="text-center pt-8">{row.time}</td>
                 <td className="text-center">
                   <div className="relative flex justify-center items-center">

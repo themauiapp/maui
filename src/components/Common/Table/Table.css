@@ -5,3 +5,18 @@
   left: calc((100% - 90px) / 2);
   transition: opacity 0.5s ease-in;
 }
+
+.maui-table {
+  width: 100%;
+}
+
+.maui-table-parent {
+  overflow-x: scroll;
+}
+
+@media (max-width: 768px) {
+  .maui-table {
+    width: 600px;
+    overflow-x: scroll;
+  }
+}

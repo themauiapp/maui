@@ -13,6 +13,7 @@ export const DAILYEXPENSES = gql`
         id
         name
         amount
+        date
         time
         created_at
       }
@@ -45,6 +46,7 @@ export const WEEKLYEXPENSES = gql`
         id
         name
         amount
+        date
         time
         created_at
       }
@@ -70,6 +72,7 @@ export const INCOMEEXPENSES = gql`
         id
         name
         amount
+        date
         time
         created_at
       }
@@ -162,6 +165,7 @@ export const SEARCHEXPENSES = gql`
         id
         name
         amount
+        date
         time
         created_at
       }

@@ -126,6 +126,7 @@ const Expenses = () => {
         pagination: { currentPage, maxPages },
       } = expenseData;
       setExpenses(expenses);
+      console.log(expenses);
       setSum(sum);
       setPagination({
         currentPage,
