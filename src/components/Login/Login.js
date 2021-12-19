@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { useFormik } from "formik";
 import { notifyError, notifySuccess } from "../../services/notify";
 import { setCsrfCookie, setUserContext } from "../../services/cookie";
@@ -9,16 +9,19 @@ import { LOGIN, GOOGLELOGIN, RESETPASSWORDEMAIL } from "../../graphql/auth";
 import { loginSchema } from "../../schemas/auth";
 import { AppContext } from "../../contexts/AppContext";
 import errorHandler from "../../utilities/errorHandler";
+import Countdown from "../Countdown/Countdown";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [showCountdown, setShowCountdown] = useState(false);
   const [loginMutation] = useMutation(LOGIN);
   const [googleLoginMutation] = useMutation(GOOGLELOGIN);
   const [resetPasswordEmailMutation] = useMutation(RESETPASSWORDEMAIL);
   const { changeUser } = useContext(AppContext);
   const history = useHistory();
+  const { token: cliToken } = useRouteMatch().params;
   const cookies = new Cookies();
 
   const formik = useFormik({
@@ -43,7 +46,6 @@ const Login = () => {
     try {
       await setCsrfCookie();
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
@@ -51,13 +53,16 @@ const Login = () => {
   const loginUser = async (variables) => {
     setLoading(true);
     try {
-      const response = await loginMutation({ variables });
+      const response = await loginMutation({
+        variables: { ...variables, cliToken },
+      });
       const data = response.data.login;
       if (data.errorId) {
         const error = new Error(data.errorId);
         throw error;
       }
       setUserContext(data, changeUser);
+      if (cliToken) return setShowCountdown(true);
       history.push("/my/dashboard");
       notifySuccess("Logged in successfully");
     } catch (error) {
@@ -128,6 +133,10 @@ const Login = () => {
     }
   };
 
+  if (showCountdown) {
+    return <Countdown />;
+  }
+
   return (
     <form
       noValidate
@@ -135,7 +144,7 @@ const Login = () => {
       onSubmit={formik.handleSubmit}
     >
       <p className="text-lg sm:text-xl mb-5 px-8 sm:px-10 nunito">
-        Welcome back
+        {!cliToken ? "Welcome Back" : "Access the Maui CLI"}
       </p>
       {displayFields()}
       <div className="relative mt-2 mx-8 sm:mx-10">
