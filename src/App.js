@@ -69,7 +69,7 @@ function App() {
         <GuestGuardedRoute path="/password/reset/:token">
           <Auth />
         </GuestGuardedRoute>
-        <Route path="/cli/login/:token">
+        <Route path="/cli/session/:token">
           <Auth />
         </Route>
         <GuestGuardedRoute path="/">
