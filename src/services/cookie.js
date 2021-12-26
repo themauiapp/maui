@@ -34,11 +34,10 @@ const setUserContext = (data, setUser = null, key = "user") => {
   const expiryDateObject = new Date(new Date().getTime() + 1000 * 3 * 86400);
   cookies.set("maui_token", generateToken(), {
     path: "/",
+    domain: '.' + window.location.hostname,
     expires: expiryDateObject,
   });
-  if (setUser) {
-    setUser(user);
-  }
+
   if (setUser) {
     setUser(user);
   }
@@ -57,7 +56,7 @@ const generateToken = () => {
 };
 const clearCookies = () => {
   mauiCookies.forEach((cookie) => {
-    cookies.remove(cookie, { path: "/", domain: "localhost" });
+    cookies.remove(cookie, { path: "/", domain: window.location.hostname });
   });
 };
 
