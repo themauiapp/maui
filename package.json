@@ -33,6 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:prod": "serve -l 3000 -s build",
     "build": "workbox generateSW && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

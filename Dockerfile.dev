@@ -10,10 +10,6 @@ COPY . .
 
 RUN yarn install --silent
 
-RUN yarn global add serve
-
-RUN yarn build
-
 EXPOSE 3000
 
-CMD ["yarn", "run", "start:prod"]
+CMD ["yarn", "run", "start"]
