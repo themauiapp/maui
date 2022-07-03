@@ -177,7 +177,7 @@ const AuthHome = () => {
               }}
             >
               <Header toggleSidebar={toggleSidebar} />
-              <div className="px-8 bmd:px-16 lg:px-24">
+              <div className="px-8 bmd:px-16 lg:px-20">
                 <Switch>
                   <Route path="/my/dashboard">
                     <Dashboard />

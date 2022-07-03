@@ -105,7 +105,7 @@ const Header = ({ toggleSidebar }) => {
   };
 
   return (
-    <div className="w-full px-8 bmd:px-16 lg:px-24 py-8 flex justify-between items-center">
+    <div className="w-full px-8 bmd:px-16 lg:px-20 py-8 flex justify-between items-center">
       {!isResponsive ? (
         <form className="flex" onSubmit={search}>
           <img
