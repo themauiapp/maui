@@ -90,7 +90,7 @@ const Auth = () => {
         <div className="h-4/6 sm:h-1/2 lg:h-4/6 px-8 sm:px-12 md:px-24 flex justify-between lg:justify-around">
           <div className="hidden bmd:block auth__image-parent relative w-1/3 lg:w-1/4">
             <img
-              src="/images/auth/woman-standing.jpg"
+              src="https://res.cloudinary.com/olamileke/image/upload/v1656887853/maui/assets/auth/compressed-woman-standing_yyn5yy.jpg"
               className="object-cover w-full h-full"
               alt="woman smiling"
             />
