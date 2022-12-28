@@ -3,12 +3,12 @@ import { setContext } from "@apollo/client/link/context";
 import { createUploadLink } from "apollo-upload-client";
 import Cookies from "universal-cookie";
 
-const createApolloClient = (window = null) => {
+const createApolloClient = (includeCode = false) => {
   let uri = `${
     process.env.REACT_APP_API_URL ?? window.__env__.REACT_APP_API_URL
   }graphql`;
 
-  if (window) {
+  if (includeCode) {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     uri = `${uri}?code=${code}`;

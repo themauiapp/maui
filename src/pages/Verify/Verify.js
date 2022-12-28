@@ -12,7 +12,7 @@ import errorHandler from "../../utilities/errorHandler";
 
 const Verify = () => {
   const [verifyGoogleLoginMutation] = useMutation(VERIFYGOOGLELOGIN, {
-    client: createApolloClient(window),
+    client: createApolloClient(true),
   });
   const [resetEmailMutation] = useMutation(RESETEMAIL);
   const history = useHistory();
