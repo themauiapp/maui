@@ -84,7 +84,7 @@ const Home = () => {
         <div className="hidden lg:block relative bg-light-grey col-span-6 pr-24">
           <img
             className="absolute left-0 w-full object-cover px-24"
-            src="https://res.cloudinary.com/olamileke/image/upload/v1656886406/maui/assets/home-page/compressed-maui-hero_etkfvt.jpg"
+            src="https://res.cloudinary.com/olamileke/image/upload/v1672230240/maui/assets/home-page/compressed-maui-hero_qwinlr.jpg"
             alt="hero"
             style={{ height: "90%", bottom: "-70px" }}
           />
@@ -151,19 +151,19 @@ const Home = () => {
           <div className="col-span-12 bmd:col-span-6 bsm:flex mb-8 bmd:mb-0">
             <div className="about__img-primary">
               <img
-                src="https://res.cloudinary.com/olamileke/image/upload/v1656886600/maui/assets/home-page/compressed-woman-portrait_uasfoc.jpg"
+                src="https://res.cloudinary.com/olamileke/image/upload/v1672230314/maui/assets/home-page/compressed-woman-portrait_idoom0.jpg"
                 className="object-cover w-full"
                 alt="woman in portrait"
               />
             </div>
             <div className="hidden md:flex flex-col about__img-secondary">
               <img
-                src="https://res.cloudinary.com/olamileke/image/upload/v1656886710/maui/assets/home-page/compressed-man-smiling_rtsres.jpg"
+                src="https://res.cloudinary.com/olamileke/image/upload/v1672230390/maui/assets/home-page/compressed-man-smiling_mzngnn.jpg"
                 className="object-cover w-full"
                 alt="girl holding icecream"
               />
               <img
-                src="https://res.cloudinary.com/olamileke/image/upload/v1656886837/maui/assets/home-page/compressed-man-looking_v2gvnc.jpg"
+                src="https://res.cloudinary.com/olamileke/image/upload/v1672230462/maui/assets/home-page/compressed-man-looking_v2gvnc_lhl4q2.jpg"
                 className="object-cover w-full"
                 alt="man staring"
               />
@@ -236,14 +236,14 @@ const Home = () => {
             <div className="features__img-ease relative grid grid-cols-12 col-gap-5 sm:mb-5">
               <div className="col-span-12 sm:col-span-6">
                 <img
-                  src="https://res.cloudinary.com/olamileke/image/upload/v1656887454/maui/assets/home-page/compressed-man-headphones_esutx6.jpg"
+                  src="https://res.cloudinary.com/olamileke/image/upload/v1672230644/maui/assets/home-page/compressed-man-headphones_j8dxhf.jpg"
                   className="w-full object-cover"
                   alt="man wearing headphones"
                 />
               </div>
               <div className="hidden sm:block col-span-12 sm:col-span-6">
                 <img
-                  src="https://res.cloudinary.com/olamileke/image/upload/v1656887580/maui/assets/home-page/compressed-girl-walking_ftp1u2.jpg"
+                  src="https://res.cloudinary.com/olamileke/image/upload/v1672230703/maui/assets/home-page/compressed-girl-walking_gir5vc.jpg"
                   className="w-full object-cover"
                   alt="girl walking"
                 />
@@ -252,14 +252,14 @@ const Home = () => {
             <div className="hidden features__img-ease relative sm:grid grid-cols-12 col-gap-5">
               <div className="col-span-6">
                 <img
-                  src="https://res.cloudinary.com/olamileke/image/upload/v1656887671/maui/assets/home-page/compressed-rasta-smiling_hqjip2.jpg"
+                  src="https://res.cloudinary.com/olamileke/image/upload/v1672230752/maui/assets/home-page/compressed-rasta-smiling_xshjiy.jpg"
                   className="w-full object-cover"
                   alt="black man smiling"
                 />
               </div>
               <div className="col-span-6">
                 <img
-                  src="https://res.cloudinary.com/olamileke/image/upload/v1656887746/maui/assets/home-page/compressed-people-on-road_ldf52k.jpg"
+                  src="https://res.cloudinary.com/olamileke/image/upload/v1672230809/maui/assets/home-page/compressed-people-on-road_lkkpo4.jpg"
                   className="w-full object-cover"
                   alt="crowd walking on sidewalk"
                 />
