@@ -4,7 +4,9 @@ import { createUploadLink } from "apollo-upload-client";
 import Cookies from "universal-cookie";
 
 const createApolloClient = (window = null) => {
-  let uri = `${process.env.REACT_APP_API_URL}graphql`;
+  let uri = `${
+    process.env.REACT_APP_API_URL ?? window.__env__.REACT_APP_API_URL
+  }graphql`;
 
   if (window) {
     const params = new URLSearchParams(window.location.search);

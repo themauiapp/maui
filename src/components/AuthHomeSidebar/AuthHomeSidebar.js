@@ -33,7 +33,7 @@ const AuthHomeSidebar = ({ toggle }) => {
       return (
         <div
           key={index}
-          className={`relative transition-colors duration-500 ease-in pl-5 pr-4 py-3 rounded-full flex items-center mb-6 ${
+          className={`relative transition-colors duration-500 ease-in pl-5 pr-4 py-3 rounded-md flex items-center mb-6 ${
             activeLink === link.name
               ? "bg-light-grey text-revolver-purple font-semibold"
               : ""

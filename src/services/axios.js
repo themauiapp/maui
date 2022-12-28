@@ -7,7 +7,7 @@ const createAxiosObject = () => {
     Accepts: "application/json",
   };
   const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: process.env.REACT_APP_API_URL ?? window.__env__.REACT_APP_API_URL,
     headers,
   });
 
