@@ -10,7 +10,7 @@ COPY . .
 
 RUN yarn install --silent
 
-RUN yarn global add serve
+RUN yarn global add serve --ignore-engines
 
 RUN yarn build
 
