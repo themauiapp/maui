@@ -34,7 +34,7 @@ const setUserContext = (data, setUser = null, key = "user") => {
   const expiryDateObject = new Date(new Date().getTime() + 1000 * 3 * 86400);
   cookies.set("maui_token", generateToken(), {
     path: "/",
-    domain: "." + window.location.hostname,
+    domain: "." + (process.env.REACT_APP_DOMAIN ?? window.__env__.REACT_APP_DOMAIN),
     expires: expiryDateObject,
   });
 
