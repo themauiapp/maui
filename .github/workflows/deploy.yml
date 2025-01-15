@@ -21,7 +21,7 @@ jobs:
       - name: Builds the application into an image
         id: build
         run: |
-          curl -X POST https://notify.olamileke.me \
+          curl -X POST https://notify.olamileke.dev \
             -H 'Authorization: Bearer ${{ secrets.NOTIFY_BEARER_TOKEN }}' \
             -H 'Content-Type: application/json' \
             -d '{"service":"Maui", "step":"BUILD_START"}' 
@@ -29,7 +29,7 @@ jobs:
       - name: Send out notification if application build is successful
         if: ${{ steps.build.conclusion == 'success' }}
         run: |
-          curl -X POST https://notify.olamileke.me \
+          curl -X POST https://notify.olamileke.dev \
             -H 'Authorization: Bearer ${{ secrets.NOTIFY_BEARER_TOKEN }}' \
             -H 'Content-Type: application/json' \
             -d '{"service":"Maui", "step":"BUILD_COMPLETED"}'
@@ -45,7 +45,7 @@ jobs:
       - name: Send out notification if Container Registry push is successful
         if: ${{ steps.push.conclusion == 'success' }}
         run: |
-          curl -X POST https://notify.olamileke.me \
+          curl -X POST https://notify.olamileke.dev \
             -H 'Authorization: Bearer ${{ secrets.NOTIFY_BEARER_TOKEN }}' \
             -H 'Content-Type: application/json' \
             -d '{"service":"Maui", "step":"IMAGE_PUSHED"}'
@@ -69,14 +69,14 @@ jobs:
       - name: Send out notification if deploy is successful
         if: ${{ steps.deploy.conclusion == 'success' }}
         run: |
-          curl -X POST https://notify.olamileke.me \
+          curl -X POST https://notify.olamileke.dev \
             -H 'Authorization: Bearer ${{ secrets.NOTIFY_BEARER_TOKEN }}' \
             -H 'Content-Type: application/json' \
             -d '{"service":"Maui", "step":"DEPLOYED"}'
       - name: Send out notification if pipeline fails
         if: ${{ failure() }}
         run: |
-          curl -X POST https://notify.olamileke.me \
+          curl -X POST https://notify.olamileke.dev \
             -H 'Authorization: Bearer ${{ secrets.NOTIFY_BEARER_TOKEN }}' \
             -H 'Content-Type: application/json' \
             -d '{"service":"Maui", "step":"FAILED"}'
